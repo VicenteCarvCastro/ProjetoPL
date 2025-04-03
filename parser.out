@@ -1,0 +1,281 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> S
+Rule 1     S -> Programa .
+Rule 2     Programa -> Head Body
+Rule 3     Head -> Titulo Variaveis
+Rule 4     Titulo -> PROGRAM nome
+Rule 5     Variaveis -> VAR vars
+Rule 6     Variaveis -> <empty>
+Rule 7     vars -> varsDecl ; vars
+Rule 8     vars -> varsDecl
+Rule 9     Body -> BEGIN ListaInstrucoes END
+Rule 10    ListaInstrucoes -> ListaInstrucoes ; Instrucao
+Rule 11    ListaInstrucoes -> Instrucao
+Rule 12    Instrucao -> codigo ;
+Rule 13    Instrucao -> Print ;
+Rule 14    Print -> IMPRIME conteudoP
+
+Terminals, with rules where they appear
+
+.                    : 1
+;                    : 7 10 12 13
+BEGIN                : 9
+END                  : 9
+IMPRIME              : 14
+PROGRAM              : 4
+VAR                  : 5
+codigo               : 12
+conteudoP            : 14
+error                : 
+nome                 : 4
+varsDecl             : 7 8
+
+Nonterminals, with rules where they appear
+
+Body                 : 2
+Head                 : 2
+Instrucao            : 10 11
+ListaInstrucoes      : 9 10
+Print                : 13
+Programa             : 1
+S                    : 0
+Titulo               : 3
+Variaveis            : 3
+vars                 : 5 7
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . S
+    (1) S -> . Programa .
+    (2) Programa -> . Head Body
+    (3) Head -> . Titulo Variaveis
+    (4) Titulo -> . PROGRAM nome
+
+    PROGRAM         shift and go to state 5
+
+    S                              shift and go to state 1
+    Programa                       shift and go to state 2
+    Head                           shift and go to state 3
+    Titulo                         shift and go to state 4
+
+state 1
+
+    (0) S' -> S .
+
+
+
+state 2
+
+    (1) S -> Programa . .
+
+    .               shift and go to state 6
+
+
+state 3
+
+    (2) Programa -> Head . Body
+    (9) Body -> . BEGIN ListaInstrucoes END
+
+    BEGIN           shift and go to state 8
+
+    Body                           shift and go to state 7
+
+state 4
+
+    (3) Head -> Titulo . Variaveis
+    (5) Variaveis -> . VAR vars
+    (6) Variaveis -> .
+
+    VAR             shift and go to state 10
+    BEGIN           reduce using rule 6 (Variaveis -> .)
+
+    Variaveis                      shift and go to state 9
+
+state 5
+
+    (4) Titulo -> PROGRAM . nome
+
+    nome            shift and go to state 11
+
+
+state 6
+
+    (1) S -> Programa . .
+
+    $end            reduce using rule 1 (S -> Programa . .)
+
+
+state 7
+
+    (2) Programa -> Head Body .
+
+    .               reduce using rule 2 (Programa -> Head Body .)
+
+
+state 8
+
+    (9) Body -> BEGIN . ListaInstrucoes END
+    (10) ListaInstrucoes -> . ListaInstrucoes ; Instrucao
+    (11) ListaInstrucoes -> . Instrucao
+    (12) Instrucao -> . codigo ;
+    (13) Instrucao -> . Print ;
+    (14) Print -> . IMPRIME conteudoP
+
+    codigo          shift and go to state 14
+    IMPRIME         shift and go to state 16
+
+    ListaInstrucoes                shift and go to state 12
+    Instrucao                      shift and go to state 13
+    Print                          shift and go to state 15
+
+state 9
+
+    (3) Head -> Titulo Variaveis .
+
+    BEGIN           reduce using rule 3 (Head -> Titulo Variaveis .)
+
+
+state 10
+
+    (5) Variaveis -> VAR . vars
+    (7) vars -> . varsDecl ; vars
+    (8) vars -> . varsDecl
+
+    varsDecl        shift and go to state 18
+
+    vars                           shift and go to state 17
+
+state 11
+
+    (4) Titulo -> PROGRAM nome .
+
+    VAR             reduce using rule 4 (Titulo -> PROGRAM nome .)
+    BEGIN           reduce using rule 4 (Titulo -> PROGRAM nome .)
+
+
+state 12
+
+    (9) Body -> BEGIN ListaInstrucoes . END
+    (10) ListaInstrucoes -> ListaInstrucoes . ; Instrucao
+
+    END             shift and go to state 19
+    ;               shift and go to state 20
+
+
+state 13
+
+    (11) ListaInstrucoes -> Instrucao .
+
+    END             reduce using rule 11 (ListaInstrucoes -> Instrucao .)
+    ;               reduce using rule 11 (ListaInstrucoes -> Instrucao .)
+
+
+state 14
+
+    (12) Instrucao -> codigo . ;
+
+    ;               shift and go to state 21
+
+
+state 15
+
+    (13) Instrucao -> Print . ;
+
+    ;               shift and go to state 22
+
+
+state 16
+
+    (14) Print -> IMPRIME . conteudoP
+
+    conteudoP       shift and go to state 23
+
+
+state 17
+
+    (5) Variaveis -> VAR vars .
+
+    BEGIN           reduce using rule 5 (Variaveis -> VAR vars .)
+
+
+state 18
+
+    (7) vars -> varsDecl . ; vars
+    (8) vars -> varsDecl .
+
+    ;               shift and go to state 24
+    BEGIN           reduce using rule 8 (vars -> varsDecl .)
+
+
+state 19
+
+    (9) Body -> BEGIN ListaInstrucoes END .
+
+    .               reduce using rule 9 (Body -> BEGIN ListaInstrucoes END .)
+
+
+state 20
+
+    (10) ListaInstrucoes -> ListaInstrucoes ; . Instrucao
+    (12) Instrucao -> . codigo ;
+    (13) Instrucao -> . Print ;
+    (14) Print -> . IMPRIME conteudoP
+
+    codigo          shift and go to state 14
+    IMPRIME         shift and go to state 16
+
+    Instrucao                      shift and go to state 25
+    Print                          shift and go to state 15
+
+state 21
+
+    (12) Instrucao -> codigo ; .
+
+    END             reduce using rule 12 (Instrucao -> codigo ; .)
+    ;               reduce using rule 12 (Instrucao -> codigo ; .)
+
+
+state 22
+
+    (13) Instrucao -> Print ; .
+
+    END             reduce using rule 13 (Instrucao -> Print ; .)
+    ;               reduce using rule 13 (Instrucao -> Print ; .)
+
+
+state 23
+
+    (14) Print -> IMPRIME conteudoP .
+
+    ;               reduce using rule 14 (Print -> IMPRIME conteudoP .)
+
+
+state 24
+
+    (7) vars -> varsDecl ; . vars
+    (7) vars -> . varsDecl ; vars
+    (8) vars -> . varsDecl
+
+    varsDecl        shift and go to state 18
+
+    vars                           shift and go to state 26
+
+state 25
+
+    (10) ListaInstrucoes -> ListaInstrucoes ; Instrucao .
+
+    END             reduce using rule 10 (ListaInstrucoes -> ListaInstrucoes ; Instrucao .)
+    ;               reduce using rule 10 (ListaInstrucoes -> ListaInstrucoes ; Instrucao .)
+
+
+state 26
+
+    (7) vars -> varsDecl ; vars .
+
+    BEGIN           reduce using rule 7 (vars -> varsDecl ; vars .)
+

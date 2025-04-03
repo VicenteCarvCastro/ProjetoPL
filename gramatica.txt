@@ -1,0 +1,68 @@
+Gramatica -> Programa '.'
+
+Programa -> Head Body 
+
+Head -> Titulo Variaveis
+
+Titulo -> PROGRAM nome
+
+(MUDAR A PARTE DAS VARIAVIES)
+Variaveis -> VAR vars
+             | epsylon
+
+vars -> varsDecl ';' vars
+      | varsDecl
+
+Body -> BEGIN ListaInstrocoes END 
+
+ListaInstrocoes -> ListaInstrocoes ';' Instrucao 
+                | Instrucao
+
+Instrucao -> assignment_statement SEMICOLON
+          | if_statement
+          | while_statement
+          | for_statement
+          | write_statement SEMICOLON
+          | read_statement SEMICOLON
+          | empty
+
+assignment_statement : ID ASSIGN expression
+
+if_statement : IF expression THEN statement
+             | IF expression THEN statement ELSE statement
+
+while_statement : WHILE expression DO statement
+
+for_statement : FOR ID ASSIGN expression TO expression DO statement
+              | FOR ID ASSIGN expression DOWNTO expression DO statement
+
+write_statement : WRITE LPAREN expression_list RPAREN
+                | WRITELN LPAREN expression_list RPAREN
+
+read_statement : READ LPAREN id_list RPAREN
+               | READLN LPAREN id_list RPAREN
+
+Print -> IMPRIME conteudoP (conteudo parenteses)
+
+
+
+"""
+def t_IMPRIME(t):
+    r'writeln\((.*?)\);'
+
+    match = re.match(r'writeln\((.*?)\);', t.value)
+
+    if match:
+        imprime = match.group(1)[1:-1]
+        print(">> ", imprime)
+        func = match.group(0)
+        t.value = {"func:": func, "value:": imprime}
+
+        # Acessando os valores dentro de t.value
+        func_value = t.value["func"]  # Acessa "writeln"
+
+        # Imprimindo os valores acessados
+        print("Função:", func_value)
+    
+    return t"
+"""
