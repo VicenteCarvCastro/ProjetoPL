@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "BEGIN END IMPRIME PROGRAM VAR codigo conteudoP nome varsDeclS : Programa '.'Programa : Head BodyHead : Titulo VariaveisTitulo : PROGRAM nomeVariaveis : VAR varsVariaveis : vars : varsDecl ';' varsvars : varsDeclBody : BEGIN ListaInstrucoes ENDListaInstrucoes : ListaInstrucoes ';' InstrucaoListaInstrucoes : InstrucaoInstrucao : codigo ';'Instrucao : Print ';'Print : IMPRIME conteudoP"
+_lr_signature = "nonassocELSEARRAY ASSIGN BEGIN BOOLEAN CHAR DO DOWNTO ELSE END EQUALS FALSE FOR GREATER_THAN GREATER_THAN_OR_EQUAL_TO ID IF INTEGER LESS_THAN LESS_THAN_OR_EQUAL_TO NOT_EQUALS NUMBER OF PROGRAM RANGE READ READLN REAL STRING_LITERAL THEN TO TRUE VAR WHILE WRITE WRITELNgramatica : programa '.'programa : cabecalho corpocabecalho : titulo declaracoes_variaveistitulo : PROGRAM ID ';'declaracoes_variaveis : VAR declaracoesdeclaracoes_variaveis :declaracoes : declaracaodeclaracoes : declaracao declaracoesdeclaracao : lista_id ':' tipo ';'lista_id : IDlista_id : lista_id ',' IDtipo : INTEGERtipo : REALtipo : BOOLEANtipo : CHARtipo : ARRAY '[' NUMBER RANGE NUMBER ']' OF tipocorpo : BEGIN lista_instrucoes ENDlista_instrucoes : lista_instrucoes ';' instrucaolista_instrucoes : instrucaoinstrucao : instrucao : atribuicaoinstrucao : leiturainstrucao : escritainstrucao : if_statementinstrucao : while_statementinstrucao : for_statementinstrucao : blocobloco : BEGIN lista_instrucoes ENDatribuicao : ID ASSIGN expressaoleitura : READ '(' lista_id ')'leitura : READLN '(' lista_id ')'escrita : WRITE '(' lista_expressao ')'escrita : WRITELN '(' lista_expressao ')'lista_expressao : expressaolista_expressao : lista_expressao ',' expressaoexpressao : expressao_simplesexpressao : expressao_simples operador_relacional expressao_simplesexpressao_simples : termoexpressao_simples : expressao_simples '+' termoexpressao_simples : expressao_simples '-' termotermo : fatortermo : termo '*' fatortermo : termo '/' fatorfator : NUMBERfator : STRING_LITERALfator : IDfator : TRUEfator : FALSEfator : '(' expressao ')'operador_relacional : EQUALSoperador_relacional : NOT_EQUALSoperador_relacional : LESS_THANoperador_relacional : LESS_THAN_OR_EQUAL_TOoperador_relacional : GREATER_THANoperador_relacional : GREATER_THAN_OR_EQUAL_TOif_statement : IF expressao THEN instrucao ELSE instrucaoif_statement : IF expressao THEN instrucaowhile_statement : WHILE expressao DO instrucaofor_statement : FOR ID ASSIGN expressao TO expressao DO instrucaofor_statement : FOR ID ASSIGN expressao DOWNTO expressao DO instrucao"
     
-_lr_action_items = {'PROGRAM':([0,],[5,]),'$end':([1,6,],[0,-1,]),'.':([2,7,19,],[6,-2,-9,]),'BEGIN':([3,4,9,11,17,18,26,],[8,-6,-3,-4,-5,-8,-7,]),'VAR':([4,11,],[10,-4,]),'nome':([5,],[11,]),'codigo':([8,20,],[14,14,]),'IMPRIME':([8,20,],[16,16,]),'varsDecl':([10,24,],[18,18,]),'END':([12,13,21,22,25,],[19,-11,-12,-13,-10,]),';':([12,13,14,15,18,21,22,23,25,],[20,-11,21,22,24,-12,-13,-14,-10,]),'conteudoP':([16,],[23,]),}
+_lr_action_items = {'PROGRAM':([0,],[5,]),'$end':([1,6,],[0,-1,]),'.':([2,7,36,],[6,-2,-17,]),'BEGIN':([3,4,8,9,12,30,31,34,37,55,66,79,102,105,113,114,],[8,-6,12,-3,12,-5,-7,-4,12,-8,12,12,-9,12,12,12,]),'VAR':([4,34,],[10,-4,]),'ID':([5,8,10,12,27,28,29,31,37,38,39,40,41,42,52,57,66,67,68,69,70,71,72,73,74,75,76,77,79,80,91,102,105,106,107,113,114,],[11,22,33,22,49,49,54,33,22,49,33,33,49,49,49,87,22,49,49,49,-50,-51,-52,-53,-54,-55,49,49,22,49,49,-9,22,49,49,22,22,]),'END':([8,12,13,14,15,16,17,18,19,20,21,35,37,44,45,46,47,48,49,50,51,58,59,60,66,79,88,89,90,92,93,94,95,96,97,98,99,100,105,109,113,114,116,117,],[-20,-20,36,-19,-21,-22,-23,-24,-25,-26,-27,58,-20,-36,-38,-41,-44,-45,-46,-47,-48,-28,-18,-29,-20,-20,-30,-31,-32,-33,-57,-37,-39,-40,-42,-43,-49,-58,-20,-56,-20,-20,-59,-60,]),';':([8,11,12,13,14,15,16,17,18,19,20,21,35,37,44,45,46,47,48,49,50,51,58,59,60,66,79,81,82,83,84,85,88,89,90,92,93,94,95,96,97,98,99,100,105,109,113,114,116,117,120,],[-20,34,-20,37,-19,-21,-22,-23,-24,-25,-26,-27,37,-20,-36,-38,-41,-44,-45,-46,-47,-48,-28,-18,-29,-20,-20,102,-12,-13,-14,-15,-30,-31,-32,-33,-57,-37,-39,-40,-42,-43,-49,-58,-20,-56,-20,-20,-59,-60,-16,]),'READ':([8,12,37,66,79,105,113,114,],[23,23,23,23,23,23,23,23,]),'READLN':([8,12,37,66,79,105,113,114,],[24,24,24,24,24,24,24,24,]),'WRITE':([8,12,37,66,79,105,113,114,],[25,25,25,25,25,25,25,25,]),'WRITELN':([8,12,37,66,79,105,113,114,],[26,26,26,26,26,26,26,26,]),'IF':([8,12,37,66,79,105,113,114,],[27,27,27,27,27,27,27,27,]),'WHILE':([8,12,37,66,79,105,113,114,],[28,28,28,28,28,28,28,28,]),'FOR':([8,12,37,66,79,105,113,114,],[29,29,29,29,29,29,29,29,]),'ELSE':([15,16,17,18,19,20,21,44,45,46,47,48,49,50,51,58,60,66,79,88,89,90,92,93,94,95,96,97,98,99,100,105,109,113,114,116,117,],[-21,-22,-23,-24,-25,-26,-27,-36,-38,-41,-44,-45,-46,-47,-48,-28,-29,-20,-20,-30,-31,-32,-33,105,-37,-39,-40,-42,-43,-49,-58,-20,-56,-20,-20,-59,-60,]),'ASSIGN':([22,54,],[38,80,]),'(':([23,24,25,26,27,28,38,41,42,52,67,68,69,70,71,72,73,74,75,76,77,80,91,106,107,],[39,40,41,42,52,52,52,52,52,52,52,52,52,-50,-51,-52,-53,-54,-55,52,52,52,52,52,52,]),'NUMBER':([27,28,38,41,42,52,67,68,69,70,71,72,73,74,75,76,77,80,91,103,106,107,112,],[47,47,47,47,47,47,47,47,47,-50,-51,-52,-53,-54,-55,47,47,47,47,108,47,47,115,]),'STRING_LITERAL':([27,28,38,41,42,52,67,68,69,70,71,72,73,74,75,76,77,80,91,106,107,],[48,48,48,48,48,48,48,48,48,-50,-51,-52,-53,-54,-55,48,48,48,48,48,48,]),'TRUE':([27,28,38,41,42,52,67,68,69,70,71,72,73,74,75,76,77,80,91,106,107,],[50,50,50,50,50,50,50,50,50,-50,-51,-52,-53,-54,-55,50,50,50,50,50,50,]),'FALSE':([27,28,38,41,42,52,67,68,69,70,71,72,73,74,75,76,77,80,91,106,107,],[51,51,51,51,51,51,51,51,51,-50,-51,-52,-53,-54,-55,51,51,51,51,51,51,]),':':([32,33,87,],[56,-10,-11,]),',':([32,33,44,45,46,47,48,49,50,51,61,62,63,64,65,87,94,95,96,97,98,99,104,],[57,-10,-36,-38,-41,-44,-45,-46,-47,-48,57,57,91,-34,91,-11,-37,-39,-40,-42,-43,-49,-35,]),')':([33,44,45,46,47,48,49,50,51,61,62,63,64,65,78,87,94,95,96,97,98,99,104,],[-10,-36,-38,-41,-44,-45,-46,-47,-48,88,89,90,-34,92,99,-11,-37,-39,-40,-42,-43,-49,-35,]),'THEN':([43,44,45,46,47,48,49,50,51,94,95,96,97,98,99,],[66,-36,-38,-41,-44,-45,-46,-47,-48,-37,-39,-40,-42,-43,-49,]),'DO':([44,45,46,47,48,49,50,51,53,94,95,96,97,98,99,110,111,],[-36,-38,-41,-44,-45,-46,-47,-48,79,-37,-39,-40,-42,-43,-49,113,114,]),'TO':([44,45,46,47,48,49,50,51,94,95,96,97,98,99,101,],[-36,-38,-41,-44,-45,-46,-47,-48,-37,-39,-40,-42,-43,-49,106,]),'DOWNTO':([44,45,46,47,48,49,50,51,94,95,96,97,98,99,101,],[-36,-38,-41,-44,-45,-46,-47,-48,-37,-39,-40,-42,-43,-49,107,]),'+':([44,45,46,47,48,49,50,51,94,95,96,97,98,99,],[68,-38,-41,-44,-45,-46,-47,-48,68,-39,-40,-42,-43,-49,]),'-':([44,45,46,47,48,49,50,51,94,95,96,97,98,99,],[69,-38,-41,-44,-45,-46,-47,-48,69,-39,-40,-42,-43,-49,]),'EQUALS':([44,45,46,47,48,49,50,51,95,96,97,98,99,],[70,-38,-41,-44,-45,-46,-47,-48,-39,-40,-42,-43,-49,]),'NOT_EQUALS':([44,45,46,47,48,49,50,51,95,96,97,98,99,],[71,-38,-41,-44,-45,-46,-47,-48,-39,-40,-42,-43,-49,]),'LESS_THAN':([44,45,46,47,48,49,50,51,95,96,97,98,99,],[72,-38,-41,-44,-45,-46,-47,-48,-39,-40,-42,-43,-49,]),'LESS_THAN_OR_EQUAL_TO':([44,45,46,47,48,49,50,51,95,96,97,98,99,],[73,-38,-41,-44,-45,-46,-47,-48,-39,-40,-42,-43,-49,]),'GREATER_THAN':([44,45,46,47,48,49,50,51,95,96,97,98,99,],[74,-38,-41,-44,-45,-46,-47,-48,-39,-40,-42,-43,-49,]),'GREATER_THAN_OR_EQUAL_TO':([44,45,46,47,48,49,50,51,95,96,97,98,99,],[75,-38,-41,-44,-45,-46,-47,-48,-39,-40,-42,-43,-49,]),'*':([45,46,47,48,49,50,51,95,96,97,98,99,],[76,-41,-44,-45,-46,-47,-48,76,76,-42,-43,-49,]),'/':([45,46,47,48,49,50,51,95,96,97,98,99,],[77,-41,-44,-45,-46,-47,-48,77,77,-42,-43,-49,]),'INTEGER':([56,119,],[82,82,]),'REAL':([56,119,],[83,83,]),'BOOLEAN':([56,119,],[84,84,]),'CHAR':([56,119,],[85,85,]),'ARRAY':([56,119,],[86,86,]),'[':([86,],[103,]),'RANGE':([108,],[112,]),']':([115,],[118,]),'OF':([118,],[119,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'S':([0,],[1,]),'Programa':([0,],[2,]),'Head':([0,],[3,]),'Titulo':([0,],[4,]),'Body':([3,],[7,]),'Variaveis':([4,],[9,]),'ListaInstrucoes':([8,],[12,]),'Instrucao':([8,20,],[13,25,]),'Print':([8,20,],[15,15,]),'vars':([10,24,],[17,26,]),}
+_lr_goto_items = {'gramatica':([0,],[1,]),'programa':([0,],[2,]),'cabecalho':([0,],[3,]),'titulo':([0,],[4,]),'corpo':([3,],[7,]),'declaracoes_variaveis':([4,],[9,]),'lista_instrucoes':([8,12,],[13,35,]),'instrucao':([8,12,37,66,79,105,113,114,],[14,14,59,93,100,109,116,117,]),'atribuicao':([8,12,37,66,79,105,113,114,],[15,15,15,15,15,15,15,15,]),'leitura':([8,12,37,66,79,105,113,114,],[16,16,16,16,16,16,16,16,]),'escrita':([8,12,37,66,79,105,113,114,],[17,17,17,17,17,17,17,17,]),'if_statement':([8,12,37,66,79,105,113,114,],[18,18,18,18,18,18,18,18,]),'while_statement':([8,12,37,66,79,105,113,114,],[19,19,19,19,19,19,19,19,]),'for_statement':([8,12,37,66,79,105,113,114,],[20,20,20,20,20,20,20,20,]),'bloco':([8,12,37,66,79,105,113,114,],[21,21,21,21,21,21,21,21,]),'declaracoes':([10,31,],[30,55,]),'declaracao':([10,31,],[31,31,]),'lista_id':([10,31,39,40,],[32,32,61,62,]),'expressao':([27,28,38,41,42,52,80,91,106,107,],[43,53,60,64,64,78,101,104,110,111,]),'expressao_simples':([27,28,38,41,42,52,67,80,91,106,107,],[44,44,44,44,44,44,94,44,44,44,44,]),'termo':([27,28,38,41,42,52,67,68,69,80,91,106,107,],[45,45,45,45,45,45,45,95,96,45,45,45,45,]),'fator':([27,28,38,41,42,52,67,68,69,76,77,80,91,106,107,],[46,46,46,46,46,46,46,46,46,97,98,46,46,46,46,]),'lista_expressao':([41,42,],[63,65,]),'operador_relacional':([44,],[67,]),'tipo':([56,119,],[81,120,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,19 +26,65 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> S","S'",1,None,None,None),
-  ('S -> Programa .','S',2,'p_Gramatica','sin.py',5),
-  ('Programa -> Head Body','Programa',2,'p_Programa','sin.py',8),
-  ('Head -> Titulo Variaveis','Head',2,'p_Head','sin.py',12),
-  ('Titulo -> PROGRAM nome','Titulo',2,'p_Titulo','sin.py',15),
-  ('Variaveis -> VAR vars','Variaveis',2,'p_Titulo_geral','sin.py',18),
-  ('Variaveis -> <empty>','Variaveis',0,'p_Titulo_empty','sin.py',21),
-  ('vars -> varsDecl ; vars','vars',3,'p_vars_ListaInstrucoes','sin.py',24),
-  ('vars -> varsDecl','vars',1,'p_vars_decl','sin.py',27),
-  ('Body -> BEGIN ListaInstrucoes END','Body',3,'p_Body','sin.py',30),
-  ('ListaInstrucoes -> ListaInstrucoes ; Instrucao','ListaInstrucoes',3,'p_ListaInstrucoes_geral','sin.py',34),
-  ('ListaInstrucoes -> Instrucao','ListaInstrucoes',1,'p_ListaInstrucoes_empty','sin.py',37),
-  ('Instrucao -> codigo ;','Instrucao',2,'p_Instrucao_codigo','sin.py',41),
-  ('Instrucao -> Print ;','Instrucao',2,'p_Instrucao_imprime','sin.py',44),
-  ('Print -> IMPRIME conteudoP','Print',2,'p_Print','sin.py',47),
+  ("S' -> gramatica","S'",1,None,None,None),
+  ('gramatica -> programa .','gramatica',2,'p_gramatica','parser.py',15),
+  ('programa -> cabecalho corpo','programa',2,'p_programa','parser.py',19),
+  ('cabecalho -> titulo declaracoes_variaveis','cabecalho',2,'p_cabecalho','parser.py',26),
+  ('titulo -> PROGRAM ID ;','titulo',3,'p_titulo','parser.py',30),
+  ('declaracoes_variaveis -> VAR declaracoes','declaracoes_variaveis',2,'p_declaracoes_variaveis_com','parser.py',37),
+  ('declaracoes_variaveis -> <empty>','declaracoes_variaveis',0,'p_declaracoes_variaveis_vazio','parser.py',41),
+  ('declaracoes -> declaracao','declaracoes',1,'p_declaracoes_uma','parser.py',45),
+  ('declaracoes -> declaracao declaracoes','declaracoes',2,'p_declaracoes_varias','parser.py',49),
+  ('declaracao -> lista_id : tipo ;','declaracao',4,'p_declaracao','parser.py',53),
+  ('lista_id -> ID','lista_id',1,'p_lista_id_uma','parser.py',57),
+  ('lista_id -> lista_id , ID','lista_id',3,'p_lista_id_varias','parser.py',61),
+  ('tipo -> INTEGER','tipo',1,'p_tipo_inteiro','parser.py',68),
+  ('tipo -> REAL','tipo',1,'p_tipo_real','parser.py',72),
+  ('tipo -> BOOLEAN','tipo',1,'p_tipo_boolean','parser.py',76),
+  ('tipo -> CHAR','tipo',1,'p_tipo_char','parser.py',80),
+  ('tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF tipo','tipo',8,'p_tipo_array','parser.py',84),
+  ('corpo -> BEGIN lista_instrucoes END','corpo',3,'p_corpo','parser.py',91),
+  ('lista_instrucoes -> lista_instrucoes ; instrucao','lista_instrucoes',3,'p_lista_instrucoes_varias','parser.py',98),
+  ('lista_instrucoes -> instrucao','lista_instrucoes',1,'p_lista_instrucoes_uma','parser.py',102),
+  ('instrucao -> <empty>','instrucao',0,'p_instrucao_vazia','parser.py',108),
+  ('instrucao -> atribuicao','instrucao',1,'p_instrucao_simples','parser.py',116),
+  ('instrucao -> leitura','instrucao',1,'p_instrucao_leitura','parser.py',120),
+  ('instrucao -> escrita','instrucao',1,'p_instrucao_escrita','parser.py',124),
+  ('instrucao -> if_statement','instrucao',1,'p_instrucao_if','parser.py',128),
+  ('instrucao -> while_statement','instrucao',1,'p_instrucao_while','parser.py',132),
+  ('instrucao -> for_statement','instrucao',1,'p_instrucao_for','parser.py',136),
+  ('instrucao -> bloco','instrucao',1,'p_instrucao_bloco','parser.py',140),
+  ('bloco -> BEGIN lista_instrucoes END','bloco',3,'p_bloco','parser.py',144),
+  ('atribuicao -> ID ASSIGN expressao','atribuicao',3,'p_atribuicao','parser.py',151),
+  ('leitura -> READ ( lista_id )','leitura',4,'p_leitura_read','parser.py',158),
+  ('leitura -> READLN ( lista_id )','leitura',4,'p_leitura_readln','parser.py',162),
+  ('escrita -> WRITE ( lista_expressao )','escrita',4,'p_escrita_write','parser.py',169),
+  ('escrita -> WRITELN ( lista_expressao )','escrita',4,'p_escrita_writeln','parser.py',173),
+  ('lista_expressao -> expressao','lista_expressao',1,'p_lista_expressao_uma','parser.py',177),
+  ('lista_expressao -> lista_expressao , expressao','lista_expressao',3,'p_lista_expressao_varias','parser.py',181),
+  ('expressao -> expressao_simples','expressao',1,'p_expressao_simples','parser.py',188),
+  ('expressao -> expressao_simples operador_relacional expressao_simples','expressao',3,'p_expressao_relacional','parser.py',192),
+  ('expressao_simples -> termo','expressao_simples',1,'p_expressao_simples_termo','parser.py',196),
+  ('expressao_simples -> expressao_simples + termo','expressao_simples',3,'p_expressao_simples_soma','parser.py',200),
+  ('expressao_simples -> expressao_simples - termo','expressao_simples',3,'p_expressao_simples_sub','parser.py',204),
+  ('termo -> fator','termo',1,'p_termo_fator','parser.py',208),
+  ('termo -> termo * fator','termo',3,'p_termo_mult','parser.py',212),
+  ('termo -> termo / fator','termo',3,'p_termo_div','parser.py',216),
+  ('fator -> NUMBER','fator',1,'p_fator_numero','parser.py',220),
+  ('fator -> STRING_LITERAL','fator',1,'p_fator_string','parser.py',224),
+  ('fator -> ID','fator',1,'p_fator_id','parser.py',228),
+  ('fator -> TRUE','fator',1,'p_fator_true','parser.py',232),
+  ('fator -> FALSE','fator',1,'p_fator_false','parser.py',236),
+  ('fator -> ( expressao )','fator',3,'p_fator_parenteses','parser.py',240),
+  ('operador_relacional -> EQUALS','operador_relacional',1,'p_operador_relacional_igual','parser.py',247),
+  ('operador_relacional -> NOT_EQUALS','operador_relacional',1,'p_operador_relacional_diferente','parser.py',251),
+  ('operador_relacional -> LESS_THAN','operador_relacional',1,'p_operador_relacional_menor','parser.py',255),
+  ('operador_relacional -> LESS_THAN_OR_EQUAL_TO','operador_relacional',1,'p_operador_relacional_menor_igual','parser.py',259),
+  ('operador_relacional -> GREATER_THAN','operador_relacional',1,'p_operador_relacional_maior','parser.py',263),
+  ('operador_relacional -> GREATER_THAN_OR_EQUAL_TO','operador_relacional',1,'p_operador_relacional_maior_igual','parser.py',267),
+  ('if_statement -> IF expressao THEN instrucao ELSE instrucao','if_statement',6,'p_if_else_statement','parser.py',274),
+  ('if_statement -> IF expressao THEN instrucao','if_statement',4,'p_if_statement','parser.py',278),
+  ('while_statement -> WHILE expressao DO instrucao','while_statement',4,'p_while_statement','parser.py',282),
+  ('for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao','for_statement',8,'p_for_statement_to','parser.py',286),
+  ('for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao','for_statement',8,'p_for_statement_downto','parser.py',290),
 ]

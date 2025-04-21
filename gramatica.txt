@@ -6,12 +6,15 @@ Head -> Titulo Variaveis
 
 Titulo -> PROGRAM nome
 
-(MUDAR A PARTE DAS VARIAVIES)
-Variaveis -> VAR vars
+
+Variaveis -> VAR listaVars
              | epsylon
 
-vars -> varsDecl ';' vars
-      | varsDecl
+
+listaVars -> varsDecl ';' listaVars
+            | varsDecl
+
+
 
 Body -> BEGIN ListaInstrocoes END 
 
@@ -46,23 +49,3 @@ Print -> IMPRIME conteudoP (conteudo parenteses)
 
 
 
-"""
-def t_IMPRIME(t):
-    r'writeln\((.*?)\);'
-
-    match = re.match(r'writeln\((.*?)\);', t.value)
-
-    if match:
-        imprime = match.group(1)[1:-1]
-        print(">> ", imprime)
-        func = match.group(0)
-        t.value = {"func:": func, "value:": imprime}
-
-        # Acessando os valores dentro de t.value
-        func_value = t.value["func"]  # Acessa "writeln"
-
-        # Imprimindo os valores acessados
-        print("Função:", func_value)
-    
-    return t"
-"""

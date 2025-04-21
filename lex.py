@@ -1,95 +1,91 @@
 import ply.lex as lex
-import re
 
+# -------------------------
+# PALAVRAS RESERVADAS
+# -------------------------
+reserved = {
+    'program': 'PROGRAM',
+    'var': 'VAR',
+    'integer': 'INTEGER',
+    'real': 'REAL',
+    'boolean': 'BOOLEAN',
+    'char': 'CHAR',
+    'array': 'ARRAY',
+    'of': 'OF',
+    'begin': 'BEGIN',
+    'end': 'END',
+    'readln': 'READLN',
+    'writeln': 'WRITELN',
+    'write': 'WRITE',
+    'read': 'READ',
+    'if': 'IF',
+    'then': 'THEN',
+    'else': 'ELSE',
+    'while': 'WHILE',
+    'do': 'DO',
+    'for': 'FOR',
+    'to': 'TO',
+    'downto': 'DOWNTO',
+    'true': 'TRUE',
+    'false': 'FALSE'
+}
 
-# Definir literais (exceto '.')
+# -------------------------
+# LISTA DE TOKENS
+# -------------------------
+tokens = [
+    'ID', 'NUMBER', 'STRING_LITERAL', 'ASSIGN', 'RANGE',
+    'EQUALS', 'NOT_EQUALS', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO',
+    'GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO'
+] + list(reserved.values())
 
-literals = [';', '(', ')', ',', '.']
+# -------------------------
+# LITERAIS
+# -------------------------
+literals = [';', ',', '(', ')', '.', ':', '[', ']']
 
+# -------------------------
+# EXPRESSÕES REGULARES DOS TOKENS
+# -------------------------
+t_ignore = ' \t'
 
+t_ASSIGN = r':='
+t_RANGE = r'\.\.'
+t_EQUALS = r'='
+t_NOT_EQUALS = r'<>'
+t_LESS_THAN = r'<'
+t_LESS_THAN_OR_EQUAL_TO = r'<='
+t_GREATER_THAN = r'>'
+t_GREATER_THAN_OR_EQUAL_TO = r'>='
 
-# Definir os tokens
-
-tokens = ['PROGRAM', 'BEGIN', 'END', 'VAR', 'nome', 'codigo', 'varsDecl', 
-          'IMPRIME', 'conteudoP']
-
-
-
-
-# Palavras reservadas
-
-def t_PROGRAM(t):
-    r'program'
+def t_STRING_LITERAL(t):
+    r'\'(.*?)\''
+    t.value = t.value[1:-1]
     return t
 
-
-def t_BEGIN(t):
-    r'begin'
+def t_NUMBER(t):
+    r'\d+'
+    t.value = int(t.value)
     return t
 
-
-def t_END(t):
-    r'end'
+def t_ID(t):
+    r'[A-Za-z_][A-Za-z0-9_]*'
+    t.type = reserved.get(t.value.lower(), 'ID')
     return t
 
+def t_COMMENT(t):
+    r'\{[^}]*\}'
+    pass  # ignora comentários
 
-def t_VAR(t):
-    r'var'
-    return t
-
-
-def t_IMPRIME(t):
-    r'writeln'
-    return t
-
-def t_conteudoP(t):
-    r'\([^)]*\)'
-    return t
-
-
-# VOU MUDAR ISTO
-def t_varsDecl(t):
-
-    r'[A-Za-z]\w*(\s*,\s*[A-Za-z]\w*)*\s*:\s*[A-Za-z]\w*\s*'
-
-    match = re.match(r'([A-Za-z]\w*(?:\s*,\s*[A-Za-z]\w*)*)\s*:\s*([A-Za-z]\w*)\s*', t.value)
-
-    if match:
-        variaveis = match.group(1).split(",")
-        tipo = match.group(2)
-        variaveis = [var.strip() for var in variaveis]
-        t.value = {"variaveis": variaveis, "tipo": tipo}
-
-    return t
-
-
-
-# Captura código genérico
-
-def t_codigo(t):
-    r'[a-zA-Z_][^\n;]*;'
-    return t
-
-def t_nome(t):
-    r'[A-Za-z]+'
-    return t
-
-
-# Ignorar espaços e novas linhas
-
-t_ignore = " \n"
-
-
-# Tratamento de erros
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
 def t_error(t):
-
-    print(f'Caracter ilegal: {t.value[0]}')
-
+    print(f"Caracter ilegal: {t.value[0]}")
     t.lexer.skip(1)
 
-
-# Construir o lexer
 lexer = lex.lex()
+
 
 
