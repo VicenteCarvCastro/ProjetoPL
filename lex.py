@@ -14,10 +14,10 @@ reserved = {
     'of': 'OF',
     'begin': 'BEGIN',
     'end': 'END',
-    'readln': 'READLN',
-    'writeln': 'WRITELN',
-    'write': 'WRITE',
     'read': 'READ',
+    'readln': 'READLN',
+    'write': 'WRITE',
+    'writeln': 'WRITELN',
     'if': 'IF',
     'then': 'THEN',
     'else': 'ELSE',
@@ -27,39 +27,67 @@ reserved = {
     'to': 'TO',
     'downto': 'DOWNTO',
     'true': 'TRUE',
-    'false': 'FALSE'
+    'false': 'FALSE',
+    'div': 'DIV',
+    'mod': 'MOD',
+    'not': 'NOT',
+    'and': 'AND',
+    'or': 'OR'
 }
 
 # -------------------------
 # LISTA DE TOKENS
 # -------------------------
 tokens = [
-    'ID', 'NUMBER', 'STRING_LITERAL', 'ASSIGN', 'RANGE',
+    'ID', 'NUMBER', 'STRING_LITERAL', 'ASSIGN',
     'EQUALS', 'NOT_EQUALS', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO',
-    'GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO'
+    'GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'RANGE'
 ] + list(reserved.values())
 
 # -------------------------
 # LITERAIS
 # -------------------------
-literals = [';', ',', '(', ')', '.', ':', '[', ']']
+literals = [';', ',', '(', ')', '.', ':', '[', ']', '+', '-', '*', '/']
 
 # -------------------------
 # EXPRESSÕES REGULARES DOS TOKENS
 # -------------------------
 t_ignore = ' \t'
 
-t_ASSIGN = r':='
-t_RANGE = r'\.\.'
-t_EQUALS = r'='
-t_NOT_EQUALS = r'<>'
-t_LESS_THAN = r'<'
-t_LESS_THAN_OR_EQUAL_TO = r'<='
-t_GREATER_THAN = r'>'
-t_GREATER_THAN_OR_EQUAL_TO = r'>='
+def t_ASSIGN(t):
+    r':='
+    return t
+
+def t_EQUALS(t):
+    r'='
+    return t
+
+def t_NOT_EQUALS(t):
+    r'<>|!='
+    return t
+
+def t_LESS_THAN_OR_EQUAL_TO(t):
+    r'<='
+    return t
+
+def t_GREATER_THAN_OR_EQUAL_TO(t):
+    r'>='
+    return t
+
+def t_LESS_THAN(t):
+    r'<'
+    return t
+
+def t_GREATER_THAN(t):
+    r'>'
+    return t
+
+def t_RANGE(t):
+    r'\.\.'
+    return t
 
 def t_STRING_LITERAL(t):
-    r'\'(.*?)\''
+    r"'[^']*'"
     t.value = t.value[1:-1]
     return t
 
@@ -85,7 +113,8 @@ def t_error(t):
     print(f"Caracter ilegal: {t.value[0]}")
     t.lexer.skip(1)
 
+# -------------------------
+# CONSTRUIR O LEXER
+# -------------------------
 lexer = lex.lex()
-
-
 

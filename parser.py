@@ -6,6 +6,12 @@ from lex import tokens
 # -------------------------
 precedence = (
     ('nonassoc', 'ELSE'),
+    ('left', 'OR'),
+    ('left', 'AND'),
+    ('right', 'NOT'),
+    ('left', '+', '-'),
+    ('left', '*', '/', 'DIV', 'MOD'),
+    ('right', 'UMINUS'),
 )
 
 # -------------------------
@@ -94,20 +100,13 @@ def p_corpo(p):
 # -------------------------
 # LISTA DE INSTRUÇÕES
 # -------------------------
-def p_lista_instrucoes_varias(p):
-    "lista_instrucoes : lista_instrucoes ';' instrucao"
-    p[0] = p[1] + [p[3]]
-
 def p_lista_instrucoes_uma(p):
     "lista_instrucoes : instrucao"
     p[0] = [p[1]]
 
-
-
-def p_instrucao_vazia(p):
-    "instrucao : "
-    p[0] = ("vazia",)
-
+def p_lista_instrucoes_varias(p):
+    "lista_instrucoes : lista_instrucoes ';' instrucao"
+    p[0] = p[1] + [p[3]]
 
 # -------------------------
 # INSTRUÇÕES
@@ -140,6 +139,10 @@ def p_instrucao_bloco(p):
     "instrucao : bloco"
     p[0] = p[1]
 
+def p_instrucao_vazia(p):
+    "instrucao :"
+    p[0] = ("vazia",)
+
 def p_bloco(p):
     "bloco : BEGIN lista_instrucoes END"
     p[0] = ("bloco", p[2])
@@ -147,19 +150,26 @@ def p_bloco(p):
 # -------------------------
 # Atribuição
 # -------------------------
-def p_atribuicao(p):
+def p_atribuicao_variavel(p):
     "atribuicao : ID ASSIGN expressao"
     p[0] = ("atribuicao", p[1], p[3])
+
+def p_atribuicao_array(p):
+    "atribuicao : ID '[' expressao ']' ASSIGN expressao"
+    p[0] = ("atribuicao_array", p[1], p[3], p[6])
+
+
+
 
 # -------------------------
 # Leitura
 # -------------------------
 def p_leitura_read(p):
-    "leitura : READ '(' lista_id ')'"
+    "leitura : READ '(' expressao_simples ')'"
     p[0] = ("read", p[3])
 
 def p_leitura_readln(p):
-    "leitura : READLN '(' lista_id ')'"
+    "leitura : READLN '(' expressao_simples ')'"
     p[0] = ("readln", p[3])
 
 # -------------------------
@@ -173,6 +183,9 @@ def p_escrita_writeln(p):
     "escrita : WRITELN '(' lista_expressao ')'"
     p[0] = ("writeln", p[3])
 
+
+
+# Lista_expressao
 def p_lista_expressao_uma(p):
     "lista_expressao : expressao"
     p[0] = [p[1]]
@@ -184,6 +197,18 @@ def p_lista_expressao_varias(p):
 # -------------------------
 # EXPRESSÕES
 # -------------------------
+def p_expressao_binaria_or(p):
+    "expressao : expressao OR expressao"
+    p[0] = ('or', p[1], p[3])
+
+def p_expressao_binaria_and(p):
+    "expressao : expressao AND expressao"
+    p[0] = ('and', p[1], p[3])
+
+def p_expressao_unaria_not(p):
+    "fator : NOT fator"
+    p[0] = ('not', p[2])
+
 def p_expressao_simples(p):
     "expressao : expressao_simples"
     p[0] = p[1]
@@ -204,6 +229,10 @@ def p_expressao_simples_sub(p):
     "expressao_simples : expressao_simples '-' termo"
     p[0] = ('-', p[1], p[3])
 
+#def p_expressao_simples_lista_id(p):
+#    "expressao_simples : lista_id"
+
+
 def p_termo_fator(p):
     "termo : fator"
     p[0] = p[1]
@@ -215,6 +244,22 @@ def p_termo_mult(p):
 def p_termo_div(p):
     "termo : termo '/' fator"
     p[0] = ('/', p[1], p[3])
+
+def p_termo_div_inteira(p):
+    "termo : termo DIV fator"
+    p[0] = ('div', p[1], p[3])
+
+def p_termo_mod(p):
+    "termo : termo MOD fator"
+    p[0] = ('mod', p[1], p[3])
+
+def p_fator_unario_negativo(p):
+    "fator : '-' fator %prec UMINUS"
+    p[0] = ('neg', p[2])
+
+def p_fator_array_index(p):
+    "fator : ID '[' expressao ']'"
+    p[0] = ("array_acesso", p[1], p[3])
 
 def p_fator_numero(p):
     "fator : NUMBER"

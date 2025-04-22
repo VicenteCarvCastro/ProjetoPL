@@ -1,21 +1,14 @@
-program Maior3;
+program SomaArray;
 var
-num1, num2, num3, maior: Integer;
+numeros: array[1..5] of integer;
+i, soma: integer;
 begin
-{ Ler 3 números }
-Write('Introduza o primeiro número: ');
-ReadLn(num1);
-Write('Introduza o segundo número: ');
-ReadLn(num2);
-Write('Introduza o terceiro número: ');
-ReadLn(num3);
-{ Calcular o maior }
-if num1 > num2 then
-if num1 > num3 then maior := num1
-else maior := num3
-else
-if num2 > num3 then maior := num2
-else maior := num3;
-{ Escrever o resultado }
-WriteLn('O maior é: ', maior)
+soma := 0;
+writeln('Introduza 5 números inteiros:');
+for i := 1 to 5 do
+begin
+readln(numeros[i]);
+soma := soma + numeros[i];
+end;
+writeln('A soma dos números é: ', soma);
 end.
