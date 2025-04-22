@@ -5,6 +5,7 @@ import ply.lex as lex
 # -------------------------
 reserved = {
     'program': 'PROGRAM',
+    'function': 'FUNCTION',
     'var': 'VAR',
     'integer': 'INTEGER',
     'real': 'REAL',

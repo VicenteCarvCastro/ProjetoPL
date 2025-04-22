@@ -2,16 +2,27 @@ gramatica        → programa '.'
 
 programa         → cabecalho corpo
 
-cabecalho        → titulo declaracoes_variaveis
+cabecalho        → titulo declaracao_funcoes declaracoes_variaveis 
+
 titulo           → PROGRAM ID
+
+declaracao_funcoes -> FUNCTION funcoes 
+                    | ε
+
+funcoes -> funcao 
+         | funcao funcoes 
+
+funcao -> ID '(' declaracoes ')' ':' tipo
+
 
 declaracoes_variaveis → VAR declaracoes
                       | ε
 
 declaracoes      → declaracao
-                 | declaracao declaracoes
+                 | declaracoes ';' declaracao
 
-declaracao       → lista_id ':' tipo ';'
+declaracao       → lista_id ':' tipo 
+
 lista_id         → ID
                  | lista_id ',' ID
 

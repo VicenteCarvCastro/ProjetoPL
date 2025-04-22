@@ -29,7 +29,7 @@ def p_programa(p):
 # CABEÇALHO
 # -------------------------
 def p_cabecalho(p):
-    "cabecalho : titulo declaracoes_variaveis"
+    "cabecalho : titulo declaracao_funcoes declaracoes_variaveis"
     p[0] = ("cabecalho", p[1], p[2])
 
 def p_titulo(p):
@@ -37,9 +37,44 @@ def p_titulo(p):
     p[0] = ("titulo", p[2])
 
 # -------------------------
+# DECLARAÇÕES DE FUNÇÕES
+# -------------------------
+def p_declaracao_funcoes(p):
+    "declaracao_funcoes : FUNCTION funcoes"
+    p[0] = p[2]
+
+def p_declaracao_funcoes_vazio(p):
+    "declaracao_funcoes :"
+    p[0] = []
+
+def p_funcoes_funcao(p):
+    "funcoes : funcao"
+    p[0] = [p[1]]
+
+def p_funcoes(p):
+    "funcoes : funcao funcoes"
+    p[0] = [p[1]] + p[2]
+
+def p_funcao(p):
+    "funcao : ID '(' parametros ')' ':' tipo ';' declaracoes_variaveis corpo ';'"
+    p[0] = ("funcao", p[1], p[3], p[6], p[8], p[9])
+
+# -------------------------
+# PARÂMETROS DE FUNÇÃO
+# -------------------------
+def p_parametros_uma(p):
+    "parametros : lista_id ':' tipo"
+    p[0] = [("param", p[1], p[3])]
+
+def p_parametros_varias(p):
+    "parametros : lista_id ':' tipo ';' parametros"
+    p[0] = [("param", p[1], p[3])] + p[5]
+
+
+# -------------------------
 # DECLARAÇÕES DE VARIÁVEIS
 # -------------------------
-def p_declaracoes_variaveis_com(p):
+def p_declaracoes_variaveis(p):
     "declaracoes_variaveis : VAR declaracoes"
     p[0] = p[2]
 
