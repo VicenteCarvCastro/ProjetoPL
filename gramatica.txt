@@ -1,10 +1,10 @@
-gramatica        → programa '.'
+gramatica -> programa '.'
 
-programa         → cabecalho corpo
+programa  -> cabecalho corpo
 
-cabecalho        → titulo declaracao_funcoes declaracoes_variaveis 
+cabecalho ->  titulo declaracao_funcoes declaracoes_variaveis 
 
-titulo           → PROGRAM ID
+titulo    -> PROGRAM ID ';'
 
 declaracao_funcoes -> FUNCTION funcoes 
                     | ε
@@ -12,68 +12,84 @@ declaracao_funcoes -> FUNCTION funcoes
 funcoes -> funcao 
          | funcao funcoes 
 
-funcao -> ID '(' declaracoes ')' ':' tipo
+funcao -> ID '(' parametros ')' ':' tipo ';' bloco_funcao ';'
+
+bloco_funcao -> declaracoes_variaveis corpo
 
 
-declaracoes_variaveis → VAR declaracoes
+parametros -> lista_id ':' tipo    ( Mudar isto para usar declaracoes -> MAS NAO DA NAO SEI PORQ??)
+            | lista_id ':' tipo ';' parametros
+            | ε
+
+
+declaracoes_variaveis -> VAR declaracoes
                       | ε
 
-declaracoes      → declaracao
-                 | declaracoes ';' declaracao
+declaracoes      -> declaracao
+                 | declaracao declaracoes 
 
-declaracao       → lista_id ':' tipo 
+declaracao       -> lista_id ':' tipo ';'
 
-lista_id         → ID
+lista_id         -> ID
                  | lista_id ',' ID
 
-tipo             → INTEGER
+tipo             -> INTEGER
                  | REAL
                  | BOOLEAN
                  | CHAR
                  | ARRAY '[' NUMBER RANGE NUMBER ']' OF tipo
 
-corpo            → BEGIN lista_instrucoes END
+corpo            -> BEGIN lista_instrucoes END
 
-lista_instrucoes → instrucao
+lista_instrucoes -> instrucao
                  | lista_instrucoes ';' instrucao
 
-instrucao        → atribuicao
+instrucao        -> atribuicao
                  | leitura
                  | escrita
                  | if_statement
                  | while_statement
                  | for_statement
                  | bloco
+                 | ε ??
 
-bloco            → BEGIN lista_instrucoes END
 
-atribuicao       → ID ASSIGN expressao
+atribuicao       -> ID ASSIGN expressao
                  | ID '[' expressao ']' ASSIGN expressao
 
-leitura          → READ '(' expressao_simples ')' 
+leitura          -> READ '(' expressao_simples ')' 
                  | READLN '(' expressao_simples ')' 
 
-escrita          → WRITE '(' lista_expressao ')'
-                 | WRITELN '(' lista_expressao ')'
+escrita          -> WRITE '(' lista_expressao ')'
+                 |  WRITELN '(' lista_expressao ')'
 
-lista_id         → ID               
-                 | lista_id ',' ID
+if               -> IF expressao THEN instrucao ELSE instrucao
+                 |  IF expressao THEN instrucao
 
-lista_expressao  → expressao
+while            -> WHILE expressao DO instrucao
+
+for              -> FOR ID ASSIGN expressao TO expressao DO instrucao
+                  | FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+
+bloco            ->  BEGIN lista_instrucoes END
+
+
+
+lista_expressao  -> expressao
                  | lista_expressao ',' expressao
 
-expressao        → expressao_simples
+expressao        -> expressao_simples
                  | expressao_simples operador_relacional expressao_simples
 
-expressao_simples → termo
-                  | expressao_simples '+' termo (nao esta mal??)
+expressao_simples -> termo
+                  | expressao_simples '+' termo (NAO ESTA MAL ??)
                   | expressao_simples '-' termo
 
-termo            → fator
-                 | termo '*' fator (nao esta mal??)  ==>     termo -> fator termo2
+termo            -> fator
+                 | termo '*' fator (NAO ESTA MAL ??)  ==>     termo -> fator termo2
                  | termo '/' fator                           termo2 -> '*' termo
                                                              termo2 -> '/' termo
-fator            → NUMBER
+fator            -> NUMBER
                  | STRING_LITERAL
                  | ID                            // Nao da ASNEIRA 3 expressoes começar por ID?
                  | ID '[' expressao ']'          // Acesso a array
@@ -82,4 +98,4 @@ fator            → NUMBER
                  | FALSE
                  | '(' expressao ')'
 
-operador_relacional → '=' | '<>' | '<' | '<=' | '>' | '>='
+operador_relacional -> '=' | '<>' | '<' | '<=' | '>' | '>='
