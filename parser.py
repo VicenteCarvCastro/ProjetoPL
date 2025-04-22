@@ -86,6 +86,10 @@ def p_tipo_char(p):
     "tipo : CHAR"
     p[0] = "char"
 
+def p_tipo_string(p):
+    "tipo : STRING"
+    p[0] = "string"
+
 def p_tipo_array(p):
     "tipo : ARRAY '[' NUMBER RANGE NUMBER ']' OF tipo"
     p[0] = ("array", p[3], p[5], p[8])
@@ -284,6 +288,10 @@ def p_fator_false(p):
 def p_fator_parenteses(p):
     "fator : '(' expressao ')'"
     p[0] = p[2]
+
+def p_fator_id_parenteses(p):
+    "fator : ID '(' expressao ')'"
+    p[0] = p[3]
 
 # -------------------------
 # OPERADORES RELACIONAIS

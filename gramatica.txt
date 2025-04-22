@@ -64,8 +64,9 @@ termo            → fator
                                                              termo2 -> '/' termo
 fator            → NUMBER
                  | STRING_LITERAL
-                 | ID
+                 | ID                            // Nao da ASNEIRA 3 expressoes começar por ID?
                  | ID '[' expressao ']'          // Acesso a array
+                 | ID '(' expressao ')'          // Funcoes (ex: for i := "length(bin)")
                  | TRUE
                  | FALSE
                  | '(' expressao ')'

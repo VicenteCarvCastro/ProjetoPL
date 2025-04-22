@@ -10,6 +10,7 @@ reserved = {
     'real': 'REAL',
     'boolean': 'BOOLEAN',
     'char': 'CHAR',
+    'string': 'STRING',
     'array': 'ARRAY',
     'of': 'OF',
     'begin': 'BEGIN',
@@ -87,7 +88,7 @@ def t_RANGE(t):
     return t
 
 def t_STRING_LITERAL(t):
-    r"'[^']*'"
+    r"'[^']*'" # colocar '?' depois '*' para nao ser greedy?
     t.value = t.value[1:-1]
     return t
 
