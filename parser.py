@@ -12,6 +12,7 @@ precedence = (
     ('left', '+', '-'),
     ('left', '*', '/', 'DIV', 'MOD'),
     ('right', 'UMINUS'),
+    ('left', '(', ')', '[' ,']')  # chamadas e indexações
 )
 
 # -------------------------
@@ -25,12 +26,15 @@ def p_programa(p):
     "programa : cabecalho corpo"
     p[0] = ("programa", p[1], p[2])
 
+
+
 # -------------------------
 # CABEÇALHO
 # -------------------------
 def p_cabecalho(p):
     "cabecalho : titulo declaracao_funcoes declaracoes_variaveis"
-    p[0] = ("cabecalho", p[1], p[2])
+    p[0] = ("cabecalho", p[1], p[2], p[3])
+
 
 def p_titulo(p):
     "titulo : PROGRAM ID ';'"
@@ -56,8 +60,14 @@ def p_funcoes(p):
     p[0] = [p[1]] + p[2]
 
 def p_funcao(p):
-    "funcao : ID '(' parametros ')' ':' tipo ';' declaracoes_variaveis corpo ';'"
+    "funcao : ID '(' parametros ')' ':' tipo ';' bloco_funcao ';'"
     p[0] = ("funcao", p[1], p[3], p[6], p[8], p[9])
+
+def p_bloco_funcao(p):
+    "bloco_funcao : declaracoes_variaveis corpo"
+    p[0] = ("bloco_funcao", p[1], p[2])
+
+
 
 # -------------------------
 # PARÂMETROS DE FUNÇÃO
@@ -150,7 +160,7 @@ def p_lista_instrucoes_varias(p):
 # -------------------------
 # INSTRUÇÕES
 # -------------------------
-def p_instrucao_simples(p):
+def p_instrucao_atribuicao(p):
     "instrucao : atribuicao"
     p[0] = p[1]
 
@@ -180,11 +190,9 @@ def p_instrucao_bloco(p):
 
 def p_instrucao_vazia(p):
     "instrucao :"
-    p[0] = ("vazia",)
+    p[0] = ("vazio",)
 
-def p_bloco(p):
-    "bloco : BEGIN lista_instrucoes END"
-    p[0] = ("bloco", p[2])
+
 
 # -------------------------
 # Atribuição
@@ -222,7 +230,32 @@ def p_escrita_writeln(p):
     "escrita : WRITELN '(' lista_expressao ')'"
     p[0] = ("writeln", p[3])
 
+# -------------------------
+# IF, WHILE, FOR
+# -------------------------
+def p_if_statement_else(p):
+    "if_statement : IF expressao THEN instrucao ELSE instrucao"
+    p[0] = ("if-else", p[2], p[4], p[6])
 
+def p_if_statement(p):
+    "if_statement : IF expressao THEN instrucao"
+    p[0] = ("if", p[2], p[4])
+
+def p_while_statement(p):
+    "while_statement : WHILE expressao DO instrucao"
+    p[0] = ("while", p[2], p[4])
+
+def p_for_statement_to(p):
+    "for_statement : FOR ID ASSIGN expressao TO expressao DO instrucao"
+    p[0] = ("for-to", p[2], p[4], p[6], p[8])
+
+def p_for_statement_downto(p):
+    "for_statement : FOR ID ASSIGN expressao DOWNTO expressao DO instrucao"
+    p[0] = ("for-downto", p[2], p[4], p[6], p[8])
+
+def p_bloco(p):
+    "bloco : BEGIN lista_instrucoes END"
+    p[0] = ("bloco", p[2])
 
 # Lista_expressao
 def p_lista_expressao_uma(p):
@@ -236,25 +269,28 @@ def p_lista_expressao_varias(p):
 # -------------------------
 # EXPRESSÕES
 # -------------------------
-def p_expressao_binaria_or(p):
+# Operadores lógicos
+def p_expressao_logica_or(p):
     "expressao : expressao OR expressao"
     p[0] = ('or', p[1], p[3])
 
-def p_expressao_binaria_and(p):
+def p_expressao_logica_and(p):
     "expressao : expressao AND expressao"
     p[0] = ('and', p[1], p[3])
 
-def p_expressao_unaria_not(p):
+def p_expressao_logica_not(p):
     "fator : NOT fator"
     p[0] = ('not', p[2])
 
-def p_expressao_simples(p):
-    "expressao : expressao_simples"
-    p[0] = p[1]
-
+# Expressão relacional
 def p_expressao_relacional(p):
     "expressao : expressao_simples operador_relacional expressao_simples"
     p[0] = ("relop", p[2], p[1], p[3])
+
+# Expressão aritmética
+def p_expressao(p):
+    "expressao : expressao_simples"
+    p[0] = p[1]
 
 def p_expressao_simples_termo(p):
     "expressao_simples : termo"
@@ -268,10 +304,7 @@ def p_expressao_simples_sub(p):
     "expressao_simples : expressao_simples '-' termo"
     p[0] = ('-', p[1], p[3])
 
-#def p_expressao_simples_lista_id(p):
-#    "expressao_simples : lista_id"
-
-
+# Termos
 def p_termo_fator(p):
     "termo : fator"
     p[0] = p[1]
@@ -292,6 +325,7 @@ def p_termo_mod(p):
     "termo : termo MOD fator"
     p[0] = ('mod', p[1], p[3])
 
+# Fatores
 def p_fator_unario_negativo(p):
     "fator : '-' fator %prec UMINUS"
     p[0] = ('neg', p[2])
@@ -324,9 +358,9 @@ def p_fator_parenteses(p):
     "fator : '(' expressao ')'"
     p[0] = p[2]
 
-def p_fator_id_parenteses(p):
+def p_fator_chamada_funcao(p):
     "fator : ID '(' expressao ')'"
-    p[0] = p[3]
+    p[0] = ("call", p[1], p[3])
 
 # -------------------------
 # OPERADORES RELACIONAIS
@@ -355,28 +389,6 @@ def p_operador_relacional_maior_igual(p):
     "operador_relacional : GREATER_THAN_OR_EQUAL_TO"
     p[0] = p[1]
 
-# -------------------------
-# IF, WHILE, FOR
-# -------------------------
-def p_if_else_statement(p):
-    "if_statement : IF expressao THEN instrucao ELSE instrucao"
-    p[0] = ("if-else", p[2], p[4], p[6])
-
-def p_if_statement(p):
-    "if_statement : IF expressao THEN instrucao"
-    p[0] = ("if", p[2], p[4])
-
-def p_while_statement(p):
-    "while_statement : WHILE expressao DO instrucao"
-    p[0] = ("while", p[2], p[4])
-
-def p_for_statement_to(p):
-    "for_statement : FOR ID ASSIGN expressao TO expressao DO instrucao"
-    p[0] = ("for-to", p[2], p[4], p[6], p[8])
-
-def p_for_statement_downto(p):
-    "for_statement : FOR ID ASSIGN expressao DOWNTO expressao DO instrucao"
-    p[0] = ("for-downto", p[2], p[4], p[6], p[8])
 
 # -------------------------
 # ERROS

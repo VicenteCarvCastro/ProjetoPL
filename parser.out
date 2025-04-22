@@ -11,165 +11,167 @@ Rule 5     declaracao_funcoes -> FUNCTION funcoes
 Rule 6     declaracao_funcoes -> <empty>
 Rule 7     funcoes -> funcao
 Rule 8     funcoes -> funcao funcoes
-Rule 9     funcao -> ID ( parametros ) : tipo ; declaracoes_variaveis corpo ;
-Rule 10    parametros -> lista_id : tipo
-Rule 11    parametros -> lista_id : tipo ; parametros
-Rule 12    declaracoes_variaveis -> VAR declaracoes
-Rule 13    declaracoes_variaveis -> <empty>
-Rule 14    declaracoes -> declaracao
-Rule 15    declaracoes -> declaracao declaracoes
-Rule 16    declaracao -> lista_id : tipo ;
-Rule 17    lista_id -> ID
-Rule 18    lista_id -> lista_id , ID
-Rule 19    tipo -> INTEGER
-Rule 20    tipo -> REAL
-Rule 21    tipo -> BOOLEAN
-Rule 22    tipo -> CHAR
-Rule 23    tipo -> STRING
-Rule 24    tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF tipo
-Rule 25    corpo -> BEGIN lista_instrucoes END
-Rule 26    lista_instrucoes -> instrucao
-Rule 27    lista_instrucoes -> lista_instrucoes ; instrucao
-Rule 28    instrucao -> atribuicao
-Rule 29    instrucao -> leitura
-Rule 30    instrucao -> escrita
-Rule 31    instrucao -> if_statement
-Rule 32    instrucao -> while_statement
-Rule 33    instrucao -> for_statement
-Rule 34    instrucao -> bloco
-Rule 35    instrucao -> <empty>
-Rule 36    bloco -> BEGIN lista_instrucoes END
+Rule 9     funcao -> ID ( parametros ) : tipo ; bloco_funcao ;
+Rule 10    bloco_funcao -> declaracoes_variaveis corpo
+Rule 11    parametros -> lista_id : tipo
+Rule 12    parametros -> lista_id : tipo ; parametros
+Rule 13    declaracoes_variaveis -> VAR declaracoes
+Rule 14    declaracoes_variaveis -> <empty>
+Rule 15    declaracoes -> declaracao
+Rule 16    declaracoes -> declaracao declaracoes
+Rule 17    declaracao -> lista_id : tipo ;
+Rule 18    lista_id -> ID
+Rule 19    lista_id -> lista_id , ID
+Rule 20    tipo -> INTEGER
+Rule 21    tipo -> REAL
+Rule 22    tipo -> BOOLEAN
+Rule 23    tipo -> CHAR
+Rule 24    tipo -> STRING
+Rule 25    tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF tipo
+Rule 26    corpo -> BEGIN lista_instrucoes END
+Rule 27    lista_instrucoes -> instrucao
+Rule 28    lista_instrucoes -> lista_instrucoes ; instrucao
+Rule 29    instrucao -> atribuicao
+Rule 30    instrucao -> leitura
+Rule 31    instrucao -> escrita
+Rule 32    instrucao -> if_statement
+Rule 33    instrucao -> while_statement
+Rule 34    instrucao -> for_statement
+Rule 35    instrucao -> bloco
+Rule 36    instrucao -> <empty>
 Rule 37    atribuicao -> ID ASSIGN expressao
 Rule 38    atribuicao -> ID [ expressao ] ASSIGN expressao
 Rule 39    leitura -> READ ( expressao_simples )
 Rule 40    leitura -> READLN ( expressao_simples )
 Rule 41    escrita -> WRITE ( lista_expressao )
 Rule 42    escrita -> WRITELN ( lista_expressao )
-Rule 43    lista_expressao -> expressao
-Rule 44    lista_expressao -> lista_expressao , expressao
-Rule 45    expressao -> expressao OR expressao
-Rule 46    expressao -> expressao AND expressao
-Rule 47    fator -> NOT fator
-Rule 48    expressao -> expressao_simples
-Rule 49    expressao -> expressao_simples operador_relacional expressao_simples
-Rule 50    expressao_simples -> termo
-Rule 51    expressao_simples -> expressao_simples + termo
-Rule 52    expressao_simples -> expressao_simples - termo
-Rule 53    termo -> fator
-Rule 54    termo -> termo * fator
-Rule 55    termo -> termo / fator
-Rule 56    termo -> termo DIV fator
-Rule 57    termo -> termo MOD fator
-Rule 58    fator -> - fator
-Rule 59    fator -> ID [ expressao ]
-Rule 60    fator -> NUMBER
-Rule 61    fator -> STRING_LITERAL
-Rule 62    fator -> ID
-Rule 63    fator -> TRUE
-Rule 64    fator -> FALSE
-Rule 65    fator -> ( expressao )
-Rule 66    fator -> ID ( expressao )
-Rule 67    operador_relacional -> EQUALS
-Rule 68    operador_relacional -> NOT_EQUALS
-Rule 69    operador_relacional -> LESS_THAN
-Rule 70    operador_relacional -> LESS_THAN_OR_EQUAL_TO
-Rule 71    operador_relacional -> GREATER_THAN
-Rule 72    operador_relacional -> GREATER_THAN_OR_EQUAL_TO
-Rule 73    if_statement -> IF expressao THEN instrucao ELSE instrucao
-Rule 74    if_statement -> IF expressao THEN instrucao
-Rule 75    while_statement -> WHILE expressao DO instrucao
-Rule 76    for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao
-Rule 77    for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+Rule 43    if_statement -> IF expressao THEN instrucao ELSE instrucao
+Rule 44    if_statement -> IF expressao THEN instrucao
+Rule 45    while_statement -> WHILE expressao DO instrucao
+Rule 46    for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao
+Rule 47    for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+Rule 48    bloco -> BEGIN lista_instrucoes END
+Rule 49    lista_expressao -> expressao
+Rule 50    lista_expressao -> lista_expressao , expressao
+Rule 51    expressao -> expressao OR expressao
+Rule 52    expressao -> expressao AND expressao
+Rule 53    fator -> NOT fator
+Rule 54    expressao -> expressao_simples operador_relacional expressao_simples
+Rule 55    expressao -> expressao_simples
+Rule 56    expressao_simples -> termo
+Rule 57    expressao_simples -> expressao_simples + termo
+Rule 58    expressao_simples -> expressao_simples - termo
+Rule 59    termo -> fator
+Rule 60    termo -> termo * fator
+Rule 61    termo -> termo / fator
+Rule 62    termo -> termo DIV fator
+Rule 63    termo -> termo MOD fator
+Rule 64    fator -> - fator
+Rule 65    fator -> ID [ expressao ]
+Rule 66    fator -> NUMBER
+Rule 67    fator -> STRING_LITERAL
+Rule 68    fator -> ID
+Rule 69    fator -> TRUE
+Rule 70    fator -> FALSE
+Rule 71    fator -> ( expressao )
+Rule 72    fator -> ID ( expressao )
+Rule 73    operador_relacional -> EQUALS
+Rule 74    operador_relacional -> NOT_EQUALS
+Rule 75    operador_relacional -> LESS_THAN
+Rule 76    operador_relacional -> LESS_THAN_OR_EQUAL_TO
+Rule 77    operador_relacional -> GREATER_THAN
+Rule 78    operador_relacional -> GREATER_THAN_OR_EQUAL_TO
 
 Terminals, with rules where they appear
 
-(                    : 9 39 40 41 42 65 66
-)                    : 9 39 40 41 42 65 66
-*                    : 54
-+                    : 51
-,                    : 18 44
--                    : 52 58
+(                    : 9 39 40 41 42 71 72
+)                    : 9 39 40 41 42 71 72
+*                    : 60
++                    : 57
+,                    : 19 50
+-                    : 58 64
 .                    : 1
-/                    : 55
-:                    : 9 10 11 16
-;                    : 4 9 9 11 16 27
-AND                  : 46
-ARRAY                : 24
-ASSIGN               : 37 38 76 77
-BEGIN                : 25 36
-BOOLEAN              : 21
-CHAR                 : 22
-DIV                  : 56
-DO                   : 75 76 77
-DOWNTO               : 77
-ELSE                 : 73
-END                  : 25 36
-EQUALS               : 67
-FALSE                : 64
-FOR                  : 76 77
+/                    : 61
+:                    : 9 11 12 17
+;                    : 4 9 9 12 17 28
+AND                  : 52
+ARRAY                : 25
+ASSIGN               : 37 38 46 47
+BEGIN                : 26 48
+BOOLEAN              : 22
+CHAR                 : 23
+DIV                  : 62
+DO                   : 45 46 47
+DOWNTO               : 47
+ELSE                 : 43
+END                  : 26 48
+EQUALS               : 73
+FALSE                : 70
+FOR                  : 46 47
 FUNCTION             : 5
-GREATER_THAN         : 71
-GREATER_THAN_OR_EQUAL_TO : 72
-ID                   : 4 9 17 18 37 38 59 62 66 76 77
-IF                   : 73 74
-INTEGER              : 19
-LESS_THAN            : 69
-LESS_THAN_OR_EQUAL_TO : 70
-MOD                  : 57
-NOT                  : 47
-NOT_EQUALS           : 68
-NUMBER               : 24 24 60
-OF                   : 24
-OR                   : 45
+GREATER_THAN         : 77
+GREATER_THAN_OR_EQUAL_TO : 78
+ID                   : 4 9 18 19 37 38 46 47 65 68 72
+IF                   : 43 44
+INTEGER              : 20
+LESS_THAN            : 75
+LESS_THAN_OR_EQUAL_TO : 76
+MOD                  : 63
+NOT                  : 53
+NOT_EQUALS           : 74
+NUMBER               : 25 25 66
+OF                   : 25
+OR                   : 51
 PROGRAM              : 4
-RANGE                : 24
+RANGE                : 25
 READ                 : 39
 READLN               : 40
-REAL                 : 20
-STRING               : 23
-STRING_LITERAL       : 61
-THEN                 : 73 74
-TO                   : 76
-TRUE                 : 63
-VAR                  : 12
-WHILE                : 75
+REAL                 : 21
+STRING               : 24
+STRING_LITERAL       : 67
+THEN                 : 43 44
+TO                   : 46
+TRUE                 : 69
+VAR                  : 13
+WHILE                : 45
 WRITE                : 41
 WRITELN              : 42
-[                    : 24 38 59
-]                    : 24 38 59
+[                    : 25 38 65
+]                    : 25 38 65
 error                : 
 
 Nonterminals, with rules where they appear
 
-atribuicao           : 28
-bloco                : 34
+atribuicao           : 29
+bloco                : 35
+bloco_funcao         : 9
 cabecalho            : 2
-corpo                : 2 9
-declaracao           : 14 15
+corpo                : 2 10
+declaracao           : 15 16
 declaracao_funcoes   : 3
-declaracoes          : 12 15
-declaracoes_variaveis : 3 9
-escrita              : 30
-expressao            : 37 38 38 43 44 45 45 46 46 59 65 66 73 74 75 76 76 77 77
-expressao_simples    : 39 40 48 49 49 51 52
-fator                : 47 53 54 55 56 57 58
-for_statement        : 33
+declaracoes          : 13 16
+declaracoes_variaveis : 3 10
+escrita              : 31
+expressao            : 37 38 38 43 44 45 46 46 47 47 49 50 51 51 52 52 65 71 72
+expressao_simples    : 39 40 54 54 55 57 58
+fator                : 53 59 60 61 62 63 64
+for_statement        : 34
 funcao               : 7 8
 funcoes              : 5 8
 gramatica            : 0
-if_statement         : 31
-instrucao            : 26 27 73 73 74 75 76 77
-leitura              : 29
-lista_expressao      : 41 42 44
-lista_id             : 10 11 16 18
-lista_instrucoes     : 25 27 36
-operador_relacional  : 49
-parametros           : 9 11
+if_statement         : 32
+instrucao            : 27 28 43 43 44 45 46 47
+leitura              : 30
+lista_expressao      : 41 42 50
+lista_id             : 11 12 17 19
+lista_instrucoes     : 26 28 48
+operador_relacional  : 54
+parametros           : 9 12
 programa             : 1
-termo                : 50 51 52 54 55 56 57
-tipo                 : 9 10 11 16 24
+termo                : 56 57 58 60 61 62 63
+tipo                 : 9 11 12 17 25
 titulo               : 3
-while_statement      : 32
+while_statement      : 33
 
 Parsing method: LALR
 
@@ -204,7 +206,7 @@ state 2
 state 3
 
     (2) programa -> cabecalho . corpo
-    (25) corpo -> . BEGIN lista_instrucoes END
+    (26) corpo -> . BEGIN lista_instrucoes END
 
     BEGIN           shift and go to state 8
 
@@ -245,32 +247,32 @@ state 7
 
 state 8
 
-    (25) corpo -> BEGIN . lista_instrucoes END
-    (26) lista_instrucoes -> . instrucao
-    (27) lista_instrucoes -> . lista_instrucoes ; instrucao
-    (28) instrucao -> . atribuicao
-    (29) instrucao -> . leitura
-    (30) instrucao -> . escrita
-    (31) instrucao -> . if_statement
-    (32) instrucao -> . while_statement
-    (33) instrucao -> . for_statement
-    (34) instrucao -> . bloco
-    (35) instrucao -> .
+    (26) corpo -> BEGIN . lista_instrucoes END
+    (27) lista_instrucoes -> . instrucao
+    (28) lista_instrucoes -> . lista_instrucoes ; instrucao
+    (29) instrucao -> . atribuicao
+    (30) instrucao -> . leitura
+    (31) instrucao -> . escrita
+    (32) instrucao -> . if_statement
+    (33) instrucao -> . while_statement
+    (34) instrucao -> . for_statement
+    (35) instrucao -> . bloco
+    (36) instrucao -> .
     (37) atribuicao -> . ID ASSIGN expressao
     (38) atribuicao -> . ID [ expressao ] ASSIGN expressao
     (39) leitura -> . READ ( expressao_simples )
     (40) leitura -> . READLN ( expressao_simples )
     (41) escrita -> . WRITE ( lista_expressao )
     (42) escrita -> . WRITELN ( lista_expressao )
-    (73) if_statement -> . IF expressao THEN instrucao ELSE instrucao
-    (74) if_statement -> . IF expressao THEN instrucao
-    (75) while_statement -> . WHILE expressao DO instrucao
-    (76) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
-    (36) bloco -> . BEGIN lista_instrucoes END
+    (43) if_statement -> . IF expressao THEN instrucao ELSE instrucao
+    (44) if_statement -> . IF expressao THEN instrucao
+    (45) while_statement -> . WHILE expressao DO instrucao
+    (46) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+    (48) bloco -> . BEGIN lista_instrucoes END
 
-    END             reduce using rule 35 (instrucao -> .)
-    ;               reduce using rule 35 (instrucao -> .)
+    END             reduce using rule 36 (instrucao -> .)
+    ;               reduce using rule 36 (instrucao -> .)
     ID              shift and go to state 22
     READ            shift and go to state 23
     READLN          shift and go to state 24
@@ -294,11 +296,11 @@ state 8
 state 9
 
     (3) cabecalho -> titulo declaracao_funcoes . declaracoes_variaveis
-    (12) declaracoes_variaveis -> . VAR declaracoes
-    (13) declaracoes_variaveis -> .
+    (13) declaracoes_variaveis -> . VAR declaracoes
+    (14) declaracoes_variaveis -> .
 
     VAR             shift and go to state 31
-    BEGIN           reduce using rule 13 (declaracoes_variaveis -> .)
+    BEGIN           reduce using rule 14 (declaracoes_variaveis -> .)
 
     declaracoes_variaveis          shift and go to state 30
 
@@ -307,7 +309,7 @@ state 10
     (5) declaracao_funcoes -> FUNCTION . funcoes
     (7) funcoes -> . funcao
     (8) funcoes -> . funcao funcoes
-    (9) funcao -> . ID ( parametros ) : tipo ; declaracoes_variaveis corpo ;
+    (9) funcao -> . ID ( parametros ) : tipo ; bloco_funcao ;
 
     ID              shift and go to state 34
 
@@ -323,32 +325,32 @@ state 11
 
 state 12
 
-    (36) bloco -> BEGIN . lista_instrucoes END
-    (26) lista_instrucoes -> . instrucao
-    (27) lista_instrucoes -> . lista_instrucoes ; instrucao
-    (28) instrucao -> . atribuicao
-    (29) instrucao -> . leitura
-    (30) instrucao -> . escrita
-    (31) instrucao -> . if_statement
-    (32) instrucao -> . while_statement
-    (33) instrucao -> . for_statement
-    (34) instrucao -> . bloco
-    (35) instrucao -> .
+    (48) bloco -> BEGIN . lista_instrucoes END
+    (27) lista_instrucoes -> . instrucao
+    (28) lista_instrucoes -> . lista_instrucoes ; instrucao
+    (29) instrucao -> . atribuicao
+    (30) instrucao -> . leitura
+    (31) instrucao -> . escrita
+    (32) instrucao -> . if_statement
+    (33) instrucao -> . while_statement
+    (34) instrucao -> . for_statement
+    (35) instrucao -> . bloco
+    (36) instrucao -> .
     (37) atribuicao -> . ID ASSIGN expressao
     (38) atribuicao -> . ID [ expressao ] ASSIGN expressao
     (39) leitura -> . READ ( expressao_simples )
     (40) leitura -> . READLN ( expressao_simples )
     (41) escrita -> . WRITE ( lista_expressao )
     (42) escrita -> . WRITELN ( lista_expressao )
-    (73) if_statement -> . IF expressao THEN instrucao ELSE instrucao
-    (74) if_statement -> . IF expressao THEN instrucao
-    (75) while_statement -> . WHILE expressao DO instrucao
-    (76) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
-    (36) bloco -> . BEGIN lista_instrucoes END
+    (43) if_statement -> . IF expressao THEN instrucao ELSE instrucao
+    (44) if_statement -> . IF expressao THEN instrucao
+    (45) while_statement -> . WHILE expressao DO instrucao
+    (46) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+    (48) bloco -> . BEGIN lista_instrucoes END
 
-    END             reduce using rule 35 (instrucao -> .)
-    ;               reduce using rule 35 (instrucao -> .)
+    END             reduce using rule 36 (instrucao -> .)
+    ;               reduce using rule 36 (instrucao -> .)
     ID              shift and go to state 22
     READ            shift and go to state 23
     READLN          shift and go to state 24
@@ -371,8 +373,8 @@ state 12
 
 state 13
 
-    (25) corpo -> BEGIN lista_instrucoes . END
-    (27) lista_instrucoes -> lista_instrucoes . ; instrucao
+    (26) corpo -> BEGIN lista_instrucoes . END
+    (28) lista_instrucoes -> lista_instrucoes . ; instrucao
 
     END             shift and go to state 37
     ;               shift and go to state 38
@@ -380,73 +382,73 @@ state 13
 
 state 14
 
-    (26) lista_instrucoes -> instrucao .
+    (27) lista_instrucoes -> instrucao .
 
-    END             reduce using rule 26 (lista_instrucoes -> instrucao .)
-    ;               reduce using rule 26 (lista_instrucoes -> instrucao .)
+    END             reduce using rule 27 (lista_instrucoes -> instrucao .)
+    ;               reduce using rule 27 (lista_instrucoes -> instrucao .)
 
 
 state 15
 
-    (28) instrucao -> atribuicao .
+    (29) instrucao -> atribuicao .
 
-    END             reduce using rule 28 (instrucao -> atribuicao .)
-    ;               reduce using rule 28 (instrucao -> atribuicao .)
-    ELSE            reduce using rule 28 (instrucao -> atribuicao .)
+    END             reduce using rule 29 (instrucao -> atribuicao .)
+    ;               reduce using rule 29 (instrucao -> atribuicao .)
+    ELSE            reduce using rule 29 (instrucao -> atribuicao .)
 
 
 state 16
 
-    (29) instrucao -> leitura .
+    (30) instrucao -> leitura .
 
-    END             reduce using rule 29 (instrucao -> leitura .)
-    ;               reduce using rule 29 (instrucao -> leitura .)
-    ELSE            reduce using rule 29 (instrucao -> leitura .)
+    END             reduce using rule 30 (instrucao -> leitura .)
+    ;               reduce using rule 30 (instrucao -> leitura .)
+    ELSE            reduce using rule 30 (instrucao -> leitura .)
 
 
 state 17
 
-    (30) instrucao -> escrita .
+    (31) instrucao -> escrita .
 
-    END             reduce using rule 30 (instrucao -> escrita .)
-    ;               reduce using rule 30 (instrucao -> escrita .)
-    ELSE            reduce using rule 30 (instrucao -> escrita .)
+    END             reduce using rule 31 (instrucao -> escrita .)
+    ;               reduce using rule 31 (instrucao -> escrita .)
+    ELSE            reduce using rule 31 (instrucao -> escrita .)
 
 
 state 18
 
-    (31) instrucao -> if_statement .
+    (32) instrucao -> if_statement .
 
-    END             reduce using rule 31 (instrucao -> if_statement .)
-    ;               reduce using rule 31 (instrucao -> if_statement .)
-    ELSE            reduce using rule 31 (instrucao -> if_statement .)
+    END             reduce using rule 32 (instrucao -> if_statement .)
+    ;               reduce using rule 32 (instrucao -> if_statement .)
+    ELSE            reduce using rule 32 (instrucao -> if_statement .)
 
 
 state 19
 
-    (32) instrucao -> while_statement .
+    (33) instrucao -> while_statement .
 
-    END             reduce using rule 32 (instrucao -> while_statement .)
-    ;               reduce using rule 32 (instrucao -> while_statement .)
-    ELSE            reduce using rule 32 (instrucao -> while_statement .)
+    END             reduce using rule 33 (instrucao -> while_statement .)
+    ;               reduce using rule 33 (instrucao -> while_statement .)
+    ELSE            reduce using rule 33 (instrucao -> while_statement .)
 
 
 state 20
 
-    (33) instrucao -> for_statement .
+    (34) instrucao -> for_statement .
 
-    END             reduce using rule 33 (instrucao -> for_statement .)
-    ;               reduce using rule 33 (instrucao -> for_statement .)
-    ELSE            reduce using rule 33 (instrucao -> for_statement .)
+    END             reduce using rule 34 (instrucao -> for_statement .)
+    ;               reduce using rule 34 (instrucao -> for_statement .)
+    ELSE            reduce using rule 34 (instrucao -> for_statement .)
 
 
 state 21
 
-    (34) instrucao -> bloco .
+    (35) instrucao -> bloco .
 
-    END             reduce using rule 34 (instrucao -> bloco .)
-    ;               reduce using rule 34 (instrucao -> bloco .)
-    ELSE            reduce using rule 34 (instrucao -> bloco .)
+    END             reduce using rule 35 (instrucao -> bloco .)
+    ;               reduce using rule 35 (instrucao -> bloco .)
+    ELSE            reduce using rule 35 (instrucao -> bloco .)
 
 
 state 22
@@ -488,30 +490,30 @@ state 26
 
 state 27
 
-    (73) if_statement -> IF . expressao THEN instrucao ELSE instrucao
-    (74) if_statement -> IF . expressao THEN instrucao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (43) if_statement -> IF . expressao THEN instrucao ELSE instrucao
+    (44) if_statement -> IF . expressao THEN instrucao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -529,29 +531,29 @@ state 27
 
 state 28
 
-    (75) while_statement -> WHILE . expressao DO instrucao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (45) while_statement -> WHILE . expressao DO instrucao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -569,8 +571,8 @@ state 28
 
 state 29
 
-    (76) for_statement -> FOR . ID ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> FOR . ID ASSIGN expressao DOWNTO expressao DO instrucao
+    (46) for_statement -> FOR . ID ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> FOR . ID ASSIGN expressao DOWNTO expressao DO instrucao
 
     ID              shift and go to state 58
 
@@ -584,12 +586,12 @@ state 30
 
 state 31
 
-    (12) declaracoes_variaveis -> VAR . declaracoes
-    (14) declaracoes -> . declaracao
-    (15) declaracoes -> . declaracao declaracoes
-    (16) declaracao -> . lista_id : tipo ;
-    (17) lista_id -> . ID
-    (18) lista_id -> . lista_id , ID
+    (13) declaracoes_variaveis -> VAR . declaracoes
+    (15) declaracoes -> . declaracao
+    (16) declaracoes -> . declaracao declaracoes
+    (17) declaracao -> . lista_id : tipo ;
+    (18) lista_id -> . ID
+    (19) lista_id -> . lista_id , ID
 
     ID              shift and go to state 62
 
@@ -611,7 +613,7 @@ state 33
     (8) funcoes -> funcao . funcoes
     (7) funcoes -> . funcao
     (8) funcoes -> . funcao funcoes
-    (9) funcao -> . ID ( parametros ) : tipo ; declaracoes_variaveis corpo ;
+    (9) funcao -> . ID ( parametros ) : tipo ; bloco_funcao ;
 
     VAR             reduce using rule 7 (funcoes -> funcao .)
     BEGIN           reduce using rule 7 (funcoes -> funcao .)
@@ -622,7 +624,7 @@ state 33
 
 state 34
 
-    (9) funcao -> ID . ( parametros ) : tipo ; declaracoes_variaveis corpo ;
+    (9) funcao -> ID . ( parametros ) : tipo ; bloco_funcao ;
 
     (               shift and go to state 64
 
@@ -638,8 +640,8 @@ state 35
 
 state 36
 
-    (36) bloco -> BEGIN lista_instrucoes . END
-    (27) lista_instrucoes -> lista_instrucoes . ; instrucao
+    (48) bloco -> BEGIN lista_instrucoes . END
+    (28) lista_instrucoes -> lista_instrucoes . ; instrucao
 
     END             shift and go to state 65
     ;               shift and go to state 38
@@ -647,38 +649,38 @@ state 36
 
 state 37
 
-    (25) corpo -> BEGIN lista_instrucoes END .
+    (26) corpo -> BEGIN lista_instrucoes END .
 
-    .               reduce using rule 25 (corpo -> BEGIN lista_instrucoes END .)
-    ;               reduce using rule 25 (corpo -> BEGIN lista_instrucoes END .)
+    .               reduce using rule 26 (corpo -> BEGIN lista_instrucoes END .)
+    ;               reduce using rule 26 (corpo -> BEGIN lista_instrucoes END .)
 
 
 state 38
 
-    (27) lista_instrucoes -> lista_instrucoes ; . instrucao
-    (28) instrucao -> . atribuicao
-    (29) instrucao -> . leitura
-    (30) instrucao -> . escrita
-    (31) instrucao -> . if_statement
-    (32) instrucao -> . while_statement
-    (33) instrucao -> . for_statement
-    (34) instrucao -> . bloco
-    (35) instrucao -> .
+    (28) lista_instrucoes -> lista_instrucoes ; . instrucao
+    (29) instrucao -> . atribuicao
+    (30) instrucao -> . leitura
+    (31) instrucao -> . escrita
+    (32) instrucao -> . if_statement
+    (33) instrucao -> . while_statement
+    (34) instrucao -> . for_statement
+    (35) instrucao -> . bloco
+    (36) instrucao -> .
     (37) atribuicao -> . ID ASSIGN expressao
     (38) atribuicao -> . ID [ expressao ] ASSIGN expressao
     (39) leitura -> . READ ( expressao_simples )
     (40) leitura -> . READLN ( expressao_simples )
     (41) escrita -> . WRITE ( lista_expressao )
     (42) escrita -> . WRITELN ( lista_expressao )
-    (73) if_statement -> . IF expressao THEN instrucao ELSE instrucao
-    (74) if_statement -> . IF expressao THEN instrucao
-    (75) while_statement -> . WHILE expressao DO instrucao
-    (76) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
-    (36) bloco -> . BEGIN lista_instrucoes END
+    (43) if_statement -> . IF expressao THEN instrucao ELSE instrucao
+    (44) if_statement -> . IF expressao THEN instrucao
+    (45) while_statement -> . WHILE expressao DO instrucao
+    (46) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+    (48) bloco -> . BEGIN lista_instrucoes END
 
-    END             reduce using rule 35 (instrucao -> .)
-    ;               reduce using rule 35 (instrucao -> .)
+    END             reduce using rule 36 (instrucao -> .)
+    ;               reduce using rule 36 (instrucao -> .)
     ID              shift and go to state 22
     READ            shift and go to state 23
     READLN          shift and go to state 24
@@ -701,28 +703,28 @@ state 38
 state 39
 
     (37) atribuicao -> ID ASSIGN . expressao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -741,28 +743,28 @@ state 39
 state 40
 
     (38) atribuicao -> ID [ . expressao ] ASSIGN expressao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -781,24 +783,24 @@ state 40
 state 41
 
     (39) leitura -> READ ( . expressao_simples )
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -816,24 +818,24 @@ state 41
 state 42
 
     (40) leitura -> READLN ( . expressao_simples )
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -851,30 +853,30 @@ state 42
 state 43
 
     (41) escrita -> WRITE ( . lista_expressao )
-    (43) lista_expressao -> . expressao
-    (44) lista_expressao -> . lista_expressao , expressao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (49) lista_expressao -> . expressao
+    (50) lista_expressao -> . lista_expressao , expressao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -894,30 +896,30 @@ state 43
 state 44
 
     (42) escrita -> WRITELN ( . lista_expressao )
-    (43) lista_expressao -> . expressao
-    (44) lista_expressao -> . lista_expressao , expressao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (49) lista_expressao -> . expressao
+    (50) lista_expressao -> . lista_expressao , expressao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -936,10 +938,10 @@ state 44
 
 state 45
 
-    (73) if_statement -> IF expressao . THEN instrucao ELSE instrucao
-    (74) if_statement -> IF expressao . THEN instrucao
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (43) if_statement -> IF expressao . THEN instrucao ELSE instrucao
+    (44) if_statement -> IF expressao . THEN instrucao
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     THEN            shift and go to state 74
     OR              shift and go to state 75
@@ -948,29 +950,29 @@ state 45
 
 state 46
 
-    (48) expressao -> expressao_simples .
-    (49) expressao -> expressao_simples . operador_relacional expressao_simples
-    (51) expressao_simples -> expressao_simples . + termo
-    (52) expressao_simples -> expressao_simples . - termo
-    (67) operador_relacional -> . EQUALS
-    (68) operador_relacional -> . NOT_EQUALS
-    (69) operador_relacional -> . LESS_THAN
-    (70) operador_relacional -> . LESS_THAN_OR_EQUAL_TO
-    (71) operador_relacional -> . GREATER_THAN
-    (72) operador_relacional -> . GREATER_THAN_OR_EQUAL_TO
+    (54) expressao -> expressao_simples . operador_relacional expressao_simples
+    (55) expressao -> expressao_simples .
+    (57) expressao_simples -> expressao_simples . + termo
+    (58) expressao_simples -> expressao_simples . - termo
+    (73) operador_relacional -> . EQUALS
+    (74) operador_relacional -> . NOT_EQUALS
+    (75) operador_relacional -> . LESS_THAN
+    (76) operador_relacional -> . LESS_THAN_OR_EQUAL_TO
+    (77) operador_relacional -> . GREATER_THAN
+    (78) operador_relacional -> . GREATER_THAN_OR_EQUAL_TO
 
-    THEN            reduce using rule 48 (expressao -> expressao_simples .)
-    OR              reduce using rule 48 (expressao -> expressao_simples .)
-    AND             reduce using rule 48 (expressao -> expressao_simples .)
-    DO              reduce using rule 48 (expressao -> expressao_simples .)
-    END             reduce using rule 48 (expressao -> expressao_simples .)
-    ;               reduce using rule 48 (expressao -> expressao_simples .)
-    ELSE            reduce using rule 48 (expressao -> expressao_simples .)
-    ]               reduce using rule 48 (expressao -> expressao_simples .)
-    )               reduce using rule 48 (expressao -> expressao_simples .)
-    ,               reduce using rule 48 (expressao -> expressao_simples .)
-    TO              reduce using rule 48 (expressao -> expressao_simples .)
-    DOWNTO          reduce using rule 48 (expressao -> expressao_simples .)
+    THEN            reduce using rule 55 (expressao -> expressao_simples .)
+    OR              reduce using rule 55 (expressao -> expressao_simples .)
+    AND             reduce using rule 55 (expressao -> expressao_simples .)
+    DO              reduce using rule 55 (expressao -> expressao_simples .)
+    END             reduce using rule 55 (expressao -> expressao_simples .)
+    ;               reduce using rule 55 (expressao -> expressao_simples .)
+    ELSE            reduce using rule 55 (expressao -> expressao_simples .)
+    ]               reduce using rule 55 (expressao -> expressao_simples .)
+    )               reduce using rule 55 (expressao -> expressao_simples .)
+    ,               reduce using rule 55 (expressao -> expressao_simples .)
+    TO              reduce using rule 55 (expressao -> expressao_simples .)
+    DOWNTO          reduce using rule 55 (expressao -> expressao_simples .)
     +               shift and go to state 78
     -               shift and go to state 79
     EQUALS          shift and go to state 80
@@ -984,32 +986,32 @@ state 46
 
 state 47
 
-    (50) expressao_simples -> termo .
-    (54) termo -> termo . * fator
-    (55) termo -> termo . / fator
-    (56) termo -> termo . DIV fator
-    (57) termo -> termo . MOD fator
+    (56) expressao_simples -> termo .
+    (60) termo -> termo . * fator
+    (61) termo -> termo . / fator
+    (62) termo -> termo . DIV fator
+    (63) termo -> termo . MOD fator
 
-    +               reduce using rule 50 (expressao_simples -> termo .)
-    -               reduce using rule 50 (expressao_simples -> termo .)
-    EQUALS          reduce using rule 50 (expressao_simples -> termo .)
-    NOT_EQUALS      reduce using rule 50 (expressao_simples -> termo .)
-    LESS_THAN       reduce using rule 50 (expressao_simples -> termo .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 50 (expressao_simples -> termo .)
-    GREATER_THAN    reduce using rule 50 (expressao_simples -> termo .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 50 (expressao_simples -> termo .)
-    THEN            reduce using rule 50 (expressao_simples -> termo .)
-    OR              reduce using rule 50 (expressao_simples -> termo .)
-    AND             reduce using rule 50 (expressao_simples -> termo .)
-    DO              reduce using rule 50 (expressao_simples -> termo .)
-    END             reduce using rule 50 (expressao_simples -> termo .)
-    ;               reduce using rule 50 (expressao_simples -> termo .)
-    ELSE            reduce using rule 50 (expressao_simples -> termo .)
-    ]               reduce using rule 50 (expressao_simples -> termo .)
-    )               reduce using rule 50 (expressao_simples -> termo .)
-    ,               reduce using rule 50 (expressao_simples -> termo .)
-    TO              reduce using rule 50 (expressao_simples -> termo .)
-    DOWNTO          reduce using rule 50 (expressao_simples -> termo .)
+    +               reduce using rule 56 (expressao_simples -> termo .)
+    -               reduce using rule 56 (expressao_simples -> termo .)
+    EQUALS          reduce using rule 56 (expressao_simples -> termo .)
+    NOT_EQUALS      reduce using rule 56 (expressao_simples -> termo .)
+    LESS_THAN       reduce using rule 56 (expressao_simples -> termo .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 56 (expressao_simples -> termo .)
+    GREATER_THAN    reduce using rule 56 (expressao_simples -> termo .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 56 (expressao_simples -> termo .)
+    THEN            reduce using rule 56 (expressao_simples -> termo .)
+    OR              reduce using rule 56 (expressao_simples -> termo .)
+    AND             reduce using rule 56 (expressao_simples -> termo .)
+    DO              reduce using rule 56 (expressao_simples -> termo .)
+    END             reduce using rule 56 (expressao_simples -> termo .)
+    ;               reduce using rule 56 (expressao_simples -> termo .)
+    ELSE            reduce using rule 56 (expressao_simples -> termo .)
+    ]               reduce using rule 56 (expressao_simples -> termo .)
+    )               reduce using rule 56 (expressao_simples -> termo .)
+    ,               reduce using rule 56 (expressao_simples -> termo .)
+    TO              reduce using rule 56 (expressao_simples -> termo .)
+    DOWNTO          reduce using rule 56 (expressao_simples -> termo .)
     *               shift and go to state 86
     /               shift and go to state 87
     DIV             shift and go to state 88
@@ -1018,17 +1020,17 @@ state 47
 
 state 48
 
-    (58) fator -> - . fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (64) fator -> - . fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1043,47 +1045,47 @@ state 48
 
 state 49
 
-    (53) termo -> fator .
+    (59) termo -> fator .
 
-    *               reduce using rule 53 (termo -> fator .)
-    /               reduce using rule 53 (termo -> fator .)
-    DIV             reduce using rule 53 (termo -> fator .)
-    MOD             reduce using rule 53 (termo -> fator .)
-    +               reduce using rule 53 (termo -> fator .)
-    -               reduce using rule 53 (termo -> fator .)
-    EQUALS          reduce using rule 53 (termo -> fator .)
-    NOT_EQUALS      reduce using rule 53 (termo -> fator .)
-    LESS_THAN       reduce using rule 53 (termo -> fator .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 53 (termo -> fator .)
-    GREATER_THAN    reduce using rule 53 (termo -> fator .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 53 (termo -> fator .)
-    THEN            reduce using rule 53 (termo -> fator .)
-    OR              reduce using rule 53 (termo -> fator .)
-    AND             reduce using rule 53 (termo -> fator .)
-    DO              reduce using rule 53 (termo -> fator .)
-    END             reduce using rule 53 (termo -> fator .)
-    ;               reduce using rule 53 (termo -> fator .)
-    ELSE            reduce using rule 53 (termo -> fator .)
-    ]               reduce using rule 53 (termo -> fator .)
-    )               reduce using rule 53 (termo -> fator .)
-    ,               reduce using rule 53 (termo -> fator .)
-    TO              reduce using rule 53 (termo -> fator .)
-    DOWNTO          reduce using rule 53 (termo -> fator .)
+    *               reduce using rule 59 (termo -> fator .)
+    /               reduce using rule 59 (termo -> fator .)
+    DIV             reduce using rule 59 (termo -> fator .)
+    MOD             reduce using rule 59 (termo -> fator .)
+    +               reduce using rule 59 (termo -> fator .)
+    -               reduce using rule 59 (termo -> fator .)
+    EQUALS          reduce using rule 59 (termo -> fator .)
+    NOT_EQUALS      reduce using rule 59 (termo -> fator .)
+    LESS_THAN       reduce using rule 59 (termo -> fator .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 59 (termo -> fator .)
+    GREATER_THAN    reduce using rule 59 (termo -> fator .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 59 (termo -> fator .)
+    THEN            reduce using rule 59 (termo -> fator .)
+    OR              reduce using rule 59 (termo -> fator .)
+    AND             reduce using rule 59 (termo -> fator .)
+    DO              reduce using rule 59 (termo -> fator .)
+    END             reduce using rule 59 (termo -> fator .)
+    ;               reduce using rule 59 (termo -> fator .)
+    ELSE            reduce using rule 59 (termo -> fator .)
+    ]               reduce using rule 59 (termo -> fator .)
+    )               reduce using rule 59 (termo -> fator .)
+    ,               reduce using rule 59 (termo -> fator .)
+    TO              reduce using rule 59 (termo -> fator .)
+    DOWNTO          reduce using rule 59 (termo -> fator .)
 
 
 state 50
 
-    (47) fator -> NOT . fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (53) fator -> NOT . fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1098,183 +1100,183 @@ state 50
 
 state 51
 
-    (59) fator -> ID . [ expressao ]
-    (62) fator -> ID .
-    (66) fator -> ID . ( expressao )
+    (65) fator -> ID . [ expressao ]
+    (68) fator -> ID .
+    (72) fator -> ID . ( expressao )
 
     [               shift and go to state 92
-    *               reduce using rule 62 (fator -> ID .)
-    /               reduce using rule 62 (fator -> ID .)
-    DIV             reduce using rule 62 (fator -> ID .)
-    MOD             reduce using rule 62 (fator -> ID .)
-    +               reduce using rule 62 (fator -> ID .)
-    -               reduce using rule 62 (fator -> ID .)
-    EQUALS          reduce using rule 62 (fator -> ID .)
-    NOT_EQUALS      reduce using rule 62 (fator -> ID .)
-    LESS_THAN       reduce using rule 62 (fator -> ID .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 62 (fator -> ID .)
-    GREATER_THAN    reduce using rule 62 (fator -> ID .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 62 (fator -> ID .)
-    THEN            reduce using rule 62 (fator -> ID .)
-    OR              reduce using rule 62 (fator -> ID .)
-    AND             reduce using rule 62 (fator -> ID .)
-    DO              reduce using rule 62 (fator -> ID .)
-    END             reduce using rule 62 (fator -> ID .)
-    ;               reduce using rule 62 (fator -> ID .)
-    ELSE            reduce using rule 62 (fator -> ID .)
-    ]               reduce using rule 62 (fator -> ID .)
-    )               reduce using rule 62 (fator -> ID .)
-    ,               reduce using rule 62 (fator -> ID .)
-    TO              reduce using rule 62 (fator -> ID .)
-    DOWNTO          reduce using rule 62 (fator -> ID .)
+    *               reduce using rule 68 (fator -> ID .)
+    /               reduce using rule 68 (fator -> ID .)
+    DIV             reduce using rule 68 (fator -> ID .)
+    MOD             reduce using rule 68 (fator -> ID .)
+    +               reduce using rule 68 (fator -> ID .)
+    -               reduce using rule 68 (fator -> ID .)
+    EQUALS          reduce using rule 68 (fator -> ID .)
+    NOT_EQUALS      reduce using rule 68 (fator -> ID .)
+    LESS_THAN       reduce using rule 68 (fator -> ID .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 68 (fator -> ID .)
+    GREATER_THAN    reduce using rule 68 (fator -> ID .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 68 (fator -> ID .)
+    THEN            reduce using rule 68 (fator -> ID .)
+    OR              reduce using rule 68 (fator -> ID .)
+    AND             reduce using rule 68 (fator -> ID .)
+    DO              reduce using rule 68 (fator -> ID .)
+    END             reduce using rule 68 (fator -> ID .)
+    ;               reduce using rule 68 (fator -> ID .)
+    ELSE            reduce using rule 68 (fator -> ID .)
+    ]               reduce using rule 68 (fator -> ID .)
+    )               reduce using rule 68 (fator -> ID .)
+    ,               reduce using rule 68 (fator -> ID .)
+    TO              reduce using rule 68 (fator -> ID .)
+    DOWNTO          reduce using rule 68 (fator -> ID .)
     (               shift and go to state 93
 
 
 state 52
 
-    (60) fator -> NUMBER .
+    (66) fator -> NUMBER .
 
-    *               reduce using rule 60 (fator -> NUMBER .)
-    /               reduce using rule 60 (fator -> NUMBER .)
-    DIV             reduce using rule 60 (fator -> NUMBER .)
-    MOD             reduce using rule 60 (fator -> NUMBER .)
-    +               reduce using rule 60 (fator -> NUMBER .)
-    -               reduce using rule 60 (fator -> NUMBER .)
-    EQUALS          reduce using rule 60 (fator -> NUMBER .)
-    NOT_EQUALS      reduce using rule 60 (fator -> NUMBER .)
-    LESS_THAN       reduce using rule 60 (fator -> NUMBER .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 60 (fator -> NUMBER .)
-    GREATER_THAN    reduce using rule 60 (fator -> NUMBER .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 60 (fator -> NUMBER .)
-    THEN            reduce using rule 60 (fator -> NUMBER .)
-    OR              reduce using rule 60 (fator -> NUMBER .)
-    AND             reduce using rule 60 (fator -> NUMBER .)
-    DO              reduce using rule 60 (fator -> NUMBER .)
-    END             reduce using rule 60 (fator -> NUMBER .)
-    ;               reduce using rule 60 (fator -> NUMBER .)
-    ELSE            reduce using rule 60 (fator -> NUMBER .)
-    ]               reduce using rule 60 (fator -> NUMBER .)
-    )               reduce using rule 60 (fator -> NUMBER .)
-    ,               reduce using rule 60 (fator -> NUMBER .)
-    TO              reduce using rule 60 (fator -> NUMBER .)
-    DOWNTO          reduce using rule 60 (fator -> NUMBER .)
+    *               reduce using rule 66 (fator -> NUMBER .)
+    /               reduce using rule 66 (fator -> NUMBER .)
+    DIV             reduce using rule 66 (fator -> NUMBER .)
+    MOD             reduce using rule 66 (fator -> NUMBER .)
+    +               reduce using rule 66 (fator -> NUMBER .)
+    -               reduce using rule 66 (fator -> NUMBER .)
+    EQUALS          reduce using rule 66 (fator -> NUMBER .)
+    NOT_EQUALS      reduce using rule 66 (fator -> NUMBER .)
+    LESS_THAN       reduce using rule 66 (fator -> NUMBER .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 66 (fator -> NUMBER .)
+    GREATER_THAN    reduce using rule 66 (fator -> NUMBER .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 66 (fator -> NUMBER .)
+    THEN            reduce using rule 66 (fator -> NUMBER .)
+    OR              reduce using rule 66 (fator -> NUMBER .)
+    AND             reduce using rule 66 (fator -> NUMBER .)
+    DO              reduce using rule 66 (fator -> NUMBER .)
+    END             reduce using rule 66 (fator -> NUMBER .)
+    ;               reduce using rule 66 (fator -> NUMBER .)
+    ELSE            reduce using rule 66 (fator -> NUMBER .)
+    ]               reduce using rule 66 (fator -> NUMBER .)
+    )               reduce using rule 66 (fator -> NUMBER .)
+    ,               reduce using rule 66 (fator -> NUMBER .)
+    TO              reduce using rule 66 (fator -> NUMBER .)
+    DOWNTO          reduce using rule 66 (fator -> NUMBER .)
 
 
 state 53
 
-    (61) fator -> STRING_LITERAL .
+    (67) fator -> STRING_LITERAL .
 
-    *               reduce using rule 61 (fator -> STRING_LITERAL .)
-    /               reduce using rule 61 (fator -> STRING_LITERAL .)
-    DIV             reduce using rule 61 (fator -> STRING_LITERAL .)
-    MOD             reduce using rule 61 (fator -> STRING_LITERAL .)
-    +               reduce using rule 61 (fator -> STRING_LITERAL .)
-    -               reduce using rule 61 (fator -> STRING_LITERAL .)
-    EQUALS          reduce using rule 61 (fator -> STRING_LITERAL .)
-    NOT_EQUALS      reduce using rule 61 (fator -> STRING_LITERAL .)
-    LESS_THAN       reduce using rule 61 (fator -> STRING_LITERAL .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 61 (fator -> STRING_LITERAL .)
-    GREATER_THAN    reduce using rule 61 (fator -> STRING_LITERAL .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 61 (fator -> STRING_LITERAL .)
-    THEN            reduce using rule 61 (fator -> STRING_LITERAL .)
-    OR              reduce using rule 61 (fator -> STRING_LITERAL .)
-    AND             reduce using rule 61 (fator -> STRING_LITERAL .)
-    DO              reduce using rule 61 (fator -> STRING_LITERAL .)
-    END             reduce using rule 61 (fator -> STRING_LITERAL .)
-    ;               reduce using rule 61 (fator -> STRING_LITERAL .)
-    ELSE            reduce using rule 61 (fator -> STRING_LITERAL .)
-    ]               reduce using rule 61 (fator -> STRING_LITERAL .)
-    )               reduce using rule 61 (fator -> STRING_LITERAL .)
-    ,               reduce using rule 61 (fator -> STRING_LITERAL .)
-    TO              reduce using rule 61 (fator -> STRING_LITERAL .)
-    DOWNTO          reduce using rule 61 (fator -> STRING_LITERAL .)
+    *               reduce using rule 67 (fator -> STRING_LITERAL .)
+    /               reduce using rule 67 (fator -> STRING_LITERAL .)
+    DIV             reduce using rule 67 (fator -> STRING_LITERAL .)
+    MOD             reduce using rule 67 (fator -> STRING_LITERAL .)
+    +               reduce using rule 67 (fator -> STRING_LITERAL .)
+    -               reduce using rule 67 (fator -> STRING_LITERAL .)
+    EQUALS          reduce using rule 67 (fator -> STRING_LITERAL .)
+    NOT_EQUALS      reduce using rule 67 (fator -> STRING_LITERAL .)
+    LESS_THAN       reduce using rule 67 (fator -> STRING_LITERAL .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 67 (fator -> STRING_LITERAL .)
+    GREATER_THAN    reduce using rule 67 (fator -> STRING_LITERAL .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 67 (fator -> STRING_LITERAL .)
+    THEN            reduce using rule 67 (fator -> STRING_LITERAL .)
+    OR              reduce using rule 67 (fator -> STRING_LITERAL .)
+    AND             reduce using rule 67 (fator -> STRING_LITERAL .)
+    DO              reduce using rule 67 (fator -> STRING_LITERAL .)
+    END             reduce using rule 67 (fator -> STRING_LITERAL .)
+    ;               reduce using rule 67 (fator -> STRING_LITERAL .)
+    ELSE            reduce using rule 67 (fator -> STRING_LITERAL .)
+    ]               reduce using rule 67 (fator -> STRING_LITERAL .)
+    )               reduce using rule 67 (fator -> STRING_LITERAL .)
+    ,               reduce using rule 67 (fator -> STRING_LITERAL .)
+    TO              reduce using rule 67 (fator -> STRING_LITERAL .)
+    DOWNTO          reduce using rule 67 (fator -> STRING_LITERAL .)
 
 
 state 54
 
-    (63) fator -> TRUE .
+    (69) fator -> TRUE .
 
-    *               reduce using rule 63 (fator -> TRUE .)
-    /               reduce using rule 63 (fator -> TRUE .)
-    DIV             reduce using rule 63 (fator -> TRUE .)
-    MOD             reduce using rule 63 (fator -> TRUE .)
-    +               reduce using rule 63 (fator -> TRUE .)
-    -               reduce using rule 63 (fator -> TRUE .)
-    EQUALS          reduce using rule 63 (fator -> TRUE .)
-    NOT_EQUALS      reduce using rule 63 (fator -> TRUE .)
-    LESS_THAN       reduce using rule 63 (fator -> TRUE .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 63 (fator -> TRUE .)
-    GREATER_THAN    reduce using rule 63 (fator -> TRUE .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 63 (fator -> TRUE .)
-    THEN            reduce using rule 63 (fator -> TRUE .)
-    OR              reduce using rule 63 (fator -> TRUE .)
-    AND             reduce using rule 63 (fator -> TRUE .)
-    DO              reduce using rule 63 (fator -> TRUE .)
-    END             reduce using rule 63 (fator -> TRUE .)
-    ;               reduce using rule 63 (fator -> TRUE .)
-    ELSE            reduce using rule 63 (fator -> TRUE .)
-    ]               reduce using rule 63 (fator -> TRUE .)
-    )               reduce using rule 63 (fator -> TRUE .)
-    ,               reduce using rule 63 (fator -> TRUE .)
-    TO              reduce using rule 63 (fator -> TRUE .)
-    DOWNTO          reduce using rule 63 (fator -> TRUE .)
+    *               reduce using rule 69 (fator -> TRUE .)
+    /               reduce using rule 69 (fator -> TRUE .)
+    DIV             reduce using rule 69 (fator -> TRUE .)
+    MOD             reduce using rule 69 (fator -> TRUE .)
+    +               reduce using rule 69 (fator -> TRUE .)
+    -               reduce using rule 69 (fator -> TRUE .)
+    EQUALS          reduce using rule 69 (fator -> TRUE .)
+    NOT_EQUALS      reduce using rule 69 (fator -> TRUE .)
+    LESS_THAN       reduce using rule 69 (fator -> TRUE .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 69 (fator -> TRUE .)
+    GREATER_THAN    reduce using rule 69 (fator -> TRUE .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 69 (fator -> TRUE .)
+    THEN            reduce using rule 69 (fator -> TRUE .)
+    OR              reduce using rule 69 (fator -> TRUE .)
+    AND             reduce using rule 69 (fator -> TRUE .)
+    DO              reduce using rule 69 (fator -> TRUE .)
+    END             reduce using rule 69 (fator -> TRUE .)
+    ;               reduce using rule 69 (fator -> TRUE .)
+    ELSE            reduce using rule 69 (fator -> TRUE .)
+    ]               reduce using rule 69 (fator -> TRUE .)
+    )               reduce using rule 69 (fator -> TRUE .)
+    ,               reduce using rule 69 (fator -> TRUE .)
+    TO              reduce using rule 69 (fator -> TRUE .)
+    DOWNTO          reduce using rule 69 (fator -> TRUE .)
 
 
 state 55
 
-    (64) fator -> FALSE .
+    (70) fator -> FALSE .
 
-    *               reduce using rule 64 (fator -> FALSE .)
-    /               reduce using rule 64 (fator -> FALSE .)
-    DIV             reduce using rule 64 (fator -> FALSE .)
-    MOD             reduce using rule 64 (fator -> FALSE .)
-    +               reduce using rule 64 (fator -> FALSE .)
-    -               reduce using rule 64 (fator -> FALSE .)
-    EQUALS          reduce using rule 64 (fator -> FALSE .)
-    NOT_EQUALS      reduce using rule 64 (fator -> FALSE .)
-    LESS_THAN       reduce using rule 64 (fator -> FALSE .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 64 (fator -> FALSE .)
-    GREATER_THAN    reduce using rule 64 (fator -> FALSE .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 64 (fator -> FALSE .)
-    THEN            reduce using rule 64 (fator -> FALSE .)
-    OR              reduce using rule 64 (fator -> FALSE .)
-    AND             reduce using rule 64 (fator -> FALSE .)
-    DO              reduce using rule 64 (fator -> FALSE .)
-    END             reduce using rule 64 (fator -> FALSE .)
-    ;               reduce using rule 64 (fator -> FALSE .)
-    ELSE            reduce using rule 64 (fator -> FALSE .)
-    ]               reduce using rule 64 (fator -> FALSE .)
-    )               reduce using rule 64 (fator -> FALSE .)
-    ,               reduce using rule 64 (fator -> FALSE .)
-    TO              reduce using rule 64 (fator -> FALSE .)
-    DOWNTO          reduce using rule 64 (fator -> FALSE .)
+    *               reduce using rule 70 (fator -> FALSE .)
+    /               reduce using rule 70 (fator -> FALSE .)
+    DIV             reduce using rule 70 (fator -> FALSE .)
+    MOD             reduce using rule 70 (fator -> FALSE .)
+    +               reduce using rule 70 (fator -> FALSE .)
+    -               reduce using rule 70 (fator -> FALSE .)
+    EQUALS          reduce using rule 70 (fator -> FALSE .)
+    NOT_EQUALS      reduce using rule 70 (fator -> FALSE .)
+    LESS_THAN       reduce using rule 70 (fator -> FALSE .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 70 (fator -> FALSE .)
+    GREATER_THAN    reduce using rule 70 (fator -> FALSE .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 70 (fator -> FALSE .)
+    THEN            reduce using rule 70 (fator -> FALSE .)
+    OR              reduce using rule 70 (fator -> FALSE .)
+    AND             reduce using rule 70 (fator -> FALSE .)
+    DO              reduce using rule 70 (fator -> FALSE .)
+    END             reduce using rule 70 (fator -> FALSE .)
+    ;               reduce using rule 70 (fator -> FALSE .)
+    ELSE            reduce using rule 70 (fator -> FALSE .)
+    ]               reduce using rule 70 (fator -> FALSE .)
+    )               reduce using rule 70 (fator -> FALSE .)
+    ,               reduce using rule 70 (fator -> FALSE .)
+    TO              reduce using rule 70 (fator -> FALSE .)
+    DOWNTO          reduce using rule 70 (fator -> FALSE .)
 
 
 state 56
 
-    (65) fator -> ( . expressao )
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (71) fator -> ( . expressao )
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1292,9 +1294,9 @@ state 56
 
 state 57
 
-    (75) while_statement -> WHILE expressao . DO instrucao
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (45) while_statement -> WHILE expressao . DO instrucao
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     DO              shift and go to state 95
     OR              shift and go to state 75
@@ -1303,30 +1305,30 @@ state 57
 
 state 58
 
-    (76) for_statement -> FOR ID . ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> FOR ID . ASSIGN expressao DOWNTO expressao DO instrucao
+    (46) for_statement -> FOR ID . ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> FOR ID . ASSIGN expressao DOWNTO expressao DO instrucao
 
     ASSIGN          shift and go to state 96
 
 
 state 59
 
-    (12) declaracoes_variaveis -> VAR declaracoes .
+    (13) declaracoes_variaveis -> VAR declaracoes .
 
-    BEGIN           reduce using rule 12 (declaracoes_variaveis -> VAR declaracoes .)
+    BEGIN           reduce using rule 13 (declaracoes_variaveis -> VAR declaracoes .)
 
 
 state 60
 
-    (14) declaracoes -> declaracao .
-    (15) declaracoes -> declaracao . declaracoes
-    (14) declaracoes -> . declaracao
-    (15) declaracoes -> . declaracao declaracoes
-    (16) declaracao -> . lista_id : tipo ;
-    (17) lista_id -> . ID
-    (18) lista_id -> . lista_id , ID
+    (15) declaracoes -> declaracao .
+    (16) declaracoes -> declaracao . declaracoes
+    (15) declaracoes -> . declaracao
+    (16) declaracoes -> . declaracao declaracoes
+    (17) declaracao -> . lista_id : tipo ;
+    (18) lista_id -> . ID
+    (19) lista_id -> . lista_id , ID
 
-    BEGIN           reduce using rule 14 (declaracoes -> declaracao .)
+    BEGIN           reduce using rule 15 (declaracoes -> declaracao .)
     ID              shift and go to state 62
 
     declaracao                     shift and go to state 60
@@ -1335,8 +1337,8 @@ state 60
 
 state 61
 
-    (16) declaracao -> lista_id . : tipo ;
-    (18) lista_id -> lista_id . , ID
+    (17) declaracao -> lista_id . : tipo ;
+    (19) lista_id -> lista_id . , ID
 
     :               shift and go to state 98
     ,               shift and go to state 99
@@ -1344,10 +1346,10 @@ state 61
 
 state 62
 
-    (17) lista_id -> ID .
+    (18) lista_id -> ID .
 
-    :               reduce using rule 17 (lista_id -> ID .)
-    ,               reduce using rule 17 (lista_id -> ID .)
+    :               reduce using rule 18 (lista_id -> ID .)
+    ,               reduce using rule 18 (lista_id -> ID .)
 
 
 state 63
@@ -1360,11 +1362,11 @@ state 63
 
 state 64
 
-    (9) funcao -> ID ( . parametros ) : tipo ; declaracoes_variaveis corpo ;
-    (10) parametros -> . lista_id : tipo
-    (11) parametros -> . lista_id : tipo ; parametros
-    (17) lista_id -> . ID
-    (18) lista_id -> . lista_id , ID
+    (9) funcao -> ID ( . parametros ) : tipo ; bloco_funcao ;
+    (11) parametros -> . lista_id : tipo
+    (12) parametros -> . lista_id : tipo ; parametros
+    (18) lista_id -> . ID
+    (19) lista_id -> . lista_id , ID
 
     ID              shift and go to state 62
 
@@ -1373,26 +1375,26 @@ state 64
 
 state 65
 
-    (36) bloco -> BEGIN lista_instrucoes END .
+    (48) bloco -> BEGIN lista_instrucoes END .
 
-    END             reduce using rule 36 (bloco -> BEGIN lista_instrucoes END .)
-    ;               reduce using rule 36 (bloco -> BEGIN lista_instrucoes END .)
-    ELSE            reduce using rule 36 (bloco -> BEGIN lista_instrucoes END .)
+    END             reduce using rule 48 (bloco -> BEGIN lista_instrucoes END .)
+    ;               reduce using rule 48 (bloco -> BEGIN lista_instrucoes END .)
+    ELSE            reduce using rule 48 (bloco -> BEGIN lista_instrucoes END .)
 
 
 state 66
 
-    (27) lista_instrucoes -> lista_instrucoes ; instrucao .
+    (28) lista_instrucoes -> lista_instrucoes ; instrucao .
 
-    END             reduce using rule 27 (lista_instrucoes -> lista_instrucoes ; instrucao .)
-    ;               reduce using rule 27 (lista_instrucoes -> lista_instrucoes ; instrucao .)
+    END             reduce using rule 28 (lista_instrucoes -> lista_instrucoes ; instrucao .)
+    ;               reduce using rule 28 (lista_instrucoes -> lista_instrucoes ; instrucao .)
 
 
 state 67
 
     (37) atribuicao -> ID ASSIGN expressao .
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     END             reduce using rule 37 (atribuicao -> ID ASSIGN expressao .)
     ;               reduce using rule 37 (atribuicao -> ID ASSIGN expressao .)
@@ -1404,8 +1406,8 @@ state 67
 state 68
 
     (38) atribuicao -> ID [ expressao . ] ASSIGN expressao
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     ]               shift and go to state 102
     OR              shift and go to state 75
@@ -1415,8 +1417,8 @@ state 68
 state 69
 
     (39) leitura -> READ ( expressao_simples . )
-    (51) expressao_simples -> expressao_simples . + termo
-    (52) expressao_simples -> expressao_simples . - termo
+    (57) expressao_simples -> expressao_simples . + termo
+    (58) expressao_simples -> expressao_simples . - termo
 
     )               shift and go to state 103
     +               shift and go to state 78
@@ -1426,8 +1428,8 @@ state 69
 state 70
 
     (40) leitura -> READLN ( expressao_simples . )
-    (51) expressao_simples -> expressao_simples . + termo
-    (52) expressao_simples -> expressao_simples . - termo
+    (57) expressao_simples -> expressao_simples . + termo
+    (58) expressao_simples -> expressao_simples . - termo
 
     )               shift and go to state 104
     +               shift and go to state 78
@@ -1437,7 +1439,7 @@ state 70
 state 71
 
     (41) escrita -> WRITE ( lista_expressao . )
-    (44) lista_expressao -> lista_expressao . , expressao
+    (50) lista_expressao -> lista_expressao . , expressao
 
     )               shift and go to state 105
     ,               shift and go to state 106
@@ -1445,12 +1447,12 @@ state 71
 
 state 72
 
-    (43) lista_expressao -> expressao .
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (49) lista_expressao -> expressao .
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
-    )               reduce using rule 43 (lista_expressao -> expressao .)
-    ,               reduce using rule 43 (lista_expressao -> expressao .)
+    )               reduce using rule 49 (lista_expressao -> expressao .)
+    ,               reduce using rule 49 (lista_expressao -> expressao .)
     OR              shift and go to state 75
     AND             shift and go to state 76
 
@@ -1458,7 +1460,7 @@ state 72
 state 73
 
     (42) escrita -> WRITELN ( lista_expressao . )
-    (44) lista_expressao -> lista_expressao . , expressao
+    (50) lista_expressao -> lista_expressao . , expressao
 
     )               shift and go to state 107
     ,               shift and go to state 106
@@ -1466,32 +1468,32 @@ state 73
 
 state 74
 
-    (73) if_statement -> IF expressao THEN . instrucao ELSE instrucao
-    (74) if_statement -> IF expressao THEN . instrucao
-    (28) instrucao -> . atribuicao
-    (29) instrucao -> . leitura
-    (30) instrucao -> . escrita
-    (31) instrucao -> . if_statement
-    (32) instrucao -> . while_statement
-    (33) instrucao -> . for_statement
-    (34) instrucao -> . bloco
-    (35) instrucao -> .
+    (43) if_statement -> IF expressao THEN . instrucao ELSE instrucao
+    (44) if_statement -> IF expressao THEN . instrucao
+    (29) instrucao -> . atribuicao
+    (30) instrucao -> . leitura
+    (31) instrucao -> . escrita
+    (32) instrucao -> . if_statement
+    (33) instrucao -> . while_statement
+    (34) instrucao -> . for_statement
+    (35) instrucao -> . bloco
+    (36) instrucao -> .
     (37) atribuicao -> . ID ASSIGN expressao
     (38) atribuicao -> . ID [ expressao ] ASSIGN expressao
     (39) leitura -> . READ ( expressao_simples )
     (40) leitura -> . READLN ( expressao_simples )
     (41) escrita -> . WRITE ( lista_expressao )
     (42) escrita -> . WRITELN ( lista_expressao )
-    (73) if_statement -> . IF expressao THEN instrucao ELSE instrucao
-    (74) if_statement -> . IF expressao THEN instrucao
-    (75) while_statement -> . WHILE expressao DO instrucao
-    (76) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
-    (36) bloco -> . BEGIN lista_instrucoes END
+    (43) if_statement -> . IF expressao THEN instrucao ELSE instrucao
+    (44) if_statement -> . IF expressao THEN instrucao
+    (45) while_statement -> . WHILE expressao DO instrucao
+    (46) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+    (48) bloco -> . BEGIN lista_instrucoes END
 
-    ELSE            reduce using rule 35 (instrucao -> .)
-    END             reduce using rule 35 (instrucao -> .)
-    ;               reduce using rule 35 (instrucao -> .)
+    ELSE            reduce using rule 36 (instrucao -> .)
+    END             reduce using rule 36 (instrucao -> .)
+    ;               reduce using rule 36 (instrucao -> .)
     ID              shift and go to state 22
     READ            shift and go to state 23
     READLN          shift and go to state 24
@@ -1513,29 +1515,29 @@ state 74
 
 state 75
 
-    (45) expressao -> expressao OR . expressao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (51) expressao -> expressao OR . expressao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1553,29 +1555,29 @@ state 75
 
 state 76
 
-    (46) expressao -> expressao AND . expressao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (52) expressao -> expressao AND . expressao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1593,25 +1595,25 @@ state 76
 
 state 77
 
-    (49) expressao -> expressao_simples operador_relacional . expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (54) expressao -> expressao_simples operador_relacional . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1628,22 +1630,22 @@ state 77
 
 state 78
 
-    (51) expressao_simples -> expressao_simples + . termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (57) expressao_simples -> expressao_simples + . termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1659,22 +1661,22 @@ state 78
 
 state 79
 
-    (52) expressao_simples -> expressao_simples - . termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (58) expressao_simples -> expressao_simples - . termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1690,101 +1692,101 @@ state 79
 
 state 80
 
-    (67) operador_relacional -> EQUALS .
+    (73) operador_relacional -> EQUALS .
 
-    NOT             reduce using rule 67 (operador_relacional -> EQUALS .)
-    -               reduce using rule 67 (operador_relacional -> EQUALS .)
-    ID              reduce using rule 67 (operador_relacional -> EQUALS .)
-    NUMBER          reduce using rule 67 (operador_relacional -> EQUALS .)
-    STRING_LITERAL  reduce using rule 67 (operador_relacional -> EQUALS .)
-    TRUE            reduce using rule 67 (operador_relacional -> EQUALS .)
-    FALSE           reduce using rule 67 (operador_relacional -> EQUALS .)
-    (               reduce using rule 67 (operador_relacional -> EQUALS .)
+    NOT             reduce using rule 73 (operador_relacional -> EQUALS .)
+    -               reduce using rule 73 (operador_relacional -> EQUALS .)
+    ID              reduce using rule 73 (operador_relacional -> EQUALS .)
+    NUMBER          reduce using rule 73 (operador_relacional -> EQUALS .)
+    STRING_LITERAL  reduce using rule 73 (operador_relacional -> EQUALS .)
+    TRUE            reduce using rule 73 (operador_relacional -> EQUALS .)
+    FALSE           reduce using rule 73 (operador_relacional -> EQUALS .)
+    (               reduce using rule 73 (operador_relacional -> EQUALS .)
 
 
 state 81
 
-    (68) operador_relacional -> NOT_EQUALS .
+    (74) operador_relacional -> NOT_EQUALS .
 
-    NOT             reduce using rule 68 (operador_relacional -> NOT_EQUALS .)
-    -               reduce using rule 68 (operador_relacional -> NOT_EQUALS .)
-    ID              reduce using rule 68 (operador_relacional -> NOT_EQUALS .)
-    NUMBER          reduce using rule 68 (operador_relacional -> NOT_EQUALS .)
-    STRING_LITERAL  reduce using rule 68 (operador_relacional -> NOT_EQUALS .)
-    TRUE            reduce using rule 68 (operador_relacional -> NOT_EQUALS .)
-    FALSE           reduce using rule 68 (operador_relacional -> NOT_EQUALS .)
-    (               reduce using rule 68 (operador_relacional -> NOT_EQUALS .)
+    NOT             reduce using rule 74 (operador_relacional -> NOT_EQUALS .)
+    -               reduce using rule 74 (operador_relacional -> NOT_EQUALS .)
+    ID              reduce using rule 74 (operador_relacional -> NOT_EQUALS .)
+    NUMBER          reduce using rule 74 (operador_relacional -> NOT_EQUALS .)
+    STRING_LITERAL  reduce using rule 74 (operador_relacional -> NOT_EQUALS .)
+    TRUE            reduce using rule 74 (operador_relacional -> NOT_EQUALS .)
+    FALSE           reduce using rule 74 (operador_relacional -> NOT_EQUALS .)
+    (               reduce using rule 74 (operador_relacional -> NOT_EQUALS .)
 
 
 state 82
 
-    (69) operador_relacional -> LESS_THAN .
+    (75) operador_relacional -> LESS_THAN .
 
-    NOT             reduce using rule 69 (operador_relacional -> LESS_THAN .)
-    -               reduce using rule 69 (operador_relacional -> LESS_THAN .)
-    ID              reduce using rule 69 (operador_relacional -> LESS_THAN .)
-    NUMBER          reduce using rule 69 (operador_relacional -> LESS_THAN .)
-    STRING_LITERAL  reduce using rule 69 (operador_relacional -> LESS_THAN .)
-    TRUE            reduce using rule 69 (operador_relacional -> LESS_THAN .)
-    FALSE           reduce using rule 69 (operador_relacional -> LESS_THAN .)
-    (               reduce using rule 69 (operador_relacional -> LESS_THAN .)
+    NOT             reduce using rule 75 (operador_relacional -> LESS_THAN .)
+    -               reduce using rule 75 (operador_relacional -> LESS_THAN .)
+    ID              reduce using rule 75 (operador_relacional -> LESS_THAN .)
+    NUMBER          reduce using rule 75 (operador_relacional -> LESS_THAN .)
+    STRING_LITERAL  reduce using rule 75 (operador_relacional -> LESS_THAN .)
+    TRUE            reduce using rule 75 (operador_relacional -> LESS_THAN .)
+    FALSE           reduce using rule 75 (operador_relacional -> LESS_THAN .)
+    (               reduce using rule 75 (operador_relacional -> LESS_THAN .)
 
 
 state 83
 
-    (70) operador_relacional -> LESS_THAN_OR_EQUAL_TO .
+    (76) operador_relacional -> LESS_THAN_OR_EQUAL_TO .
 
-    NOT             reduce using rule 70 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
-    -               reduce using rule 70 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
-    ID              reduce using rule 70 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
-    NUMBER          reduce using rule 70 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
-    STRING_LITERAL  reduce using rule 70 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
-    TRUE            reduce using rule 70 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
-    FALSE           reduce using rule 70 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
-    (               reduce using rule 70 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
+    NOT             reduce using rule 76 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
+    -               reduce using rule 76 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
+    ID              reduce using rule 76 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
+    NUMBER          reduce using rule 76 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
+    STRING_LITERAL  reduce using rule 76 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
+    TRUE            reduce using rule 76 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
+    FALSE           reduce using rule 76 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
+    (               reduce using rule 76 (operador_relacional -> LESS_THAN_OR_EQUAL_TO .)
 
 
 state 84
 
-    (71) operador_relacional -> GREATER_THAN .
+    (77) operador_relacional -> GREATER_THAN .
 
-    NOT             reduce using rule 71 (operador_relacional -> GREATER_THAN .)
-    -               reduce using rule 71 (operador_relacional -> GREATER_THAN .)
-    ID              reduce using rule 71 (operador_relacional -> GREATER_THAN .)
-    NUMBER          reduce using rule 71 (operador_relacional -> GREATER_THAN .)
-    STRING_LITERAL  reduce using rule 71 (operador_relacional -> GREATER_THAN .)
-    TRUE            reduce using rule 71 (operador_relacional -> GREATER_THAN .)
-    FALSE           reduce using rule 71 (operador_relacional -> GREATER_THAN .)
-    (               reduce using rule 71 (operador_relacional -> GREATER_THAN .)
+    NOT             reduce using rule 77 (operador_relacional -> GREATER_THAN .)
+    -               reduce using rule 77 (operador_relacional -> GREATER_THAN .)
+    ID              reduce using rule 77 (operador_relacional -> GREATER_THAN .)
+    NUMBER          reduce using rule 77 (operador_relacional -> GREATER_THAN .)
+    STRING_LITERAL  reduce using rule 77 (operador_relacional -> GREATER_THAN .)
+    TRUE            reduce using rule 77 (operador_relacional -> GREATER_THAN .)
+    FALSE           reduce using rule 77 (operador_relacional -> GREATER_THAN .)
+    (               reduce using rule 77 (operador_relacional -> GREATER_THAN .)
 
 
 state 85
 
-    (72) operador_relacional -> GREATER_THAN_OR_EQUAL_TO .
+    (78) operador_relacional -> GREATER_THAN_OR_EQUAL_TO .
 
-    NOT             reduce using rule 72 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
-    -               reduce using rule 72 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
-    ID              reduce using rule 72 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
-    NUMBER          reduce using rule 72 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
-    STRING_LITERAL  reduce using rule 72 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
-    TRUE            reduce using rule 72 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
-    FALSE           reduce using rule 72 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
-    (               reduce using rule 72 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
+    NOT             reduce using rule 78 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
+    -               reduce using rule 78 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
+    ID              reduce using rule 78 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
+    NUMBER          reduce using rule 78 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
+    STRING_LITERAL  reduce using rule 78 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
+    TRUE            reduce using rule 78 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
+    FALSE           reduce using rule 78 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
+    (               reduce using rule 78 (operador_relacional -> GREATER_THAN_OR_EQUAL_TO .)
 
 
 state 86
 
-    (54) termo -> termo * . fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (60) termo -> termo * . fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1799,17 +1801,17 @@ state 86
 
 state 87
 
-    (55) termo -> termo / . fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (61) termo -> termo / . fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1824,17 +1826,17 @@ state 87
 
 state 88
 
-    (56) termo -> termo DIV . fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (62) termo -> termo DIV . fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1849,17 +1851,17 @@ state 88
 
 state 89
 
-    (57) termo -> termo MOD . fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (63) termo -> termo MOD . fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1874,89 +1876,89 @@ state 89
 
 state 90
 
-    (58) fator -> - fator .
+    (64) fator -> - fator .
 
-    *               reduce using rule 58 (fator -> - fator .)
-    /               reduce using rule 58 (fator -> - fator .)
-    DIV             reduce using rule 58 (fator -> - fator .)
-    MOD             reduce using rule 58 (fator -> - fator .)
-    +               reduce using rule 58 (fator -> - fator .)
-    -               reduce using rule 58 (fator -> - fator .)
-    EQUALS          reduce using rule 58 (fator -> - fator .)
-    NOT_EQUALS      reduce using rule 58 (fator -> - fator .)
-    LESS_THAN       reduce using rule 58 (fator -> - fator .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 58 (fator -> - fator .)
-    GREATER_THAN    reduce using rule 58 (fator -> - fator .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 58 (fator -> - fator .)
-    THEN            reduce using rule 58 (fator -> - fator .)
-    OR              reduce using rule 58 (fator -> - fator .)
-    AND             reduce using rule 58 (fator -> - fator .)
-    DO              reduce using rule 58 (fator -> - fator .)
-    END             reduce using rule 58 (fator -> - fator .)
-    ;               reduce using rule 58 (fator -> - fator .)
-    ELSE            reduce using rule 58 (fator -> - fator .)
-    ]               reduce using rule 58 (fator -> - fator .)
-    )               reduce using rule 58 (fator -> - fator .)
-    ,               reduce using rule 58 (fator -> - fator .)
-    TO              reduce using rule 58 (fator -> - fator .)
-    DOWNTO          reduce using rule 58 (fator -> - fator .)
+    *               reduce using rule 64 (fator -> - fator .)
+    /               reduce using rule 64 (fator -> - fator .)
+    DIV             reduce using rule 64 (fator -> - fator .)
+    MOD             reduce using rule 64 (fator -> - fator .)
+    +               reduce using rule 64 (fator -> - fator .)
+    -               reduce using rule 64 (fator -> - fator .)
+    EQUALS          reduce using rule 64 (fator -> - fator .)
+    NOT_EQUALS      reduce using rule 64 (fator -> - fator .)
+    LESS_THAN       reduce using rule 64 (fator -> - fator .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 64 (fator -> - fator .)
+    GREATER_THAN    reduce using rule 64 (fator -> - fator .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 64 (fator -> - fator .)
+    THEN            reduce using rule 64 (fator -> - fator .)
+    OR              reduce using rule 64 (fator -> - fator .)
+    AND             reduce using rule 64 (fator -> - fator .)
+    DO              reduce using rule 64 (fator -> - fator .)
+    END             reduce using rule 64 (fator -> - fator .)
+    ;               reduce using rule 64 (fator -> - fator .)
+    ELSE            reduce using rule 64 (fator -> - fator .)
+    ]               reduce using rule 64 (fator -> - fator .)
+    )               reduce using rule 64 (fator -> - fator .)
+    ,               reduce using rule 64 (fator -> - fator .)
+    TO              reduce using rule 64 (fator -> - fator .)
+    DOWNTO          reduce using rule 64 (fator -> - fator .)
 
 
 state 91
 
-    (47) fator -> NOT fator .
+    (53) fator -> NOT fator .
 
-    *               reduce using rule 47 (fator -> NOT fator .)
-    /               reduce using rule 47 (fator -> NOT fator .)
-    DIV             reduce using rule 47 (fator -> NOT fator .)
-    MOD             reduce using rule 47 (fator -> NOT fator .)
-    +               reduce using rule 47 (fator -> NOT fator .)
-    -               reduce using rule 47 (fator -> NOT fator .)
-    EQUALS          reduce using rule 47 (fator -> NOT fator .)
-    NOT_EQUALS      reduce using rule 47 (fator -> NOT fator .)
-    LESS_THAN       reduce using rule 47 (fator -> NOT fator .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 47 (fator -> NOT fator .)
-    GREATER_THAN    reduce using rule 47 (fator -> NOT fator .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 47 (fator -> NOT fator .)
-    THEN            reduce using rule 47 (fator -> NOT fator .)
-    OR              reduce using rule 47 (fator -> NOT fator .)
-    AND             reduce using rule 47 (fator -> NOT fator .)
-    DO              reduce using rule 47 (fator -> NOT fator .)
-    END             reduce using rule 47 (fator -> NOT fator .)
-    ;               reduce using rule 47 (fator -> NOT fator .)
-    ELSE            reduce using rule 47 (fator -> NOT fator .)
-    ]               reduce using rule 47 (fator -> NOT fator .)
-    )               reduce using rule 47 (fator -> NOT fator .)
-    ,               reduce using rule 47 (fator -> NOT fator .)
-    TO              reduce using rule 47 (fator -> NOT fator .)
-    DOWNTO          reduce using rule 47 (fator -> NOT fator .)
+    *               reduce using rule 53 (fator -> NOT fator .)
+    /               reduce using rule 53 (fator -> NOT fator .)
+    DIV             reduce using rule 53 (fator -> NOT fator .)
+    MOD             reduce using rule 53 (fator -> NOT fator .)
+    +               reduce using rule 53 (fator -> NOT fator .)
+    -               reduce using rule 53 (fator -> NOT fator .)
+    EQUALS          reduce using rule 53 (fator -> NOT fator .)
+    NOT_EQUALS      reduce using rule 53 (fator -> NOT fator .)
+    LESS_THAN       reduce using rule 53 (fator -> NOT fator .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 53 (fator -> NOT fator .)
+    GREATER_THAN    reduce using rule 53 (fator -> NOT fator .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 53 (fator -> NOT fator .)
+    THEN            reduce using rule 53 (fator -> NOT fator .)
+    OR              reduce using rule 53 (fator -> NOT fator .)
+    AND             reduce using rule 53 (fator -> NOT fator .)
+    DO              reduce using rule 53 (fator -> NOT fator .)
+    END             reduce using rule 53 (fator -> NOT fator .)
+    ;               reduce using rule 53 (fator -> NOT fator .)
+    ELSE            reduce using rule 53 (fator -> NOT fator .)
+    ]               reduce using rule 53 (fator -> NOT fator .)
+    )               reduce using rule 53 (fator -> NOT fator .)
+    ,               reduce using rule 53 (fator -> NOT fator .)
+    TO              reduce using rule 53 (fator -> NOT fator .)
+    DOWNTO          reduce using rule 53 (fator -> NOT fator .)
 
 
 state 92
 
-    (59) fator -> ID [ . expressao ]
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (65) fator -> ID [ . expressao ]
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -1974,29 +1976,29 @@ state 92
 
 state 93
 
-    (66) fator -> ID ( . expressao )
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (72) fator -> ID ( . expressao )
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -2014,9 +2016,9 @@ state 93
 
 state 94
 
-    (65) fator -> ( expressao . )
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (71) fator -> ( expressao . )
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     )               shift and go to state 120
     OR              shift and go to state 75
@@ -2025,31 +2027,31 @@ state 94
 
 state 95
 
-    (75) while_statement -> WHILE expressao DO . instrucao
-    (28) instrucao -> . atribuicao
-    (29) instrucao -> . leitura
-    (30) instrucao -> . escrita
-    (31) instrucao -> . if_statement
-    (32) instrucao -> . while_statement
-    (33) instrucao -> . for_statement
-    (34) instrucao -> . bloco
-    (35) instrucao -> .
+    (45) while_statement -> WHILE expressao DO . instrucao
+    (29) instrucao -> . atribuicao
+    (30) instrucao -> . leitura
+    (31) instrucao -> . escrita
+    (32) instrucao -> . if_statement
+    (33) instrucao -> . while_statement
+    (34) instrucao -> . for_statement
+    (35) instrucao -> . bloco
+    (36) instrucao -> .
     (37) atribuicao -> . ID ASSIGN expressao
     (38) atribuicao -> . ID [ expressao ] ASSIGN expressao
     (39) leitura -> . READ ( expressao_simples )
     (40) leitura -> . READLN ( expressao_simples )
     (41) escrita -> . WRITE ( lista_expressao )
     (42) escrita -> . WRITELN ( lista_expressao )
-    (73) if_statement -> . IF expressao THEN instrucao ELSE instrucao
-    (74) if_statement -> . IF expressao THEN instrucao
-    (75) while_statement -> . WHILE expressao DO instrucao
-    (76) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
-    (36) bloco -> . BEGIN lista_instrucoes END
+    (43) if_statement -> . IF expressao THEN instrucao ELSE instrucao
+    (44) if_statement -> . IF expressao THEN instrucao
+    (45) while_statement -> . WHILE expressao DO instrucao
+    (46) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+    (48) bloco -> . BEGIN lista_instrucoes END
 
-    ELSE            reduce using rule 35 (instrucao -> .)
-    END             reduce using rule 35 (instrucao -> .)
-    ;               reduce using rule 35 (instrucao -> .)
+    ELSE            reduce using rule 36 (instrucao -> .)
+    END             reduce using rule 36 (instrucao -> .)
+    ;               reduce using rule 36 (instrucao -> .)
     ID              shift and go to state 22
     READ            shift and go to state 23
     READLN          shift and go to state 24
@@ -2071,30 +2073,30 @@ state 95
 
 state 96
 
-    (76) for_statement -> FOR ID ASSIGN . expressao TO expressao DO instrucao
-    (77) for_statement -> FOR ID ASSIGN . expressao DOWNTO expressao DO instrucao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (46) for_statement -> FOR ID ASSIGN . expressao TO expressao DO instrucao
+    (47) for_statement -> FOR ID ASSIGN . expressao DOWNTO expressao DO instrucao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -2112,20 +2114,20 @@ state 96
 
 state 97
 
-    (15) declaracoes -> declaracao declaracoes .
+    (16) declaracoes -> declaracao declaracoes .
 
-    BEGIN           reduce using rule 15 (declaracoes -> declaracao declaracoes .)
+    BEGIN           reduce using rule 16 (declaracoes -> declaracao declaracoes .)
 
 
 state 98
 
-    (16) declaracao -> lista_id : . tipo ;
-    (19) tipo -> . INTEGER
-    (20) tipo -> . REAL
-    (21) tipo -> . BOOLEAN
-    (22) tipo -> . CHAR
-    (23) tipo -> . STRING
-    (24) tipo -> . ARRAY [ NUMBER RANGE NUMBER ] OF tipo
+    (17) declaracao -> lista_id : . tipo ;
+    (20) tipo -> . INTEGER
+    (21) tipo -> . REAL
+    (22) tipo -> . BOOLEAN
+    (23) tipo -> . CHAR
+    (24) tipo -> . STRING
+    (25) tipo -> . ARRAY [ NUMBER RANGE NUMBER ] OF tipo
 
     INTEGER         shift and go to state 124
     REAL            shift and go to state 125
@@ -2138,23 +2140,23 @@ state 98
 
 state 99
 
-    (18) lista_id -> lista_id , . ID
+    (19) lista_id -> lista_id , . ID
 
     ID              shift and go to state 130
 
 
 state 100
 
-    (9) funcao -> ID ( parametros . ) : tipo ; declaracoes_variaveis corpo ;
+    (9) funcao -> ID ( parametros . ) : tipo ; bloco_funcao ;
 
     )               shift and go to state 131
 
 
 state 101
 
-    (10) parametros -> lista_id . : tipo
-    (11) parametros -> lista_id . : tipo ; parametros
-    (18) lista_id -> lista_id . , ID
+    (11) parametros -> lista_id . : tipo
+    (12) parametros -> lista_id . : tipo ; parametros
+    (19) lista_id -> lista_id . , ID
 
     :               shift and go to state 132
     ,               shift and go to state 99
@@ -2196,29 +2198,29 @@ state 105
 
 state 106
 
-    (44) lista_expressao -> lista_expressao , . expressao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (50) lista_expressao -> lista_expressao , . expressao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -2245,58 +2247,58 @@ state 107
 
 state 108
 
-    (73) if_statement -> IF expressao THEN instrucao . ELSE instrucao
-    (74) if_statement -> IF expressao THEN instrucao .
+    (43) if_statement -> IF expressao THEN instrucao . ELSE instrucao
+    (44) if_statement -> IF expressao THEN instrucao .
 
   ! shift/reduce conflict for ELSE resolved as shift
     ELSE            shift and go to state 135
-    END             reduce using rule 74 (if_statement -> IF expressao THEN instrucao .)
-    ;               reduce using rule 74 (if_statement -> IF expressao THEN instrucao .)
+    END             reduce using rule 44 (if_statement -> IF expressao THEN instrucao .)
+    ;               reduce using rule 44 (if_statement -> IF expressao THEN instrucao .)
 
-  ! ELSE            [ reduce using rule 74 (if_statement -> IF expressao THEN instrucao .) ]
+  ! ELSE            [ reduce using rule 44 (if_statement -> IF expressao THEN instrucao .) ]
 
 
 state 109
 
-    (45) expressao -> expressao OR expressao .
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (51) expressao -> expressao OR expressao .
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
-    THEN            reduce using rule 45 (expressao -> expressao OR expressao .)
-    OR              reduce using rule 45 (expressao -> expressao OR expressao .)
-    DO              reduce using rule 45 (expressao -> expressao OR expressao .)
-    END             reduce using rule 45 (expressao -> expressao OR expressao .)
-    ;               reduce using rule 45 (expressao -> expressao OR expressao .)
-    ELSE            reduce using rule 45 (expressao -> expressao OR expressao .)
-    ]               reduce using rule 45 (expressao -> expressao OR expressao .)
-    )               reduce using rule 45 (expressao -> expressao OR expressao .)
-    ,               reduce using rule 45 (expressao -> expressao OR expressao .)
-    TO              reduce using rule 45 (expressao -> expressao OR expressao .)
-    DOWNTO          reduce using rule 45 (expressao -> expressao OR expressao .)
+    THEN            reduce using rule 51 (expressao -> expressao OR expressao .)
+    OR              reduce using rule 51 (expressao -> expressao OR expressao .)
+    DO              reduce using rule 51 (expressao -> expressao OR expressao .)
+    END             reduce using rule 51 (expressao -> expressao OR expressao .)
+    ;               reduce using rule 51 (expressao -> expressao OR expressao .)
+    ELSE            reduce using rule 51 (expressao -> expressao OR expressao .)
+    ]               reduce using rule 51 (expressao -> expressao OR expressao .)
+    )               reduce using rule 51 (expressao -> expressao OR expressao .)
+    ,               reduce using rule 51 (expressao -> expressao OR expressao .)
+    TO              reduce using rule 51 (expressao -> expressao OR expressao .)
+    DOWNTO          reduce using rule 51 (expressao -> expressao OR expressao .)
     AND             shift and go to state 76
 
-  ! AND             [ reduce using rule 45 (expressao -> expressao OR expressao .) ]
+  ! AND             [ reduce using rule 51 (expressao -> expressao OR expressao .) ]
   ! OR              [ shift and go to state 75 ]
 
 
 state 110
 
-    (46) expressao -> expressao AND expressao .
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (52) expressao -> expressao AND expressao .
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
-    THEN            reduce using rule 46 (expressao -> expressao AND expressao .)
-    OR              reduce using rule 46 (expressao -> expressao AND expressao .)
-    AND             reduce using rule 46 (expressao -> expressao AND expressao .)
-    DO              reduce using rule 46 (expressao -> expressao AND expressao .)
-    END             reduce using rule 46 (expressao -> expressao AND expressao .)
-    ;               reduce using rule 46 (expressao -> expressao AND expressao .)
-    ELSE            reduce using rule 46 (expressao -> expressao AND expressao .)
-    ]               reduce using rule 46 (expressao -> expressao AND expressao .)
-    )               reduce using rule 46 (expressao -> expressao AND expressao .)
-    ,               reduce using rule 46 (expressao -> expressao AND expressao .)
-    TO              reduce using rule 46 (expressao -> expressao AND expressao .)
-    DOWNTO          reduce using rule 46 (expressao -> expressao AND expressao .)
+    THEN            reduce using rule 52 (expressao -> expressao AND expressao .)
+    OR              reduce using rule 52 (expressao -> expressao AND expressao .)
+    AND             reduce using rule 52 (expressao -> expressao AND expressao .)
+    DO              reduce using rule 52 (expressao -> expressao AND expressao .)
+    END             reduce using rule 52 (expressao -> expressao AND expressao .)
+    ;               reduce using rule 52 (expressao -> expressao AND expressao .)
+    ELSE            reduce using rule 52 (expressao -> expressao AND expressao .)
+    ]               reduce using rule 52 (expressao -> expressao AND expressao .)
+    )               reduce using rule 52 (expressao -> expressao AND expressao .)
+    ,               reduce using rule 52 (expressao -> expressao AND expressao .)
+    TO              reduce using rule 52 (expressao -> expressao AND expressao .)
+    DOWNTO          reduce using rule 52 (expressao -> expressao AND expressao .)
 
   ! OR              [ shift and go to state 75 ]
   ! AND             [ shift and go to state 76 ]
@@ -2304,54 +2306,54 @@ state 110
 
 state 111
 
-    (49) expressao -> expressao_simples operador_relacional expressao_simples .
-    (51) expressao_simples -> expressao_simples . + termo
-    (52) expressao_simples -> expressao_simples . - termo
+    (54) expressao -> expressao_simples operador_relacional expressao_simples .
+    (57) expressao_simples -> expressao_simples . + termo
+    (58) expressao_simples -> expressao_simples . - termo
 
-    THEN            reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    OR              reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    AND             reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    DO              reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    END             reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    ;               reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    ELSE            reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    ]               reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    )               reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    ,               reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    TO              reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
-    DOWNTO          reduce using rule 49 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    THEN            reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    OR              reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    AND             reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    DO              reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    END             reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    ;               reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    ELSE            reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    ]               reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    )               reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    ,               reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    TO              reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
+    DOWNTO          reduce using rule 54 (expressao -> expressao_simples operador_relacional expressao_simples .)
     +               shift and go to state 78
     -               shift and go to state 79
 
 
 state 112
 
-    (51) expressao_simples -> expressao_simples + termo .
-    (54) termo -> termo . * fator
-    (55) termo -> termo . / fator
-    (56) termo -> termo . DIV fator
-    (57) termo -> termo . MOD fator
+    (57) expressao_simples -> expressao_simples + termo .
+    (60) termo -> termo . * fator
+    (61) termo -> termo . / fator
+    (62) termo -> termo . DIV fator
+    (63) termo -> termo . MOD fator
 
-    +               reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    -               reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    EQUALS          reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    NOT_EQUALS      reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    LESS_THAN       reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    GREATER_THAN    reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    THEN            reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    OR              reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    AND             reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    DO              reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    END             reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    ;               reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    ELSE            reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    ]               reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    )               reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    ,               reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    TO              reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
-    DOWNTO          reduce using rule 51 (expressao_simples -> expressao_simples + termo .)
+    +               reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    -               reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    EQUALS          reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    NOT_EQUALS      reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    LESS_THAN       reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    GREATER_THAN    reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    THEN            reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    OR              reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    AND             reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    DO              reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    END             reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    ;               reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    ELSE            reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    ]               reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    )               reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    ,               reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    TO              reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
+    DOWNTO          reduce using rule 57 (expressao_simples -> expressao_simples + termo .)
     *               shift and go to state 86
     /               shift and go to state 87
     DIV             shift and go to state 88
@@ -2360,32 +2362,32 @@ state 112
 
 state 113
 
-    (52) expressao_simples -> expressao_simples - termo .
-    (54) termo -> termo . * fator
-    (55) termo -> termo . / fator
-    (56) termo -> termo . DIV fator
-    (57) termo -> termo . MOD fator
+    (58) expressao_simples -> expressao_simples - termo .
+    (60) termo -> termo . * fator
+    (61) termo -> termo . / fator
+    (62) termo -> termo . DIV fator
+    (63) termo -> termo . MOD fator
 
-    +               reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    -               reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    EQUALS          reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    NOT_EQUALS      reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    LESS_THAN       reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    GREATER_THAN    reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    THEN            reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    OR              reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    AND             reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    DO              reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    END             reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    ;               reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    ELSE            reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    ]               reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    )               reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    ,               reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    TO              reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
-    DOWNTO          reduce using rule 52 (expressao_simples -> expressao_simples - termo .)
+    +               reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    -               reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    EQUALS          reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    NOT_EQUALS      reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    LESS_THAN       reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    GREATER_THAN    reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    THEN            reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    OR              reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    AND             reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    DO              reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    END             reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    ;               reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    ELSE            reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    ]               reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    )               reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    ,               reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    TO              reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
+    DOWNTO          reduce using rule 58 (expressao_simples -> expressao_simples - termo .)
     *               shift and go to state 86
     /               shift and go to state 87
     DIV             shift and go to state 88
@@ -2394,129 +2396,129 @@ state 113
 
 state 114
 
-    (54) termo -> termo * fator .
+    (60) termo -> termo * fator .
 
-    *               reduce using rule 54 (termo -> termo * fator .)
-    /               reduce using rule 54 (termo -> termo * fator .)
-    DIV             reduce using rule 54 (termo -> termo * fator .)
-    MOD             reduce using rule 54 (termo -> termo * fator .)
-    +               reduce using rule 54 (termo -> termo * fator .)
-    -               reduce using rule 54 (termo -> termo * fator .)
-    EQUALS          reduce using rule 54 (termo -> termo * fator .)
-    NOT_EQUALS      reduce using rule 54 (termo -> termo * fator .)
-    LESS_THAN       reduce using rule 54 (termo -> termo * fator .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 54 (termo -> termo * fator .)
-    GREATER_THAN    reduce using rule 54 (termo -> termo * fator .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 54 (termo -> termo * fator .)
-    THEN            reduce using rule 54 (termo -> termo * fator .)
-    OR              reduce using rule 54 (termo -> termo * fator .)
-    AND             reduce using rule 54 (termo -> termo * fator .)
-    DO              reduce using rule 54 (termo -> termo * fator .)
-    END             reduce using rule 54 (termo -> termo * fator .)
-    ;               reduce using rule 54 (termo -> termo * fator .)
-    ELSE            reduce using rule 54 (termo -> termo * fator .)
-    ]               reduce using rule 54 (termo -> termo * fator .)
-    )               reduce using rule 54 (termo -> termo * fator .)
-    ,               reduce using rule 54 (termo -> termo * fator .)
-    TO              reduce using rule 54 (termo -> termo * fator .)
-    DOWNTO          reduce using rule 54 (termo -> termo * fator .)
+    *               reduce using rule 60 (termo -> termo * fator .)
+    /               reduce using rule 60 (termo -> termo * fator .)
+    DIV             reduce using rule 60 (termo -> termo * fator .)
+    MOD             reduce using rule 60 (termo -> termo * fator .)
+    +               reduce using rule 60 (termo -> termo * fator .)
+    -               reduce using rule 60 (termo -> termo * fator .)
+    EQUALS          reduce using rule 60 (termo -> termo * fator .)
+    NOT_EQUALS      reduce using rule 60 (termo -> termo * fator .)
+    LESS_THAN       reduce using rule 60 (termo -> termo * fator .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 60 (termo -> termo * fator .)
+    GREATER_THAN    reduce using rule 60 (termo -> termo * fator .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 60 (termo -> termo * fator .)
+    THEN            reduce using rule 60 (termo -> termo * fator .)
+    OR              reduce using rule 60 (termo -> termo * fator .)
+    AND             reduce using rule 60 (termo -> termo * fator .)
+    DO              reduce using rule 60 (termo -> termo * fator .)
+    END             reduce using rule 60 (termo -> termo * fator .)
+    ;               reduce using rule 60 (termo -> termo * fator .)
+    ELSE            reduce using rule 60 (termo -> termo * fator .)
+    ]               reduce using rule 60 (termo -> termo * fator .)
+    )               reduce using rule 60 (termo -> termo * fator .)
+    ,               reduce using rule 60 (termo -> termo * fator .)
+    TO              reduce using rule 60 (termo -> termo * fator .)
+    DOWNTO          reduce using rule 60 (termo -> termo * fator .)
 
 
 state 115
 
-    (55) termo -> termo / fator .
+    (61) termo -> termo / fator .
 
-    *               reduce using rule 55 (termo -> termo / fator .)
-    /               reduce using rule 55 (termo -> termo / fator .)
-    DIV             reduce using rule 55 (termo -> termo / fator .)
-    MOD             reduce using rule 55 (termo -> termo / fator .)
-    +               reduce using rule 55 (termo -> termo / fator .)
-    -               reduce using rule 55 (termo -> termo / fator .)
-    EQUALS          reduce using rule 55 (termo -> termo / fator .)
-    NOT_EQUALS      reduce using rule 55 (termo -> termo / fator .)
-    LESS_THAN       reduce using rule 55 (termo -> termo / fator .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 55 (termo -> termo / fator .)
-    GREATER_THAN    reduce using rule 55 (termo -> termo / fator .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 55 (termo -> termo / fator .)
-    THEN            reduce using rule 55 (termo -> termo / fator .)
-    OR              reduce using rule 55 (termo -> termo / fator .)
-    AND             reduce using rule 55 (termo -> termo / fator .)
-    DO              reduce using rule 55 (termo -> termo / fator .)
-    END             reduce using rule 55 (termo -> termo / fator .)
-    ;               reduce using rule 55 (termo -> termo / fator .)
-    ELSE            reduce using rule 55 (termo -> termo / fator .)
-    ]               reduce using rule 55 (termo -> termo / fator .)
-    )               reduce using rule 55 (termo -> termo / fator .)
-    ,               reduce using rule 55 (termo -> termo / fator .)
-    TO              reduce using rule 55 (termo -> termo / fator .)
-    DOWNTO          reduce using rule 55 (termo -> termo / fator .)
+    *               reduce using rule 61 (termo -> termo / fator .)
+    /               reduce using rule 61 (termo -> termo / fator .)
+    DIV             reduce using rule 61 (termo -> termo / fator .)
+    MOD             reduce using rule 61 (termo -> termo / fator .)
+    +               reduce using rule 61 (termo -> termo / fator .)
+    -               reduce using rule 61 (termo -> termo / fator .)
+    EQUALS          reduce using rule 61 (termo -> termo / fator .)
+    NOT_EQUALS      reduce using rule 61 (termo -> termo / fator .)
+    LESS_THAN       reduce using rule 61 (termo -> termo / fator .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 61 (termo -> termo / fator .)
+    GREATER_THAN    reduce using rule 61 (termo -> termo / fator .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 61 (termo -> termo / fator .)
+    THEN            reduce using rule 61 (termo -> termo / fator .)
+    OR              reduce using rule 61 (termo -> termo / fator .)
+    AND             reduce using rule 61 (termo -> termo / fator .)
+    DO              reduce using rule 61 (termo -> termo / fator .)
+    END             reduce using rule 61 (termo -> termo / fator .)
+    ;               reduce using rule 61 (termo -> termo / fator .)
+    ELSE            reduce using rule 61 (termo -> termo / fator .)
+    ]               reduce using rule 61 (termo -> termo / fator .)
+    )               reduce using rule 61 (termo -> termo / fator .)
+    ,               reduce using rule 61 (termo -> termo / fator .)
+    TO              reduce using rule 61 (termo -> termo / fator .)
+    DOWNTO          reduce using rule 61 (termo -> termo / fator .)
 
 
 state 116
 
-    (56) termo -> termo DIV fator .
+    (62) termo -> termo DIV fator .
 
-    *               reduce using rule 56 (termo -> termo DIV fator .)
-    /               reduce using rule 56 (termo -> termo DIV fator .)
-    DIV             reduce using rule 56 (termo -> termo DIV fator .)
-    MOD             reduce using rule 56 (termo -> termo DIV fator .)
-    +               reduce using rule 56 (termo -> termo DIV fator .)
-    -               reduce using rule 56 (termo -> termo DIV fator .)
-    EQUALS          reduce using rule 56 (termo -> termo DIV fator .)
-    NOT_EQUALS      reduce using rule 56 (termo -> termo DIV fator .)
-    LESS_THAN       reduce using rule 56 (termo -> termo DIV fator .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 56 (termo -> termo DIV fator .)
-    GREATER_THAN    reduce using rule 56 (termo -> termo DIV fator .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 56 (termo -> termo DIV fator .)
-    THEN            reduce using rule 56 (termo -> termo DIV fator .)
-    OR              reduce using rule 56 (termo -> termo DIV fator .)
-    AND             reduce using rule 56 (termo -> termo DIV fator .)
-    DO              reduce using rule 56 (termo -> termo DIV fator .)
-    END             reduce using rule 56 (termo -> termo DIV fator .)
-    ;               reduce using rule 56 (termo -> termo DIV fator .)
-    ELSE            reduce using rule 56 (termo -> termo DIV fator .)
-    ]               reduce using rule 56 (termo -> termo DIV fator .)
-    )               reduce using rule 56 (termo -> termo DIV fator .)
-    ,               reduce using rule 56 (termo -> termo DIV fator .)
-    TO              reduce using rule 56 (termo -> termo DIV fator .)
-    DOWNTO          reduce using rule 56 (termo -> termo DIV fator .)
+    *               reduce using rule 62 (termo -> termo DIV fator .)
+    /               reduce using rule 62 (termo -> termo DIV fator .)
+    DIV             reduce using rule 62 (termo -> termo DIV fator .)
+    MOD             reduce using rule 62 (termo -> termo DIV fator .)
+    +               reduce using rule 62 (termo -> termo DIV fator .)
+    -               reduce using rule 62 (termo -> termo DIV fator .)
+    EQUALS          reduce using rule 62 (termo -> termo DIV fator .)
+    NOT_EQUALS      reduce using rule 62 (termo -> termo DIV fator .)
+    LESS_THAN       reduce using rule 62 (termo -> termo DIV fator .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 62 (termo -> termo DIV fator .)
+    GREATER_THAN    reduce using rule 62 (termo -> termo DIV fator .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 62 (termo -> termo DIV fator .)
+    THEN            reduce using rule 62 (termo -> termo DIV fator .)
+    OR              reduce using rule 62 (termo -> termo DIV fator .)
+    AND             reduce using rule 62 (termo -> termo DIV fator .)
+    DO              reduce using rule 62 (termo -> termo DIV fator .)
+    END             reduce using rule 62 (termo -> termo DIV fator .)
+    ;               reduce using rule 62 (termo -> termo DIV fator .)
+    ELSE            reduce using rule 62 (termo -> termo DIV fator .)
+    ]               reduce using rule 62 (termo -> termo DIV fator .)
+    )               reduce using rule 62 (termo -> termo DIV fator .)
+    ,               reduce using rule 62 (termo -> termo DIV fator .)
+    TO              reduce using rule 62 (termo -> termo DIV fator .)
+    DOWNTO          reduce using rule 62 (termo -> termo DIV fator .)
 
 
 state 117
 
-    (57) termo -> termo MOD fator .
+    (63) termo -> termo MOD fator .
 
-    *               reduce using rule 57 (termo -> termo MOD fator .)
-    /               reduce using rule 57 (termo -> termo MOD fator .)
-    DIV             reduce using rule 57 (termo -> termo MOD fator .)
-    MOD             reduce using rule 57 (termo -> termo MOD fator .)
-    +               reduce using rule 57 (termo -> termo MOD fator .)
-    -               reduce using rule 57 (termo -> termo MOD fator .)
-    EQUALS          reduce using rule 57 (termo -> termo MOD fator .)
-    NOT_EQUALS      reduce using rule 57 (termo -> termo MOD fator .)
-    LESS_THAN       reduce using rule 57 (termo -> termo MOD fator .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 57 (termo -> termo MOD fator .)
-    GREATER_THAN    reduce using rule 57 (termo -> termo MOD fator .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 57 (termo -> termo MOD fator .)
-    THEN            reduce using rule 57 (termo -> termo MOD fator .)
-    OR              reduce using rule 57 (termo -> termo MOD fator .)
-    AND             reduce using rule 57 (termo -> termo MOD fator .)
-    DO              reduce using rule 57 (termo -> termo MOD fator .)
-    END             reduce using rule 57 (termo -> termo MOD fator .)
-    ;               reduce using rule 57 (termo -> termo MOD fator .)
-    ELSE            reduce using rule 57 (termo -> termo MOD fator .)
-    ]               reduce using rule 57 (termo -> termo MOD fator .)
-    )               reduce using rule 57 (termo -> termo MOD fator .)
-    ,               reduce using rule 57 (termo -> termo MOD fator .)
-    TO              reduce using rule 57 (termo -> termo MOD fator .)
-    DOWNTO          reduce using rule 57 (termo -> termo MOD fator .)
+    *               reduce using rule 63 (termo -> termo MOD fator .)
+    /               reduce using rule 63 (termo -> termo MOD fator .)
+    DIV             reduce using rule 63 (termo -> termo MOD fator .)
+    MOD             reduce using rule 63 (termo -> termo MOD fator .)
+    +               reduce using rule 63 (termo -> termo MOD fator .)
+    -               reduce using rule 63 (termo -> termo MOD fator .)
+    EQUALS          reduce using rule 63 (termo -> termo MOD fator .)
+    NOT_EQUALS      reduce using rule 63 (termo -> termo MOD fator .)
+    LESS_THAN       reduce using rule 63 (termo -> termo MOD fator .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 63 (termo -> termo MOD fator .)
+    GREATER_THAN    reduce using rule 63 (termo -> termo MOD fator .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 63 (termo -> termo MOD fator .)
+    THEN            reduce using rule 63 (termo -> termo MOD fator .)
+    OR              reduce using rule 63 (termo -> termo MOD fator .)
+    AND             reduce using rule 63 (termo -> termo MOD fator .)
+    DO              reduce using rule 63 (termo -> termo MOD fator .)
+    END             reduce using rule 63 (termo -> termo MOD fator .)
+    ;               reduce using rule 63 (termo -> termo MOD fator .)
+    ELSE            reduce using rule 63 (termo -> termo MOD fator .)
+    ]               reduce using rule 63 (termo -> termo MOD fator .)
+    )               reduce using rule 63 (termo -> termo MOD fator .)
+    ,               reduce using rule 63 (termo -> termo MOD fator .)
+    TO              reduce using rule 63 (termo -> termo MOD fator .)
+    DOWNTO          reduce using rule 63 (termo -> termo MOD fator .)
 
 
 state 118
 
-    (59) fator -> ID [ expressao . ]
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (65) fator -> ID [ expressao . ]
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     ]               shift and go to state 136
     OR              shift and go to state 75
@@ -2525,9 +2527,9 @@ state 118
 
 state 119
 
-    (66) fator -> ID ( expressao . )
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (72) fator -> ID ( expressao . )
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     )               shift and go to state 137
     OR              shift and go to state 75
@@ -2536,49 +2538,49 @@ state 119
 
 state 120
 
-    (65) fator -> ( expressao ) .
+    (71) fator -> ( expressao ) .
 
-    *               reduce using rule 65 (fator -> ( expressao ) .)
-    /               reduce using rule 65 (fator -> ( expressao ) .)
-    DIV             reduce using rule 65 (fator -> ( expressao ) .)
-    MOD             reduce using rule 65 (fator -> ( expressao ) .)
-    +               reduce using rule 65 (fator -> ( expressao ) .)
-    -               reduce using rule 65 (fator -> ( expressao ) .)
-    EQUALS          reduce using rule 65 (fator -> ( expressao ) .)
-    NOT_EQUALS      reduce using rule 65 (fator -> ( expressao ) .)
-    LESS_THAN       reduce using rule 65 (fator -> ( expressao ) .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 65 (fator -> ( expressao ) .)
-    GREATER_THAN    reduce using rule 65 (fator -> ( expressao ) .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 65 (fator -> ( expressao ) .)
-    THEN            reduce using rule 65 (fator -> ( expressao ) .)
-    OR              reduce using rule 65 (fator -> ( expressao ) .)
-    AND             reduce using rule 65 (fator -> ( expressao ) .)
-    DO              reduce using rule 65 (fator -> ( expressao ) .)
-    END             reduce using rule 65 (fator -> ( expressao ) .)
-    ;               reduce using rule 65 (fator -> ( expressao ) .)
-    ELSE            reduce using rule 65 (fator -> ( expressao ) .)
-    ]               reduce using rule 65 (fator -> ( expressao ) .)
-    )               reduce using rule 65 (fator -> ( expressao ) .)
-    ,               reduce using rule 65 (fator -> ( expressao ) .)
-    TO              reduce using rule 65 (fator -> ( expressao ) .)
-    DOWNTO          reduce using rule 65 (fator -> ( expressao ) .)
+    *               reduce using rule 71 (fator -> ( expressao ) .)
+    /               reduce using rule 71 (fator -> ( expressao ) .)
+    DIV             reduce using rule 71 (fator -> ( expressao ) .)
+    MOD             reduce using rule 71 (fator -> ( expressao ) .)
+    +               reduce using rule 71 (fator -> ( expressao ) .)
+    -               reduce using rule 71 (fator -> ( expressao ) .)
+    EQUALS          reduce using rule 71 (fator -> ( expressao ) .)
+    NOT_EQUALS      reduce using rule 71 (fator -> ( expressao ) .)
+    LESS_THAN       reduce using rule 71 (fator -> ( expressao ) .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 71 (fator -> ( expressao ) .)
+    GREATER_THAN    reduce using rule 71 (fator -> ( expressao ) .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 71 (fator -> ( expressao ) .)
+    THEN            reduce using rule 71 (fator -> ( expressao ) .)
+    OR              reduce using rule 71 (fator -> ( expressao ) .)
+    AND             reduce using rule 71 (fator -> ( expressao ) .)
+    DO              reduce using rule 71 (fator -> ( expressao ) .)
+    END             reduce using rule 71 (fator -> ( expressao ) .)
+    ;               reduce using rule 71 (fator -> ( expressao ) .)
+    ELSE            reduce using rule 71 (fator -> ( expressao ) .)
+    ]               reduce using rule 71 (fator -> ( expressao ) .)
+    )               reduce using rule 71 (fator -> ( expressao ) .)
+    ,               reduce using rule 71 (fator -> ( expressao ) .)
+    TO              reduce using rule 71 (fator -> ( expressao ) .)
+    DOWNTO          reduce using rule 71 (fator -> ( expressao ) .)
 
 
 state 121
 
-    (75) while_statement -> WHILE expressao DO instrucao .
+    (45) while_statement -> WHILE expressao DO instrucao .
 
-    END             reduce using rule 75 (while_statement -> WHILE expressao DO instrucao .)
-    ;               reduce using rule 75 (while_statement -> WHILE expressao DO instrucao .)
-    ELSE            reduce using rule 75 (while_statement -> WHILE expressao DO instrucao .)
+    END             reduce using rule 45 (while_statement -> WHILE expressao DO instrucao .)
+    ;               reduce using rule 45 (while_statement -> WHILE expressao DO instrucao .)
+    ELSE            reduce using rule 45 (while_statement -> WHILE expressao DO instrucao .)
 
 
 state 122
 
-    (76) for_statement -> FOR ID ASSIGN expressao . TO expressao DO instrucao
-    (77) for_statement -> FOR ID ASSIGN expressao . DOWNTO expressao DO instrucao
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (46) for_statement -> FOR ID ASSIGN expressao . TO expressao DO instrucao
+    (47) for_statement -> FOR ID ASSIGN expressao . DOWNTO expressao DO instrucao
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     TO              shift and go to state 138
     DOWNTO          shift and go to state 139
@@ -2588,83 +2590,83 @@ state 122
 
 state 123
 
-    (16) declaracao -> lista_id : tipo . ;
+    (17) declaracao -> lista_id : tipo . ;
 
     ;               shift and go to state 140
 
 
 state 124
 
-    (19) tipo -> INTEGER .
+    (20) tipo -> INTEGER .
 
-    ;               reduce using rule 19 (tipo -> INTEGER .)
-    )               reduce using rule 19 (tipo -> INTEGER .)
+    ;               reduce using rule 20 (tipo -> INTEGER .)
+    )               reduce using rule 20 (tipo -> INTEGER .)
 
 
 state 125
 
-    (20) tipo -> REAL .
+    (21) tipo -> REAL .
 
-    ;               reduce using rule 20 (tipo -> REAL .)
-    )               reduce using rule 20 (tipo -> REAL .)
+    ;               reduce using rule 21 (tipo -> REAL .)
+    )               reduce using rule 21 (tipo -> REAL .)
 
 
 state 126
 
-    (21) tipo -> BOOLEAN .
+    (22) tipo -> BOOLEAN .
 
-    ;               reduce using rule 21 (tipo -> BOOLEAN .)
-    )               reduce using rule 21 (tipo -> BOOLEAN .)
+    ;               reduce using rule 22 (tipo -> BOOLEAN .)
+    )               reduce using rule 22 (tipo -> BOOLEAN .)
 
 
 state 127
 
-    (22) tipo -> CHAR .
+    (23) tipo -> CHAR .
 
-    ;               reduce using rule 22 (tipo -> CHAR .)
-    )               reduce using rule 22 (tipo -> CHAR .)
+    ;               reduce using rule 23 (tipo -> CHAR .)
+    )               reduce using rule 23 (tipo -> CHAR .)
 
 
 state 128
 
-    (23) tipo -> STRING .
+    (24) tipo -> STRING .
 
-    ;               reduce using rule 23 (tipo -> STRING .)
-    )               reduce using rule 23 (tipo -> STRING .)
+    ;               reduce using rule 24 (tipo -> STRING .)
+    )               reduce using rule 24 (tipo -> STRING .)
 
 
 state 129
 
-    (24) tipo -> ARRAY . [ NUMBER RANGE NUMBER ] OF tipo
+    (25) tipo -> ARRAY . [ NUMBER RANGE NUMBER ] OF tipo
 
     [               shift and go to state 141
 
 
 state 130
 
-    (18) lista_id -> lista_id , ID .
+    (19) lista_id -> lista_id , ID .
 
-    :               reduce using rule 18 (lista_id -> lista_id , ID .)
-    ,               reduce using rule 18 (lista_id -> lista_id , ID .)
+    :               reduce using rule 19 (lista_id -> lista_id , ID .)
+    ,               reduce using rule 19 (lista_id -> lista_id , ID .)
 
 
 state 131
 
-    (9) funcao -> ID ( parametros ) . : tipo ; declaracoes_variaveis corpo ;
+    (9) funcao -> ID ( parametros ) . : tipo ; bloco_funcao ;
 
     :               shift and go to state 142
 
 
 state 132
 
-    (10) parametros -> lista_id : . tipo
-    (11) parametros -> lista_id : . tipo ; parametros
-    (19) tipo -> . INTEGER
-    (20) tipo -> . REAL
-    (21) tipo -> . BOOLEAN
-    (22) tipo -> . CHAR
-    (23) tipo -> . STRING
-    (24) tipo -> . ARRAY [ NUMBER RANGE NUMBER ] OF tipo
+    (11) parametros -> lista_id : . tipo
+    (12) parametros -> lista_id : . tipo ; parametros
+    (20) tipo -> . INTEGER
+    (21) tipo -> . REAL
+    (22) tipo -> . BOOLEAN
+    (23) tipo -> . CHAR
+    (24) tipo -> . STRING
+    (25) tipo -> . ARRAY [ NUMBER RANGE NUMBER ] OF tipo
 
     INTEGER         shift and go to state 124
     REAL            shift and go to state 125
@@ -2678,28 +2680,28 @@ state 132
 state 133
 
     (38) atribuicao -> ID [ expressao ] ASSIGN . expressao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -2717,43 +2719,43 @@ state 133
 
 state 134
 
-    (44) lista_expressao -> lista_expressao , expressao .
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (50) lista_expressao -> lista_expressao , expressao .
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
-    )               reduce using rule 44 (lista_expressao -> lista_expressao , expressao .)
-    ,               reduce using rule 44 (lista_expressao -> lista_expressao , expressao .)
+    )               reduce using rule 50 (lista_expressao -> lista_expressao , expressao .)
+    ,               reduce using rule 50 (lista_expressao -> lista_expressao , expressao .)
     OR              shift and go to state 75
     AND             shift and go to state 76
 
 
 state 135
 
-    (73) if_statement -> IF expressao THEN instrucao ELSE . instrucao
-    (28) instrucao -> . atribuicao
-    (29) instrucao -> . leitura
-    (30) instrucao -> . escrita
-    (31) instrucao -> . if_statement
-    (32) instrucao -> . while_statement
-    (33) instrucao -> . for_statement
-    (34) instrucao -> . bloco
-    (35) instrucao -> .
+    (43) if_statement -> IF expressao THEN instrucao ELSE . instrucao
+    (29) instrucao -> . atribuicao
+    (30) instrucao -> . leitura
+    (31) instrucao -> . escrita
+    (32) instrucao -> . if_statement
+    (33) instrucao -> . while_statement
+    (34) instrucao -> . for_statement
+    (35) instrucao -> . bloco
+    (36) instrucao -> .
     (37) atribuicao -> . ID ASSIGN expressao
     (38) atribuicao -> . ID [ expressao ] ASSIGN expressao
     (39) leitura -> . READ ( expressao_simples )
     (40) leitura -> . READLN ( expressao_simples )
     (41) escrita -> . WRITE ( lista_expressao )
     (42) escrita -> . WRITELN ( lista_expressao )
-    (73) if_statement -> . IF expressao THEN instrucao ELSE instrucao
-    (74) if_statement -> . IF expressao THEN instrucao
-    (75) while_statement -> . WHILE expressao DO instrucao
-    (76) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
-    (36) bloco -> . BEGIN lista_instrucoes END
+    (43) if_statement -> . IF expressao THEN instrucao ELSE instrucao
+    (44) if_statement -> . IF expressao THEN instrucao
+    (45) while_statement -> . WHILE expressao DO instrucao
+    (46) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+    (48) bloco -> . BEGIN lista_instrucoes END
 
-    ELSE            reduce using rule 35 (instrucao -> .)
-    END             reduce using rule 35 (instrucao -> .)
-    ;               reduce using rule 35 (instrucao -> .)
+    ELSE            reduce using rule 36 (instrucao -> .)
+    END             reduce using rule 36 (instrucao -> .)
+    ;               reduce using rule 36 (instrucao -> .)
     ID              shift and go to state 22
     READ            shift and go to state 23
     READLN          shift and go to state 24
@@ -2775,89 +2777,89 @@ state 135
 
 state 136
 
-    (59) fator -> ID [ expressao ] .
+    (65) fator -> ID [ expressao ] .
 
-    *               reduce using rule 59 (fator -> ID [ expressao ] .)
-    /               reduce using rule 59 (fator -> ID [ expressao ] .)
-    DIV             reduce using rule 59 (fator -> ID [ expressao ] .)
-    MOD             reduce using rule 59 (fator -> ID [ expressao ] .)
-    +               reduce using rule 59 (fator -> ID [ expressao ] .)
-    -               reduce using rule 59 (fator -> ID [ expressao ] .)
-    EQUALS          reduce using rule 59 (fator -> ID [ expressao ] .)
-    NOT_EQUALS      reduce using rule 59 (fator -> ID [ expressao ] .)
-    LESS_THAN       reduce using rule 59 (fator -> ID [ expressao ] .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 59 (fator -> ID [ expressao ] .)
-    GREATER_THAN    reduce using rule 59 (fator -> ID [ expressao ] .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 59 (fator -> ID [ expressao ] .)
-    THEN            reduce using rule 59 (fator -> ID [ expressao ] .)
-    OR              reduce using rule 59 (fator -> ID [ expressao ] .)
-    AND             reduce using rule 59 (fator -> ID [ expressao ] .)
-    DO              reduce using rule 59 (fator -> ID [ expressao ] .)
-    END             reduce using rule 59 (fator -> ID [ expressao ] .)
-    ;               reduce using rule 59 (fator -> ID [ expressao ] .)
-    ELSE            reduce using rule 59 (fator -> ID [ expressao ] .)
-    ]               reduce using rule 59 (fator -> ID [ expressao ] .)
-    )               reduce using rule 59 (fator -> ID [ expressao ] .)
-    ,               reduce using rule 59 (fator -> ID [ expressao ] .)
-    TO              reduce using rule 59 (fator -> ID [ expressao ] .)
-    DOWNTO          reduce using rule 59 (fator -> ID [ expressao ] .)
+    *               reduce using rule 65 (fator -> ID [ expressao ] .)
+    /               reduce using rule 65 (fator -> ID [ expressao ] .)
+    DIV             reduce using rule 65 (fator -> ID [ expressao ] .)
+    MOD             reduce using rule 65 (fator -> ID [ expressao ] .)
+    +               reduce using rule 65 (fator -> ID [ expressao ] .)
+    -               reduce using rule 65 (fator -> ID [ expressao ] .)
+    EQUALS          reduce using rule 65 (fator -> ID [ expressao ] .)
+    NOT_EQUALS      reduce using rule 65 (fator -> ID [ expressao ] .)
+    LESS_THAN       reduce using rule 65 (fator -> ID [ expressao ] .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 65 (fator -> ID [ expressao ] .)
+    GREATER_THAN    reduce using rule 65 (fator -> ID [ expressao ] .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 65 (fator -> ID [ expressao ] .)
+    THEN            reduce using rule 65 (fator -> ID [ expressao ] .)
+    OR              reduce using rule 65 (fator -> ID [ expressao ] .)
+    AND             reduce using rule 65 (fator -> ID [ expressao ] .)
+    DO              reduce using rule 65 (fator -> ID [ expressao ] .)
+    END             reduce using rule 65 (fator -> ID [ expressao ] .)
+    ;               reduce using rule 65 (fator -> ID [ expressao ] .)
+    ELSE            reduce using rule 65 (fator -> ID [ expressao ] .)
+    ]               reduce using rule 65 (fator -> ID [ expressao ] .)
+    )               reduce using rule 65 (fator -> ID [ expressao ] .)
+    ,               reduce using rule 65 (fator -> ID [ expressao ] .)
+    TO              reduce using rule 65 (fator -> ID [ expressao ] .)
+    DOWNTO          reduce using rule 65 (fator -> ID [ expressao ] .)
 
 
 state 137
 
-    (66) fator -> ID ( expressao ) .
+    (72) fator -> ID ( expressao ) .
 
-    *               reduce using rule 66 (fator -> ID ( expressao ) .)
-    /               reduce using rule 66 (fator -> ID ( expressao ) .)
-    DIV             reduce using rule 66 (fator -> ID ( expressao ) .)
-    MOD             reduce using rule 66 (fator -> ID ( expressao ) .)
-    +               reduce using rule 66 (fator -> ID ( expressao ) .)
-    -               reduce using rule 66 (fator -> ID ( expressao ) .)
-    EQUALS          reduce using rule 66 (fator -> ID ( expressao ) .)
-    NOT_EQUALS      reduce using rule 66 (fator -> ID ( expressao ) .)
-    LESS_THAN       reduce using rule 66 (fator -> ID ( expressao ) .)
-    LESS_THAN_OR_EQUAL_TO reduce using rule 66 (fator -> ID ( expressao ) .)
-    GREATER_THAN    reduce using rule 66 (fator -> ID ( expressao ) .)
-    GREATER_THAN_OR_EQUAL_TO reduce using rule 66 (fator -> ID ( expressao ) .)
-    THEN            reduce using rule 66 (fator -> ID ( expressao ) .)
-    OR              reduce using rule 66 (fator -> ID ( expressao ) .)
-    AND             reduce using rule 66 (fator -> ID ( expressao ) .)
-    DO              reduce using rule 66 (fator -> ID ( expressao ) .)
-    END             reduce using rule 66 (fator -> ID ( expressao ) .)
-    ;               reduce using rule 66 (fator -> ID ( expressao ) .)
-    ELSE            reduce using rule 66 (fator -> ID ( expressao ) .)
-    ]               reduce using rule 66 (fator -> ID ( expressao ) .)
-    )               reduce using rule 66 (fator -> ID ( expressao ) .)
-    ,               reduce using rule 66 (fator -> ID ( expressao ) .)
-    TO              reduce using rule 66 (fator -> ID ( expressao ) .)
-    DOWNTO          reduce using rule 66 (fator -> ID ( expressao ) .)
+    *               reduce using rule 72 (fator -> ID ( expressao ) .)
+    /               reduce using rule 72 (fator -> ID ( expressao ) .)
+    DIV             reduce using rule 72 (fator -> ID ( expressao ) .)
+    MOD             reduce using rule 72 (fator -> ID ( expressao ) .)
+    +               reduce using rule 72 (fator -> ID ( expressao ) .)
+    -               reduce using rule 72 (fator -> ID ( expressao ) .)
+    EQUALS          reduce using rule 72 (fator -> ID ( expressao ) .)
+    NOT_EQUALS      reduce using rule 72 (fator -> ID ( expressao ) .)
+    LESS_THAN       reduce using rule 72 (fator -> ID ( expressao ) .)
+    LESS_THAN_OR_EQUAL_TO reduce using rule 72 (fator -> ID ( expressao ) .)
+    GREATER_THAN    reduce using rule 72 (fator -> ID ( expressao ) .)
+    GREATER_THAN_OR_EQUAL_TO reduce using rule 72 (fator -> ID ( expressao ) .)
+    THEN            reduce using rule 72 (fator -> ID ( expressao ) .)
+    OR              reduce using rule 72 (fator -> ID ( expressao ) .)
+    AND             reduce using rule 72 (fator -> ID ( expressao ) .)
+    DO              reduce using rule 72 (fator -> ID ( expressao ) .)
+    END             reduce using rule 72 (fator -> ID ( expressao ) .)
+    ;               reduce using rule 72 (fator -> ID ( expressao ) .)
+    ELSE            reduce using rule 72 (fator -> ID ( expressao ) .)
+    ]               reduce using rule 72 (fator -> ID ( expressao ) .)
+    )               reduce using rule 72 (fator -> ID ( expressao ) .)
+    ,               reduce using rule 72 (fator -> ID ( expressao ) .)
+    TO              reduce using rule 72 (fator -> ID ( expressao ) .)
+    DOWNTO          reduce using rule 72 (fator -> ID ( expressao ) .)
 
 
 state 138
 
-    (76) for_statement -> FOR ID ASSIGN expressao TO . expressao DO instrucao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (46) for_statement -> FOR ID ASSIGN expressao TO . expressao DO instrucao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -2875,29 +2877,29 @@ state 138
 
 state 139
 
-    (77) for_statement -> FOR ID ASSIGN expressao DOWNTO . expressao DO instrucao
-    (45) expressao -> . expressao OR expressao
-    (46) expressao -> . expressao AND expressao
-    (48) expressao -> . expressao_simples
-    (49) expressao -> . expressao_simples operador_relacional expressao_simples
-    (50) expressao_simples -> . termo
-    (51) expressao_simples -> . expressao_simples + termo
-    (52) expressao_simples -> . expressao_simples - termo
-    (53) termo -> . fator
-    (54) termo -> . termo * fator
-    (55) termo -> . termo / fator
-    (56) termo -> . termo DIV fator
-    (57) termo -> . termo MOD fator
-    (47) fator -> . NOT fator
-    (58) fator -> . - fator
-    (59) fator -> . ID [ expressao ]
-    (60) fator -> . NUMBER
-    (61) fator -> . STRING_LITERAL
-    (62) fator -> . ID
-    (63) fator -> . TRUE
-    (64) fator -> . FALSE
-    (65) fator -> . ( expressao )
-    (66) fator -> . ID ( expressao )
+    (47) for_statement -> FOR ID ASSIGN expressao DOWNTO . expressao DO instrucao
+    (51) expressao -> . expressao OR expressao
+    (52) expressao -> . expressao AND expressao
+    (54) expressao -> . expressao_simples operador_relacional expressao_simples
+    (55) expressao -> . expressao_simples
+    (56) expressao_simples -> . termo
+    (57) expressao_simples -> . expressao_simples + termo
+    (58) expressao_simples -> . expressao_simples - termo
+    (59) termo -> . fator
+    (60) termo -> . termo * fator
+    (61) termo -> . termo / fator
+    (62) termo -> . termo DIV fator
+    (63) termo -> . termo MOD fator
+    (53) fator -> . NOT fator
+    (64) fator -> . - fator
+    (65) fator -> . ID [ expressao ]
+    (66) fator -> . NUMBER
+    (67) fator -> . STRING_LITERAL
+    (68) fator -> . ID
+    (69) fator -> . TRUE
+    (70) fator -> . FALSE
+    (71) fator -> . ( expressao )
+    (72) fator -> . ID ( expressao )
 
     NOT             shift and go to state 50
     -               shift and go to state 48
@@ -2915,28 +2917,28 @@ state 139
 
 state 140
 
-    (16) declaracao -> lista_id : tipo ; .
+    (17) declaracao -> lista_id : tipo ; .
 
-    ID              reduce using rule 16 (declaracao -> lista_id : tipo ; .)
-    BEGIN           reduce using rule 16 (declaracao -> lista_id : tipo ; .)
+    ID              reduce using rule 17 (declaracao -> lista_id : tipo ; .)
+    BEGIN           reduce using rule 17 (declaracao -> lista_id : tipo ; .)
 
 
 state 141
 
-    (24) tipo -> ARRAY [ . NUMBER RANGE NUMBER ] OF tipo
+    (25) tipo -> ARRAY [ . NUMBER RANGE NUMBER ] OF tipo
 
     NUMBER          shift and go to state 148
 
 
 state 142
 
-    (9) funcao -> ID ( parametros ) : . tipo ; declaracoes_variaveis corpo ;
-    (19) tipo -> . INTEGER
-    (20) tipo -> . REAL
-    (21) tipo -> . BOOLEAN
-    (22) tipo -> . CHAR
-    (23) tipo -> . STRING
-    (24) tipo -> . ARRAY [ NUMBER RANGE NUMBER ] OF tipo
+    (9) funcao -> ID ( parametros ) : . tipo ; bloco_funcao ;
+    (20) tipo -> . INTEGER
+    (21) tipo -> . REAL
+    (22) tipo -> . BOOLEAN
+    (23) tipo -> . CHAR
+    (24) tipo -> . STRING
+    (25) tipo -> . ARRAY [ NUMBER RANGE NUMBER ] OF tipo
 
     INTEGER         shift and go to state 124
     REAL            shift and go to state 125
@@ -2949,18 +2951,18 @@ state 142
 
 state 143
 
-    (10) parametros -> lista_id : tipo .
-    (11) parametros -> lista_id : tipo . ; parametros
+    (11) parametros -> lista_id : tipo .
+    (12) parametros -> lista_id : tipo . ; parametros
 
-    )               reduce using rule 10 (parametros -> lista_id : tipo .)
+    )               reduce using rule 11 (parametros -> lista_id : tipo .)
     ;               shift and go to state 150
 
 
 state 144
 
     (38) atribuicao -> ID [ expressao ] ASSIGN expressao .
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     END             reduce using rule 38 (atribuicao -> ID [ expressao ] ASSIGN expressao .)
     ;               reduce using rule 38 (atribuicao -> ID [ expressao ] ASSIGN expressao .)
@@ -2971,18 +2973,18 @@ state 144
 
 state 145
 
-    (73) if_statement -> IF expressao THEN instrucao ELSE instrucao .
+    (43) if_statement -> IF expressao THEN instrucao ELSE instrucao .
 
-    END             reduce using rule 73 (if_statement -> IF expressao THEN instrucao ELSE instrucao .)
-    ;               reduce using rule 73 (if_statement -> IF expressao THEN instrucao ELSE instrucao .)
-    ELSE            reduce using rule 73 (if_statement -> IF expressao THEN instrucao ELSE instrucao .)
+    END             reduce using rule 43 (if_statement -> IF expressao THEN instrucao ELSE instrucao .)
+    ;               reduce using rule 43 (if_statement -> IF expressao THEN instrucao ELSE instrucao .)
+    ELSE            reduce using rule 43 (if_statement -> IF expressao THEN instrucao ELSE instrucao .)
 
 
 state 146
 
-    (76) for_statement -> FOR ID ASSIGN expressao TO expressao . DO instrucao
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (46) for_statement -> FOR ID ASSIGN expressao TO expressao . DO instrucao
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     DO              shift and go to state 151
     OR              shift and go to state 75
@@ -2991,9 +2993,9 @@ state 146
 
 state 147
 
-    (77) for_statement -> FOR ID ASSIGN expressao DOWNTO expressao . DO instrucao
-    (45) expressao -> expressao . OR expressao
-    (46) expressao -> expressao . AND expressao
+    (47) for_statement -> FOR ID ASSIGN expressao DOWNTO expressao . DO instrucao
+    (51) expressao -> expressao . OR expressao
+    (52) expressao -> expressao . AND expressao
 
     DO              shift and go to state 152
     OR              shift and go to state 75
@@ -3002,25 +3004,25 @@ state 147
 
 state 148
 
-    (24) tipo -> ARRAY [ NUMBER . RANGE NUMBER ] OF tipo
+    (25) tipo -> ARRAY [ NUMBER . RANGE NUMBER ] OF tipo
 
     RANGE           shift and go to state 153
 
 
 state 149
 
-    (9) funcao -> ID ( parametros ) : tipo . ; declaracoes_variaveis corpo ;
+    (9) funcao -> ID ( parametros ) : tipo . ; bloco_funcao ;
 
     ;               shift and go to state 154
 
 
 state 150
 
-    (11) parametros -> lista_id : tipo ; . parametros
-    (10) parametros -> . lista_id : tipo
-    (11) parametros -> . lista_id : tipo ; parametros
-    (17) lista_id -> . ID
-    (18) lista_id -> . lista_id , ID
+    (12) parametros -> lista_id : tipo ; . parametros
+    (11) parametros -> . lista_id : tipo
+    (12) parametros -> . lista_id : tipo ; parametros
+    (18) lista_id -> . ID
+    (19) lista_id -> . lista_id , ID
 
     ID              shift and go to state 62
 
@@ -3029,31 +3031,31 @@ state 150
 
 state 151
 
-    (76) for_statement -> FOR ID ASSIGN expressao TO expressao DO . instrucao
-    (28) instrucao -> . atribuicao
-    (29) instrucao -> . leitura
-    (30) instrucao -> . escrita
-    (31) instrucao -> . if_statement
-    (32) instrucao -> . while_statement
-    (33) instrucao -> . for_statement
-    (34) instrucao -> . bloco
-    (35) instrucao -> .
+    (46) for_statement -> FOR ID ASSIGN expressao TO expressao DO . instrucao
+    (29) instrucao -> . atribuicao
+    (30) instrucao -> . leitura
+    (31) instrucao -> . escrita
+    (32) instrucao -> . if_statement
+    (33) instrucao -> . while_statement
+    (34) instrucao -> . for_statement
+    (35) instrucao -> . bloco
+    (36) instrucao -> .
     (37) atribuicao -> . ID ASSIGN expressao
     (38) atribuicao -> . ID [ expressao ] ASSIGN expressao
     (39) leitura -> . READ ( expressao_simples )
     (40) leitura -> . READLN ( expressao_simples )
     (41) escrita -> . WRITE ( lista_expressao )
     (42) escrita -> . WRITELN ( lista_expressao )
-    (73) if_statement -> . IF expressao THEN instrucao ELSE instrucao
-    (74) if_statement -> . IF expressao THEN instrucao
-    (75) while_statement -> . WHILE expressao DO instrucao
-    (76) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
-    (36) bloco -> . BEGIN lista_instrucoes END
+    (43) if_statement -> . IF expressao THEN instrucao ELSE instrucao
+    (44) if_statement -> . IF expressao THEN instrucao
+    (45) while_statement -> . WHILE expressao DO instrucao
+    (46) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+    (48) bloco -> . BEGIN lista_instrucoes END
 
-    ELSE            reduce using rule 35 (instrucao -> .)
-    END             reduce using rule 35 (instrucao -> .)
-    ;               reduce using rule 35 (instrucao -> .)
+    ELSE            reduce using rule 36 (instrucao -> .)
+    END             reduce using rule 36 (instrucao -> .)
+    ;               reduce using rule 36 (instrucao -> .)
     ID              shift and go to state 22
     READ            shift and go to state 23
     READLN          shift and go to state 24
@@ -3075,31 +3077,31 @@ state 151
 
 state 152
 
-    (77) for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO . instrucao
-    (28) instrucao -> . atribuicao
-    (29) instrucao -> . leitura
-    (30) instrucao -> . escrita
-    (31) instrucao -> . if_statement
-    (32) instrucao -> . while_statement
-    (33) instrucao -> . for_statement
-    (34) instrucao -> . bloco
-    (35) instrucao -> .
+    (47) for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO . instrucao
+    (29) instrucao -> . atribuicao
+    (30) instrucao -> . leitura
+    (31) instrucao -> . escrita
+    (32) instrucao -> . if_statement
+    (33) instrucao -> . while_statement
+    (34) instrucao -> . for_statement
+    (35) instrucao -> . bloco
+    (36) instrucao -> .
     (37) atribuicao -> . ID ASSIGN expressao
     (38) atribuicao -> . ID [ expressao ] ASSIGN expressao
     (39) leitura -> . READ ( expressao_simples )
     (40) leitura -> . READLN ( expressao_simples )
     (41) escrita -> . WRITE ( lista_expressao )
     (42) escrita -> . WRITELN ( lista_expressao )
-    (73) if_statement -> . IF expressao THEN instrucao ELSE instrucao
-    (74) if_statement -> . IF expressao THEN instrucao
-    (75) while_statement -> . WHILE expressao DO instrucao
-    (76) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
-    (77) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
-    (36) bloco -> . BEGIN lista_instrucoes END
+    (43) if_statement -> . IF expressao THEN instrucao ELSE instrucao
+    (44) if_statement -> . IF expressao THEN instrucao
+    (45) while_statement -> . WHILE expressao DO instrucao
+    (46) for_statement -> . FOR ID ASSIGN expressao TO expressao DO instrucao
+    (47) for_statement -> . FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
+    (48) bloco -> . BEGIN lista_instrucoes END
 
-    ELSE            reduce using rule 35 (instrucao -> .)
-    END             reduce using rule 35 (instrucao -> .)
-    ;               reduce using rule 35 (instrucao -> .)
+    ELSE            reduce using rule 36 (instrucao -> .)
+    END             reduce using rule 36 (instrucao -> .)
+    ;               reduce using rule 36 (instrucao -> .)
     ID              shift and go to state 22
     READ            shift and go to state 23
     READLN          shift and go to state 24
@@ -3121,86 +3123,104 @@ state 152
 
 state 153
 
-    (24) tipo -> ARRAY [ NUMBER RANGE . NUMBER ] OF tipo
+    (25) tipo -> ARRAY [ NUMBER RANGE . NUMBER ] OF tipo
 
     NUMBER          shift and go to state 158
 
 
 state 154
 
-    (9) funcao -> ID ( parametros ) : tipo ; . declaracoes_variaveis corpo ;
-    (12) declaracoes_variaveis -> . VAR declaracoes
-    (13) declaracoes_variaveis -> .
+    (9) funcao -> ID ( parametros ) : tipo ; . bloco_funcao ;
+    (10) bloco_funcao -> . declaracoes_variaveis corpo
+    (13) declaracoes_variaveis -> . VAR declaracoes
+    (14) declaracoes_variaveis -> .
 
     VAR             shift and go to state 31
-    BEGIN           reduce using rule 13 (declaracoes_variaveis -> .)
+    BEGIN           reduce using rule 14 (declaracoes_variaveis -> .)
 
-    declaracoes_variaveis          shift and go to state 159
+    bloco_funcao                   shift and go to state 159
+    declaracoes_variaveis          shift and go to state 160
 
 state 155
 
-    (11) parametros -> lista_id : tipo ; parametros .
+    (12) parametros -> lista_id : tipo ; parametros .
 
-    )               reduce using rule 11 (parametros -> lista_id : tipo ; parametros .)
+    )               reduce using rule 12 (parametros -> lista_id : tipo ; parametros .)
 
 
 state 156
 
-    (76) for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao .
+    (46) for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao .
 
-    END             reduce using rule 76 (for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao .)
-    ;               reduce using rule 76 (for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao .)
-    ELSE            reduce using rule 76 (for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao .)
+    END             reduce using rule 46 (for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao .)
+    ;               reduce using rule 46 (for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao .)
+    ELSE            reduce using rule 46 (for_statement -> FOR ID ASSIGN expressao TO expressao DO instrucao .)
 
 
 state 157
 
-    (77) for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao .
+    (47) for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao .
 
-    END             reduce using rule 77 (for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao .)
-    ;               reduce using rule 77 (for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao .)
-    ELSE            reduce using rule 77 (for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao .)
+    END             reduce using rule 47 (for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao .)
+    ;               reduce using rule 47 (for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao .)
+    ELSE            reduce using rule 47 (for_statement -> FOR ID ASSIGN expressao DOWNTO expressao DO instrucao .)
 
 
 state 158
 
-    (24) tipo -> ARRAY [ NUMBER RANGE NUMBER . ] OF tipo
+    (25) tipo -> ARRAY [ NUMBER RANGE NUMBER . ] OF tipo
 
-    ]               shift and go to state 160
+    ]               shift and go to state 161
 
 
 state 159
 
-    (9) funcao -> ID ( parametros ) : tipo ; declaracoes_variaveis . corpo ;
-    (25) corpo -> . BEGIN lista_instrucoes END
+    (9) funcao -> ID ( parametros ) : tipo ; bloco_funcao . ;
 
-    BEGIN           shift and go to state 8
+    ;               shift and go to state 162
 
-    corpo                          shift and go to state 161
 
 state 160
 
-    (24) tipo -> ARRAY [ NUMBER RANGE NUMBER ] . OF tipo
+    (10) bloco_funcao -> declaracoes_variaveis . corpo
+    (26) corpo -> . BEGIN lista_instrucoes END
 
-    OF              shift and go to state 162
+    BEGIN           shift and go to state 8
 
+    corpo                          shift and go to state 163
 
 state 161
 
-    (9) funcao -> ID ( parametros ) : tipo ; declaracoes_variaveis corpo . ;
+    (25) tipo -> ARRAY [ NUMBER RANGE NUMBER ] . OF tipo
 
-    ;               shift and go to state 163
+    OF              shift and go to state 164
 
 
 state 162
 
-    (24) tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF . tipo
-    (19) tipo -> . INTEGER
-    (20) tipo -> . REAL
-    (21) tipo -> . BOOLEAN
-    (22) tipo -> . CHAR
-    (23) tipo -> . STRING
-    (24) tipo -> . ARRAY [ NUMBER RANGE NUMBER ] OF tipo
+    (9) funcao -> ID ( parametros ) : tipo ; bloco_funcao ; .
+
+    ID              reduce using rule 9 (funcao -> ID ( parametros ) : tipo ; bloco_funcao ; .)
+    VAR             reduce using rule 9 (funcao -> ID ( parametros ) : tipo ; bloco_funcao ; .)
+    BEGIN           reduce using rule 9 (funcao -> ID ( parametros ) : tipo ; bloco_funcao ; .)
+
+
+state 163
+
+    (10) bloco_funcao -> declaracoes_variaveis corpo .
+
+    ;               reduce using rule 10 (bloco_funcao -> declaracoes_variaveis corpo .)
+
+
+state 164
+
+    (25) tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF . tipo
+    (20) tipo -> . INTEGER
+    (21) tipo -> . REAL
+    (22) tipo -> . BOOLEAN
+    (23) tipo -> . CHAR
+    (24) tipo -> . STRING
+    (25) tipo -> . ARRAY [ NUMBER RANGE NUMBER ] OF tipo
 
     INTEGER         shift and go to state 124
     REAL            shift and go to state 125
@@ -3209,23 +3229,14 @@ state 162
     STRING          shift and go to state 128
     ARRAY           shift and go to state 129
 
-    tipo                           shift and go to state 164
+    tipo                           shift and go to state 165
 
-state 163
+state 165
 
-    (9) funcao -> ID ( parametros ) : tipo ; declaracoes_variaveis corpo ; .
+    (25) tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF tipo .
 
-    ID              reduce using rule 9 (funcao -> ID ( parametros ) : tipo ; declaracoes_variaveis corpo ; .)
-    VAR             reduce using rule 9 (funcao -> ID ( parametros ) : tipo ; declaracoes_variaveis corpo ; .)
-    BEGIN           reduce using rule 9 (funcao -> ID ( parametros ) : tipo ; declaracoes_variaveis corpo ; .)
-
-
-state 164
-
-    (24) tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF tipo .
-
-    ;               reduce using rule 24 (tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF tipo .)
-    )               reduce using rule 24 (tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF tipo .)
+    ;               reduce using rule 25 (tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF tipo .)
+    )               reduce using rule 25 (tipo -> ARRAY [ NUMBER RANGE NUMBER ] OF tipo .)
 
 WARNING: 
 WARNING: Conflicts:
