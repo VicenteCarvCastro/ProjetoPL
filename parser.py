@@ -11,7 +11,7 @@ precedence = (
     ('right', 'NOT'),
     ('left', '+', '-'),
     ('left', '*', '/', 'DIV', 'MOD'),
-    ('right', 'UMINUS'),
+    #('right', 'UMINUS'),
     ('left', '(', ')', '[' ,']')  # chamadas e indexações
 )
 
@@ -212,11 +212,11 @@ def p_atribuicao_array(p):
 # Leitura
 # -------------------------
 def p_leitura_read(p):
-    "leitura : READ '(' expressao_simples ')'"
+    "leitura : READ '(' expressao ')'"
     p[0] = ("read", p[3])
 
 def p_leitura_readln(p):
-    "leitura : READLN '(' expressao_simples ')'"
+    "leitura : READLN '(' expressao ')'"
     p[0] = ("readln", p[3])
 
 # -------------------------
@@ -269,102 +269,38 @@ def p_lista_expressao_varias(p):
 # -------------------------
 # EXPRESSÕES
 # -------------------------
-# Operadores lógicos
-def p_expressao_logica_or(p):
-    "expressao : expressao OR expressao"
-    p[0] = ('or', p[1], p[3])
-
-def p_expressao_logica_and(p):
-    "expressao : expressao AND expressao"
-    p[0] = ('and', p[1], p[3])
-
-def p_expressao_logica_not(p):
-    "fator : NOT fator"
-    p[0] = ('not', p[2])
-
-# Expressão relacional
-def p_expressao_relacional(p):
-    "expressao : expressao_simples operador_relacional expressao_simples"
-    p[0] = ("relop", p[2], p[1], p[3])
 
 # Expressão aritmética
 def p_expressao(p):
-    "expressao : expressao_simples"
+    "expressao : expressao_logica"
     p[0] = p[1]
 
-def p_expressao_simples_termo(p):
-    "expressao_simples : termo"
+def p_expressao_logica_OR(p):
+    "expressao_logica : expressao_logica OR expressao_relacional"
+    p[0] = ("or", p[1], p[3])
+
+def p_expressao_logica_AND(p):
+    "expressao_logica : expressao_logica AND expressao_relacional"
+    p[0] = ("and", p[1], p[3])
+
+def p_expressao_logica_relacional(p):
+    "expressao_logica : expressao_relacional"
     p[0] = p[1]
 
-def p_expressao_simples_soma(p):
-    "expressao_simples : expressao_simples '+' termo"
-    p[0] = ('+', p[1], p[3])
+# Expressão relacional
+def p_expressao_relacional_composta(p):
+    "expressao_relacional : expressao_aritmetica operador_relacional expressao_aritmetica"
+    p[0] = ("relop", p[2], p[1], p[3])
 
-def p_expressao_simples_sub(p):
-    "expressao_simples : expressao_simples '-' termo"
-    p[0] = ('-', p[1], p[3])
-
-# Termos
-def p_termo_fator(p):
-    "termo : fator"
+def p_expressao_relacional_simples(p):
+    "expressao_relacional : expressao_aritmetica"
     p[0] = p[1]
 
-def p_termo_mult(p):
-    "termo : termo '*' fator"
-    p[0] = ('*', p[1], p[3])
-
-def p_termo_div(p):
-    "termo : termo '/' fator"
-    p[0] = ('/', p[1], p[3])
-
-def p_termo_div_inteira(p):
-    "termo : termo DIV fator"
-    p[0] = ('div', p[1], p[3])
-
-def p_termo_mod(p):
-    "termo : termo MOD fator"
-    p[0] = ('mod', p[1], p[3])
-
-# Fatores
-def p_fator_unario_negativo(p):
-    "fator : '-' fator %prec UMINUS"
-    p[0] = ('neg', p[2])
-
-def p_fator_array_index(p):
-    "fator : ID '[' expressao ']'"
-    p[0] = ("array_acesso", p[1], p[3])
-
-def p_fator_numero(p):
-    "fator : NUMBER"
-    p[0] = p[1]
-
-def p_fator_string(p):
-    "fator : STRING_LITERAL"
-    p[0] = p[1]
-
-def p_fator_id(p):
-    "fator : ID"
-    p[0] = p[1]
-
-def p_fator_true(p):
-    "fator : TRUE"
-    p[0] = True
-
-def p_fator_false(p):
-    "fator : FALSE"
-    p[0] = False
-
-def p_fator_parenteses(p):
-    "fator : '(' expressao ')'"
-    p[0] = p[2]
-
-def p_fator_chamada_funcao(p):
-    "fator : ID '(' expressao ')'"
-    p[0] = ("call", p[1], p[3])
 
 # -------------------------
 # OPERADORES RELACIONAIS
 # -------------------------
+
 def p_operador_relacional_igual(p):
     "operador_relacional : EQUALS"
     p[0] = p[1]
@@ -388,6 +324,86 @@ def p_operador_relacional_maior(p):
 def p_operador_relacional_maior_igual(p):
     "operador_relacional : GREATER_THAN_OR_EQUAL_TO"
     p[0] = p[1]
+
+
+def p_expressao_aritmetica_soma(p):
+    "expressao_aritmetica : expressao_aritmetica '+' termo"
+    p[0] = ('+', p[1], p[3])
+
+def p_expressao_aritmetica_sub(p):
+    "expressao_aritmetica : expressao_aritmetica '-' termo"
+    p[0] = ('-', p[1], p[3])
+
+def p_expressao_aritmetica_termo(p):
+    "expressao_aritmetica : termo"
+    p[0] = p[1]
+
+# Termos
+def p_termo_multiplicacao(p):
+    "termo : termo '*' fator"
+    p[0] = ('*', p[1], p[3])
+
+def p_termo_divisao(p):
+    "termo : termo '/' fator"
+    p[0] = ('/', p[1], p[3])
+
+def p_termo_div(p):
+    "termo : termo DIV fator"
+    p[0] = ('div', p[1], p[3])
+
+def p_termo_mod(p):
+    "termo : termo MOD fator"
+    p[0] = ('mod', p[1], p[3])
+
+def p_termo_fator(p):
+    "termo : fator"
+    p[0] = p[1]
+
+# Fatores
+#def p_fator_unario_negativo(p):
+    #"fator : '-' fator %prec UMINUS"
+    #p[0] = ('neg', p[2])
+
+def p_fator_numero(p):
+    "fator : NUMBER"
+    p[0] = p[1]
+
+def p_fator_string(p):
+    "fator : STRING_LITERAL"
+    p[0] = p[1]
+
+def p_fator_id(p):
+    "fator : ID"
+    p[0] = p[1]
+
+def p_fator_array_index(p):
+    "fator : ID '[' expressao ']'"
+    p[0] = ("array_acesso", p[1], p[3])
+
+
+def p_fator_chamada_funcao(p):
+    "fator : ID '(' expressao ')'"
+    p[0] = ("call", p[1], p[3])
+
+def p_fator_true(p):
+    "fator : TRUE"
+    p[0] = True
+
+def p_fator_false(p):
+    "fator : FALSE"
+    p[0] = False
+
+def p_fator_parenteses(p):
+    "fator : '(' expressao ')'"
+    p[0] = p[2]
+
+def p_fator_not(p):
+    "fator : NOT fator"
+    p[0] = ('not', p[2])
+
+def p_fator_menos(p):
+    "fator : '-' fator"
+    p[0] = ('menos', p[2])
 
 
 # -------------------------

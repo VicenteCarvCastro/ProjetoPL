@@ -14,12 +14,13 @@ funcoes -> funcao
 
 funcao -> ID '(' parametros ')' ':' tipo ';' bloco_funcao ';'
 
-bloco_funcao -> declaracoes_variaveis corpo
 
 
 parametros -> lista_id ':' tipo    ( Mudar isto para usar declaracoes -> MAS NAO DA NAO SEI PORQ??)
             | lista_id ':' tipo ';' parametros
             | ε
+
+bloco_funcao -> declaracoes_variaveis corpo
 
 
 declaracoes_variaveis -> VAR declaracoes
@@ -53,8 +54,10 @@ instrucao        -> atribuicao
                  | bloco
                  | ε ??
 
+bloco            ->  BEGIN lista_instrucoes END
 
-atribuicao       -> ID ASSIGN expressao
+
+atribuicao       -> ID ASSIGN expressao                             // FALTA '+=' e '-=' ?
                  | ID '[' expressao ']' ASSIGN expressao
 
 leitura          -> READ '(' expressao_simples ')' 
@@ -71,31 +74,49 @@ while            -> WHILE expressao DO instrucao
 for              -> FOR ID ASSIGN expressao TO expressao DO instrucao
                   | FOR ID ASSIGN expressao DOWNTO expressao DO instrucao
 
-bloco            ->  BEGIN lista_instrucoes END
-
-
 
 lista_expressao  -> expressao
                  | lista_expressao ',' expressao
 
-expressao        -> expressao_simples
-                 | expressao_simples operador_relacional expressao_simples
 
-expressao_simples -> termo
-                  | expressao_simples '+' termo (NAO ESTA MAL ??)
-                  | expressao_simples '-' termo
+expressao -> expressao_logica
 
-termo            -> fator
-                 | termo '*' fator (NAO ESTA MAL ??)  ==>     termo -> fator termo2
-                 | termo '/' fator                           termo2 -> '*' termo
-                                                             termo2 -> '/' termo
-fator            -> NUMBER
+expressao_logica -> expressao_logica OR expressao_relacional
+                  | expressao_logica AND expressao_relacional
+                  | expressao_relacional
+
+expressao_relacional -> expressao_aritmetica operador_relacional expressao_aritmetica
+                      | expressao_aritmetica
+
+
+operador_relacional -> '=' | '<>' | '<' | '<=' | '>' | '>='
+
+expressao_aritmetica -> expressao_aritmetica '+' termo
+                      | expressao_aritmetica '-' termo
+                      | termo
+
+termo -> termo '*' fator
+       | termo '/' fator
+       | termo DIV fator
+       | termo MOD fator
+       | fator
+
+
+fator            -> NUMBER                       // Const? Var?
                  | STRING_LITERAL
                  | ID                            // Nao da ASNEIRA 3 expressoes começar por ID?
-                 | ID '[' expressao ']'          // Acesso a array
-                 | ID '(' expressao ')'          // Funcoes (ex: for i := "length(bin)")
+                 | ID '[' expressao ']'          // AcessoArray
+                 | ID '(' expressao ')'          // ChamadaFuncao
                  | TRUE
                  | FALSE
                  | '(' expressao ')'
+                 | NOT fator
+                 | '-' fator
 
-operador_relacional -> '=' | '<>' | '<' | '<=' | '>' | '>='
+
+Const -> INT | REAL | STRING
+
+Var -> ID
+    | ID '[' expressao ']' 
+
+
