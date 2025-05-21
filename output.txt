@@ -1,0 +1,80 @@
+START
+// Program: ('titulo', 'Maior3')
+
+// Initialize global variable num1
+PUSHI 0
+STOREG 0
+// Initialize global variable num2
+PUSHI 0
+STOREG 1
+// Initialize global variable num3
+PUSHI 0
+STOREG 2
+// Initialize global variable maior
+PUSHI 0
+STOREG 3
+
+// Write statement
+PUSHS "Introduza o primeiro número: "
+WRITEI
+// Read into num1
+READ
+ATOI
+STOREG 0
+// Write statement
+PUSHS "Introduza o segundo número: "
+WRITEI
+// Read into num2
+READ
+ATOI
+STOREG 1
+// Write statement
+PUSHS "Introduza o terceiro número: "
+WRITEI
+// Read into num3
+READ
+ATOI
+STOREG 2
+// IF-ELSE statement
+PUSHG 0
+PUSHG 1
+SUP
+JZ else_1
+// IF-ELSE statement
+PUSHG 0
+PUSHG 2
+SUP
+JZ else_3
+// Assignment: maior = expression
+PUSHG 0
+STOREG 3
+JUMP endif_4
+else_3:
+// Assignment: maior = expression
+PUSHG 2
+STOREG 3
+endif_4:
+JUMP endif_2
+else_1:
+// IF-ELSE statement
+PUSHG 1
+PUSHG 2
+SUP
+JZ else_5
+// Assignment: maior = expression
+PUSHG 1
+STOREG 3
+JUMP endif_6
+else_5:
+// Assignment: maior = expression
+PUSHG 2
+STOREG 3
+endif_6:
+endif_2:
+// Write statement
+PUSHS "O maior é: "
+WRITEI
+PUSHG 3
+WRITEI
+WRITELN
+STOP
