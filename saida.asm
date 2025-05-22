@@ -1,39 +1,13 @@
 START
-PUSHI 5
-ALLOC
-STOREG 0
-PUSHI 0
-STOREG 2
-PUSHS "Introduza 5 numeros inteiros:"
+PUSHS "Introduza uma string binria:"
 WRITES
 WRITELN
-PUSHI 1
-STOREG 1
-LABEL: for_inicio0
-PUSHG 1
-PUSHI 5
-INFEQ
-JZ for_fim1
 READ
-ATOI
-PUSHG 0
-PUSHG 1
-STOREN
-PUSHG 2
-PUSHG 0
-PUSHG 1
-LOADN
-ADD
-STOREG 2
-PUSHG 1
-PUSHI 1
-ADD
+STOREG 0
 STOREG 1
-JUMP for_inicio0
-LABEL: for_fim1
-PUSHS "A soma dos nmeros : "
+PUSHS "O valor inteiro correspondente : "
 WRITES
-PUSHG 2
+PUSHG 1
 WRITEI
 WRITELN
 STOP

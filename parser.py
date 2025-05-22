@@ -33,6 +33,21 @@ def p_gramatica(p):
 
 def p_programa(p):
     "programa : cabecalho corpo"
+
+    global proximo_endereco
+    proximo_endereco = 0
+    _,titulo, funcoes, variaveis_globais = p[1]
+
+    # Inserir variáveis globais na tabela de símbolos (alteraçao para pascal7)
+    for declaracao in variaveis_globais:
+        _, nomes, tipo = declaracao
+        for nome in nomes:
+            try:
+                tabela.adicionar(nome, tipo, endereco=proximo_endereco)
+                proximo_endereco += 1
+            except ValueError as e:
+                print(f"Erro semântico: {e}")
+
     p[0] = ("programa", p[1], p[2])
 
 
@@ -107,6 +122,17 @@ def p_bloco_funcao(p):
     vars = p[1]
     corpo = p[2]
 
+    # Adiciona as variáveis locais à tabela de símbolos (alteraçao para pascal7)
+    for declaracao in vars:
+        _, nomes, tipo = declaracao
+        for nome in nomes:
+            try:
+                tabela.adicionar(nome, tipo, endereco=proximo_endereco_local)
+                proximo_endereco_local += 1
+            except ValueError as e:
+                print(f"Erro semântico: {e}")
+
+
     tabela.sair_funcao()
 
     p[0] = (vars, corpo)
@@ -149,13 +175,7 @@ def p_declaracoes_varias(p):
 
 def p_declaracao(p):
     "declaracao : lista_id ':' tipo ';'"
-    global proximo_endereco
-    for nome in p[1]:
-        try:
-            tabela.adicionar(nome, p[3], endereco=proximo_endereco)
-            proximo_endereco += 1
-        except ValueError as e:
-            print(f"Erro semântico: {e}")
+
     p[0] = ("declaracao", p[1], p[3])
 
 
@@ -354,6 +374,9 @@ def gerar_expressao(expr):
             endereco = tabela.obter(nome_array)["endereco"]
             gen(f"PUSHG {endereco}")
             gerar_expressao(indice_expr)
+            gen("PUSHI 1")
+            gen("SUB")                     # índice zero-based = i - 1
+            gen("ADD")
             gen("LOADN")
 
 
@@ -496,10 +519,13 @@ def gerar_instrucao(instr):
             nome = destino[1]
             indice = destino[2]
             endereco = tabela.obter(nome)["endereco"]
-            gen(f"PUSHG {endereco}")
-            gerar_expressao(indice)
-            gen("STOREN")
+            gen(f"PUSHG {endereco}")   # endereço base do array
+            gerar_expressao(indice)    # índice i (1..5)
+            gen("PUSHI 1")
+            gen("SUB")                 # índice zero-based = i - 1
+            gen("STOREN")              # armazenar no endereço base + (i-1)
         else:
+        
             endereco = tabela.obter(destino)["endereco"]
             gen(f"STOREG {endereco}")
 
@@ -514,6 +540,8 @@ def gerar_instrucao(instr):
             gen("ATOI")
             gen(f"PUSHG {endereco}")
             gerar_expressao(indice)
+            gen("PUSHI 1")
+            gen("SUB")                 # índice zero-based = i - 1
             gen("STOREN")
         else:
             emitir_uma_expressao_para_input(var)
@@ -525,6 +553,8 @@ def gerar_instrucao(instr):
         endereco = tabela.obter(nome_array)["endereco"]
         gen(f"PUSHG {endereco}")
         gerar_expressao(indice_expr)
+        gen("PUSHI 1")
+        gen("SUB")                     # índice zero-based = i - 1
         gerar_expressao(valor_expr)
         gen("STOREN")
 
