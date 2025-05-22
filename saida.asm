@@ -1,13 +1,53 @@
 START
-PUSHS "Introduza uma string binria:"
+PUSHS "Introduza um nmero inteiro positivo:"
 WRITES
 WRITELN
 READ
+ATOI
 STOREG 0
+PUSHI True
+STOREG 2
+PUSHI 2
 STOREG 1
-PUSHS "O valor inteiro correspondente : "
-WRITES
+whileinicio0:
 PUSHG 1
+PUSHG 0
+PUSHI 2
+DIV
+INFEQ
+PUSHG 2
+AND
+JZ whilefim1
+PUSHG 0
+PUSHG 1
+MOD
+PUSHI 0
+EQUAL
+JZ else2
+PUSHI False
+STOREG 2
+JUMP fim3
+else2:
+fim3:
+PUSHG 1
+PUSHI 1
+ADD
+STOREG 1
+JUMP whileinicio0
+whilefim1:
+PUSHG 2
+JZ else4
+PUSHG 0
 WRITEI
+PUSHS "  um nmero primo"
+WRITES
 WRITELN
+JUMP fim5
+else4:
+PUSHG 0
+WRITEI
+PUSHS " no  um nmero primo"
+WRITES
+WRITELN
+fim5:
 STOP
