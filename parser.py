@@ -16,7 +16,7 @@ def gen(instr):
 
 def nova_label(prefix="label"):
     global label_count
-    label = f"{prefix}{label_count}"  # sem underscore!
+    label = f"{prefix}{label_count}".upper().replace("_", "")  # usa LABEL0, FORINICIO1, etc.
     label_count += 1
     return label
 
@@ -74,7 +74,9 @@ def p_declaracao_funcoes(p):
         nome_funcao = func[0]
         tipo_funcao = func[1]
         try:
-            tabela.adicionar(nome_funcao, tipo_funcao, categoria="funcao")
+            global proximo_endereco
+            tabela.adicionar(nome_funcao, tipo_funcao, categoria="funcao", endereco=proximo_endereco)
+            proximo_endereco += 1
         except ValueError as e:
             print(f"Erro semântico: {e}")
 
@@ -366,10 +368,19 @@ def gerar_expressao(expr):
             gerar_expressao(expr[1])
             gen("NOT")
         elif expr[0] == 'call' and expr[1] == 'length':
+            
             var = expr[2]
             endereco = tabela.obter(var)["endereco"]
             gen(f"PUSHG {endereco}")
             gen("STRLEN")
+
+        elif expr[0] == 'call':
+            nome_funcao = expr[1]
+            argumento = expr[2]
+            
+            gerar_expressao(argumento)  # Empilha argumento
+            gen(f"CALL {nome_funcao}")  # Chama a função
+
         elif expr[0] == 'array_acesso':
             nome_array = expr[1]
             indice_expr = expr[2]
@@ -396,7 +407,14 @@ def gerar_expressao(expr):
 
 def p_atribuicao(p):
     "atribuicao : ID ASSIGN expressao"
-    p[0] = ("atribuicao", p[1], p[3])
+    nome = p[1]
+    expr = p[3]
+
+    # Verifica se o ID é uma função em execução → atribuição ao valor de retorno
+    if tabela.em_funcao(nome):
+        p[0] = ("retorno_funcao", nome, expr)
+    else:
+        p[0] = ("atribuicao", nome, expr)
 
 def p_atribuicao_array(p):
     "atribuicao : ID '[' expressao ']' ASSIGN expressao"
@@ -589,6 +607,20 @@ def gerar_instrucao(instr):
             gen(f"STOREG {endereco}")
         else:
             print(f"Erro semântico: variável '{destino}' não declarada.")
+
+    elif instr[0] == "retorno_funcao":
+        nome_funcao = instr[1]
+        expr = instr[2]
+
+        gerar_expressao(expr)
+
+        if tabela.existe(nome_funcao):
+            endereco = tabela.obter(nome_funcao)["endereco"]
+            gen(f"STOREG {endereco}")
+        else:
+            print(f"Erro: função '{nome_funcao}' não tem endereço atribuído.")
+
+        gen("RET")
 
     elif instr[0] == "atribuicao_array":
         nome_array = instr[1]
@@ -956,14 +988,50 @@ def gerar_codigo(ast):
     if ast[0] == "programa":
         cabecalho = ast[1]
         corpo = ast[2]
-        
+
         print("DEBUG cabecalho:", cabecalho)
 
-        #  1. Inicializar arrays no segmento global
+        # 1. Alocar arrays globais
         gerar_alocacoes_arrays(cabecalho)
 
-        #  2. Gerar o corpo do programa
+        # 2. Gerar código para funções
+        funcoes = cabecalho[2]
+        for func in funcoes:
+            nome_funcao, tipo_funcao, parametros, bloco = func
+
+            # Entra no escopo da função novamente
+            tabela.entrar_funcao()
+
+            # Redefinir endereçamento local
+            global proximo_endereco_local
+            proximo_endereco_local = 0
+
+            # Parâmetros
+            for nome_param, tipo_param in parametros:
+                tabela.adicionar(nome_param, tipo_param, categoria="parametro", endereco=proximo_endereco_local)
+                proximo_endereco_local += 1
+
+            # Variáveis locais
+            declaracoes, corpo_funcao = bloco
+            for declaracao in declaracoes:
+                _, nomes, tipo = declaracao
+                for nome in nomes:
+                    try:
+                        tabela.adicionar(nome, tipo, endereco=proximo_endereco_local)
+                        proximo_endereco_local += 1
+                    except ValueError as e:
+                        print(f"Erro semântico: {e}")
+
+            gen_label(nome_funcao)
+            gerar_instrucao(corpo_funcao)
+            gen("RET")
+
+            tabela.sair_funcao()  # sair do escopo da função
+
+        # 3. Gerar código principal
+        gen("START")
         gerar_instrucao(corpo)
+        gen("STOP")
 
 
 # -------------------------
@@ -1001,9 +1069,11 @@ if __name__ == "__main__":
 
 
         # Escrever assembly no ficheiro
-        with open("saida.asm", "w", encoding="ascii", errors="ignore", newline="\n") as f:
+        with open("saida.asm", "w", encoding="utf-8", newline="\n") as f:
             for instr in codigo_assembly:
-                f.write(instr + "\n")
+                # Remove espaços e quebras estranhas
+                linha = instr.strip().replace('\r', '')
+                f.write(linha + "\n")
 
         # Opcional: imprimir também no terminal
         print("\nCódigo Assembly gerado:")

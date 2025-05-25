@@ -42,3 +42,7 @@ class TabelaSimbolos:
                 props_str = ", ".join(f"{k}={v}" for k, v in props.items())
                 result += f"    {nome}: {props_str}\n"
         return result
+
+    def em_funcao(self, nome):
+        """Verifica se estamos dentro da função de nome `nome`."""
+        return self.escopo_atual == self.local_scope and self.local_scope is not None and nome not in self.global_scope
