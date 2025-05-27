@@ -2,6 +2,20 @@ import ply.yacc as yacc
 from lex import tokens
 from simbolos import TabelaSimbolos
 
+from semantica import (
+    inferir_tipo,
+    verificar_variavel_existe,
+    verificar_atribuicao,
+    verificar_array_acesso,
+    verificar_funcao,
+    verificar_parametros,
+    declarar_variaveis,
+    declarar_array,
+    declarar_funcao,
+    verificar_instrucao,
+    verificar_programa
+)
+
 tabela = TabelaSimbolos()
 codigo_assembly = []
 proximo_endereco = 0
@@ -34,21 +48,34 @@ def p_gramatica(p):
 def p_programa(p):
     "programa : cabecalho corpo"
 
+    cabecalho = p[1]
+    corpo = p[2]
+
+    titulo = cabecalho[1]
+    funcoes = cabecalho[2]
+    variaveis_globais = cabecalho[3]
+
     global proximo_endereco
     proximo_endereco = 0
-    _,titulo, funcoes, variaveis_globais = p[1]
 
-    # Inserir variáveis globais na tabela de símbolos (alteraçao para pascal7)
     for declaracao in variaveis_globais:
         _, nomes, tipo = declaracao
         for nome in nomes:
-            try:
-                tabela.adicionar(nome, tipo, endereco=proximo_endereco)
-                proximo_endereco += 1
-            except ValueError as e:
-                print(f"Erro semântico: {e}")
+            if isinstance(tipo, tuple) and tipo[0] == "array":
+                # Chama declarar_array (importa-a no topo do ficheiro)
+                try:
+                    declarar_array(tabela, nome, tipo)
+                except ValueError as e:
+                    print(f"Erro semântico: {e}")
+            else:
+                try:
+                    tabela.adicionar(nome, tipo, endereco=proximo_endereco)
+                    proximo_endereco += 1
+                except ValueError as e:
+                    print(f"Erro semântico: {e}")
 
-    p[0] = ("programa", p[1], p[2])
+    p[0] = ("programa", cabecalho, corpo)
+
 
 
 
@@ -70,15 +97,7 @@ def p_titulo(p):
 def p_declaracao_funcoes(p):
     "declaracao_funcoes : FUNCTION funcoes"
     p[0] = p[2]
-    for func in p[2]:
-        nome_funcao = func[0]
-        tipo_funcao = func[1]
-        try:
-            global proximo_endereco
-            tabela.adicionar(nome_funcao, tipo_funcao, categoria="funcao", endereco=proximo_endereco)
-            proximo_endereco += 1
-        except ValueError as e:
-            print(f"Erro semântico: {e}")
+
 
 def p_declaracao_funcoes_vazio(p):
     "declaracao_funcoes :"
@@ -104,32 +123,7 @@ def p_funcao(p):
 
 def p_bloco_funcao(p):
     "bloco_funcao : declaracoes_variaveis corpo"
-    global parametros_em_espera, proximo_endereco_local
-    proximo_endereco_local = 0
-
-    tabela.entrar_funcao()
-
-    for nome_param, tipo_param in parametros_em_espera:
-        tabela.adicionar(nome_param, tipo_param, categoria="parametro", endereco=proximo_endereco_local)
-        proximo_endereco_local += 1
-
-    vars = p[1]
-    corpo = p[2]
-
-    # Adiciona as variáveis locais à tabela de símbolos (alteraçao para pascal7)
-    for declaracao in vars:
-        _, nomes, tipo = declaracao
-        for nome in nomes:
-            try:
-                tabela.adicionar(nome, tipo, endereco=proximo_endereco_local)
-                proximo_endereco_local += 1
-            except ValueError as e:
-                print(f"Erro semântico: {e}")
-
-
-    tabela.sair_funcao()
-
-    p[0] = (vars, corpo)
+    p[0] = (p[1], p[2])
 
 # -------------------------
 # PARÂMETROS DE FUNÇÃO
@@ -263,36 +257,7 @@ def p_instrucao_vazia(p):
 # Atribuição
 # -------------------------
 
-def inferir_tipo(expr):
-    if isinstance(expr, int):
-        return "integer"
-    if isinstance(expr, float):
-        return "real"
-    if isinstance(expr, bool):
-        return "boolean"
-    if isinstance(expr, str):
-        if expr.startswith('"') or expr.startswith("'"):
-            return "string"
-        if tabela.existe(expr):
-            return tabela.obter(expr)["tipo"]
-        return "desconhecido"
-    if isinstance(expr, tuple):
-        if expr[0] == '+':
-            t1 = inferir_tipo(expr[1])
-            t2 = inferir_tipo(expr[2])
-            if t1 == "real" or t2 == "real":
-                return "real"
-            return "integer"
-        if expr[0] == 'relop':
-            return "boolean"
-        if expr[0] == 'array_acesso':
-            nome_array = expr[1]
-            if tabela.existe(nome_array):
-                tipo_array = tabela.obter(nome_array)["tipo"]
-                if isinstance(tipo_array, tuple) and tipo_array[0] == "array":
-                    return tipo_array[3]  # tipo do elemento
-            return "desconhecido"
-    return "desconhecido"
+
 
 def gerar_expressao(expr):
     if isinstance(expr, int):
@@ -407,14 +372,7 @@ def gerar_expressao(expr):
 
 def p_atribuicao(p):
     "atribuicao : ID ASSIGN expressao"
-    nome = p[1]
-    expr = p[3]
-
-    # Verifica se o ID é uma função em execução → atribuição ao valor de retorno
-    if tabela.em_funcao(nome):
-        p[0] = ("retorno_funcao", nome, expr)
-    else:
-        p[0] = ("atribuicao", nome, expr)
+    p[0] = ("atribuicao", p[1], p[3])
 
 def p_atribuicao_array(p):
     "atribuicao : ID '[' expressao ']' ASSIGN expressao"
@@ -647,9 +605,6 @@ def gerar_instrucao(instr):
             
             # Gera código para o índice
             gerar_expressao(indice_expr)
-
-            
-            
 
             
             # Armazena no array
@@ -941,7 +896,7 @@ def p_fator_menos(p):
     p[0] = ('menos', p[2])
 
 def gerar_alocacoes_arrays(cabecalho):
-    print(">>> ENTROU EM gerar_alocacoes_arrays")
+    #print(">>> ENTROU EM gerar_alocacoes_arrays")
 
     if not isinstance(cabecalho, tuple):
         return
@@ -989,7 +944,7 @@ def gerar_codigo(ast):
         cabecalho = ast[1]
         corpo = ast[2]
 
-        print("DEBUG cabecalho:", cabecalho)
+        #print("DEBUG cabecalho:", cabecalho)
 
         # 1. Alocar arrays globais
         gerar_alocacoes_arrays(cabecalho)
@@ -1062,6 +1017,8 @@ if __name__ == "__main__":
     if parser.success:
         print("Frase válida.")
         print(ast)
+
+        verificar_programa(tabela, ast)
 
         gen("START")
         gerar_codigo(ast)

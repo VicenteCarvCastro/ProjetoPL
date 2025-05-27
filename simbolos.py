@@ -46,3 +46,6 @@ class TabelaSimbolos:
     def em_funcao(self, nome):
         """Verifica se estamos dentro da função de nome `nome`."""
         return self.escopo_atual == self.local_scope and self.local_scope is not None and nome not in self.global_scope
+    
+    def existe_no_escopo_atual(self, nome):
+        return nome in self.escopo_atual

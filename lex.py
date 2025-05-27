@@ -187,7 +187,7 @@ def t_RANGE(t):
     return t
 
 def t_STRING_LITERAL(t):
-    r"'[^']*'" # colocar '?' depois '*' para nao ser greedy?
+    r"'[^']*?'"
     t.value = t.value[1:-1]
     return t
 
@@ -216,4 +216,5 @@ def t_error(t):
 # CONSTRUIR O LEXER
 # -------------------------
 lexer = lex.lex(reflags=re.IGNORECASE)
+
 
