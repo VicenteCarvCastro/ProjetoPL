@@ -1,10 +1,10 @@
 def inferir_tipo(tabela, expr):
+    if isinstance(expr, bool):
+        return "boolean"
     if isinstance(expr, int):
         return "integer"
     if isinstance(expr, float):
         return "real"
-    if isinstance(expr, bool):
-        return "boolean"
     if isinstance(expr, str):
         # Se é uma variável declarada
         if tabela.existe(expr):

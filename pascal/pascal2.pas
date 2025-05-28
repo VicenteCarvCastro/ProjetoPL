@@ -15,7 +15,7 @@ if num1 > num3 then maior := num1
 else maior := num3
 else
 if num2 > num3 then maior := num2
-else maior := 'ola';
+else maior := num3;
 { Escrever o resultado }
 WriteLn('O maior é: ', maior)
 end.

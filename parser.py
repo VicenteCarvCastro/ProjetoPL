@@ -260,12 +260,12 @@ def p_instrucao_vazia(p):
 
 
 def gerar_expressao(expr):
-    if isinstance(expr, int):
+    if isinstance(expr, bool):
+        gen("PUSHI 1" if expr else "PUSHI 0")
+    elif isinstance(expr, int):
         gen(f"PUSHI {expr}")
     elif isinstance(expr, float):
         gen(f"PUSHF {expr}")
-    elif isinstance(expr, bool):
-        gen("PUSHI 1" if expr else "PUSHI 0")
     elif isinstance(expr, str):
         if tabela.existe(expr):
             info = tabela.obter(expr)
@@ -1020,9 +1020,9 @@ if __name__ == "__main__":
 
         verificar_programa(tabela, ast)
 
-        gen("START")
+
         gerar_codigo(ast)
-        gen("STOP")
+
 
 
         # Escrever assembly no ficheiro
