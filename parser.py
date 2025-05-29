@@ -64,7 +64,8 @@ def p_programa(p):
             if isinstance(tipo, tuple) and tipo[0] == "array":
                 # Chama declarar_array (importa-a no topo do ficheiro)
                 try:
-                    declarar_array(tabela, nome, tipo)
+                    tabela.adicionar(nome, tipo, endereco=proximo_endereco)
+                    proximo_endereco += 1
                 except ValueError as e:
                     print(f"Erro semântico: {e}")
             else:
