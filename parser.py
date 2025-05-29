@@ -58,6 +58,16 @@ def p_programa(p):
     global proximo_endereco
     proximo_endereco = 0
 
+
+    for func in funcoes:
+        nome_funcao = func[0]
+        tipo_funcao = func[1]
+        try:
+            tabela.adicionar(nome_funcao, tipo_funcao, categoria="funcao", endereco=proximo_endereco)
+            proximo_endereco += 1
+        except ValueError as e:
+            print(f"Erro semântico: {e}")
+
     for declaracao in variaveis_globais:
         _, nomes, tipo = declaracao
         for nome in nomes:
@@ -98,6 +108,7 @@ def p_titulo(p):
 def p_declaracao_funcoes(p):
     "declaracao_funcoes : FUNCTION funcoes"
     p[0] = p[2]
+  
 
 
 def p_declaracao_funcoes_vazio(p):
@@ -989,6 +1000,8 @@ def gerar_codigo(ast):
         gerar_instrucao(corpo)
         gen("STOP")
 
+        print("\n📦 Tabela de símbolos final:")
+        print(tabela)
 
 # -------------------------
 # ERROS
