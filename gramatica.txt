@@ -15,10 +15,18 @@ funcoes -> funcao
 funcao -> ID '(' parametros ')' ':' tipo ';' bloco_funcao ';'
 
 
-
-parametros -> lista_id ':' tipo    ( Mudar isto para usar declaracoes -> MAS NAO DA NAO SEI PORQ??)
+// Mudar ??
+parametros -> lista_id ':' tipo                                
             | lista_id ':' tipo ';' parametros
             | ε
+
+// parametros ficaria..
+parametros -> lista_parametros
+            | ε
+
+lista_parametros -> lista_id ':' tipo
+                  | lista_id ':' tipo ';' lista_parametros
+
 
 bloco_funcao -> declaracoes_variaveis corpo
 
@@ -44,6 +52,7 @@ corpo            -> BEGIN lista_instrucoes END
 
 lista_instrucoes -> instrucao
                  | lista_instrucoes ';' instrucao
+                 // Acrescentava vazio (1º opcao)
 
 instrucao        -> atribuicao
                  | leitura
@@ -52,16 +61,16 @@ instrucao        -> atribuicao
                  | while_statement
                  | for_statement
                  | bloco
-                 | ε ??
+                 | ε     // Tirar e colocar em lista_instrucoes ??
 
 bloco            ->  BEGIN lista_instrucoes END
 
 
-atribuicao       -> ID ASSIGN expressao                             // FALTA '+=' e '-=' ?
+atribuicao       -> ID ASSIGN expressao                             
                  | ID '[' expressao ']' ASSIGN expressao
 
-leitura          -> READ '(' expressao_simples ')' 
-                 | READLN '(' expressao_simples ')' 
+leitura          -> READ '(' expressao_simples ')'   // nao temos expressao_simples mas sim so expressao
+                 | READLN '(' expressao_simples ')'  // Acrescentar expressao_simples?
 
 escrita          -> WRITE '(' lista_expressao ')'
                  |  WRITELN '(' lista_expressao ')'
@@ -102,11 +111,11 @@ termo -> termo '*' fator
        | fator
 
 
-fator            -> NUMBER                       // Const? Var?
+fator            -> NUMBER                     // Const ?  
                  | STRING_LITERAL
-                 | ID                            // Nao da ASNEIRA 3 expressoes começar por ID?
-                 | ID '[' expressao ']'          // AcessoArray
-                 | ID '(' expressao ')'          // ChamadaFuncao
+                 | ID                          // Var ?
+                 | ID '[' expressao ']'        // Acesso a array  
+                 | ID '(' expressao ')'        // Chamada de funçao
                  | TRUE
                  | FALSE
                  | '(' expressao ')'

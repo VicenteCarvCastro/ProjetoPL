@@ -36,7 +36,7 @@ def t_VAR(t):
     return t
 
 def t_INTEGER(t):
-    r'integer'
+    r'[Ii]nteger'
     return t
 
 def t_REAL(t):
@@ -72,19 +72,19 @@ def t_END(t):
     return t
 
 def t_READLN(t):
-    r'readln'
+    r'[Rr]ead[Ll]n'
     return t
 
 def t_READ(t):
-    r'read'
+    r'[Rr]ead'
     return t
 
 def t_WRITELN(t):
-    r'writeln'
+    r'[Ww]rite[Ll]n'
     return t
 
 def t_WRITE(t):
-    r'write'
+    r'[Ww]rite'
     return t
 
 def t_IF(t):
@@ -120,12 +120,12 @@ def t_TO(t):
     return t
 
 def t_TRUE(t):
-    r'true'
+    r'[Tt]rue'
     t.value = True
     return t
 
 def t_FALSE(t):
-    r'false'
+    r'[Ff]alse'
     t.value = False
     return t
 
@@ -215,6 +215,6 @@ def t_error(t):
 # -------------------------
 # CONSTRUIR O LEXER
 # -------------------------
-lexer = lex.lex(reflags=re.IGNORECASE)
+lexer = lex.lex() # Tirei o re.IGNORECASE porque estava a causar interferencia no reconhecimento de tokens (ex: do e "Dobro")
 
 

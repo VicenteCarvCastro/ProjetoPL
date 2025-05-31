@@ -7,5 +7,5 @@ readln(n);
 fat := 1;
 for i := 1 to n do
 fat := fat * i;
-writeln(bolachas);
+writeln(bolachas, ola);  {nao diz nada}
 end.

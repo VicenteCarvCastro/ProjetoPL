@@ -49,3 +49,5 @@ class TabelaSimbolos:
     
     def existe_no_escopo_atual(self, nome):
         return nome in self.escopo_atual
+
+

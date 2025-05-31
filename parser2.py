@@ -1,5 +1,3 @@
-#           Codigo do ULTIMO Commit
-
 import ply.yacc as yacc
 from lex import tokens
 from simbolos import TabelaSimbolos
@@ -61,14 +59,14 @@ def p_programa(p):
     proximo_endereco = 0
 
 
-    for func in funcoes:
-        nome_funcao = func[0]
-        tipo_funcao = func[1]
-        try:
-            tabela.adicionar(nome_funcao, tipo_funcao, categoria="funcao", endereco=proximo_endereco)
-            proximo_endereco += 1
-        except ValueError as e:
-            print(f"Erro semântico: {e}")
+    # for func in funcoes:
+    #     nome_funcao = func[0]
+    #     tipo_funcao = func[1]
+    #     try:
+    #         tabela.adicionar(nome_funcao, tipo_funcao, categoria="funcao", endereco=proximo_endereco)
+    #         proximo_endereco += 1
+    #     except ValueError as e:
+    #         print(f"Erro semântico: {e}")
 
     for declaracao in variaveis_globais:
         _, nomes, tipo = declaracao
@@ -78,6 +76,7 @@ def p_programa(p):
                 try:
                     tabela.adicionar(nome, tipo, endereco=proximo_endereco)
                     proximo_endereco += 1
+                    #declarar_array(tabela, nome, tipo)
                 except ValueError as e:
                     print(f"Erro semântico: {e}")
             else:
@@ -298,7 +297,7 @@ def gerar_expressao(expr):
             item_fmt = expr.replace('"', '\\"')
             converte_to_ascii = ord(item_fmt[0])
             gen(f'PUSHI {converte_to_ascii}')
-            print(f"Erro semântico: variável '{expr}' não declarada.")
+            #print(f"Erro semântico: variável '{expr}' não declarada.")
     elif isinstance(expr, tuple):
         if expr[0] == '+':
             gerar_expressao(expr[1])
@@ -593,8 +592,8 @@ def gerar_instrucao(instr):
         if tabela.existe(destino):
             endereco = tabela.obter(destino)["endereco"]
             gen(f"STOREG {endereco}")
-        else:
-            print(f"Erro semântico: variável '{destino}' não declarada.")
+        #else:
+            #print(f"Erro semântico: variável '{destino}' não declarada.")
 
     elif instr[0] == "retorno_funcao":
         nome_funcao = instr[1]
@@ -1031,10 +1030,13 @@ def p_error(p):
         print("Erro sintático: Fim inesperado do arquivo.")
     parser.success = False
 
+
+
 # -------------------------
 # PARSER
 # -------------------------
 parser = yacc.yacc(debug=True)
+
 
 def executar_parser(codigo_fonte):
     import lex
@@ -1060,6 +1062,8 @@ def executar_parser(codigo_fonte):
             print(instr)
     else:
         print("❌ Erro de parsing.")
+
+
 
 if __name__ == "__main__":
     import sys
