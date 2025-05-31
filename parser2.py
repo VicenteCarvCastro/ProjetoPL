@@ -35,7 +35,7 @@ def nova_label(prefix="label"):
     return label
 
 def gen_label(nome):
-    gen(f"{nome}:")
+    gen(f"{nome}:    // Label {nome}")
 
 
 # -------------------------
@@ -274,11 +274,11 @@ def p_instrucao_vazia(p):
 
 def gerar_expressao(expr):
     if isinstance(expr, bool):
-        gen("PUSHI 1" if expr else "PUSHI 0")
+        gen("PUSHI 1     // Push True" if expr else "PUSHI 0     // Push False")
     elif isinstance(expr, int):
-        gen(f"PUSHI {expr}")
+        gen(f"PUSHI {expr}     // Push valor {expr}") 
     elif isinstance(expr, float):
-        gen(f"PUSHF {expr}")
+        gen(f"PUSHF {expr}     // Push valor {expr}")
     elif isinstance(expr, str):
         if tabela.existe(expr):
             info = tabela.obter(expr)
@@ -287,79 +287,79 @@ def gerar_expressao(expr):
             
             # Se é um array, empilha o endereço base
             if isinstance(tipo, tuple) and tipo[0] == "array":
-                gen(f"PUSHG {endereco}")
+                gen(f"PUSHG {endereco}     // Push Array Base Address")
             else:
-                gen(f"PUSHG {endereco}")
+                gen(f"PUSHG {endereco}     // Empilha endreço de {expr}")
         else:
             # String literal
             if expr.startswith("'") and expr.endswith("'"):
                 expr = expr[1:-1]  # Remove aspas simples
             item_fmt = expr.replace('"', '\\"')
             converte_to_ascii = ord(item_fmt[0])
-            gen(f'PUSHI {converte_to_ascii}')
+            gen(f'PUSHI {converte_to_ascii}     // Push Char Ascii Value')
             #print(f"Erro semântico: variável '{expr}' não declarada.")
     elif isinstance(expr, tuple):
         if expr[0] == '+':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("ADD")
+            gen("ADD     // Soma de dois valores")
         elif expr[0] == '-':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("SUB")
+            gen("SUB     // Subtração de dois valores")
         elif expr[0] == '*':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("MUL")
+            gen("MUL     // Multiplicação de dois valores")
         elif expr[0] == 'div':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("DIV")
+            gen("DIV     // Divisão de dois valores")
         elif expr[0] == 'mod':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("MOD")
+            gen("MOD     // Módulo de dois valores")
         elif expr[0] == 'relop':
             gerar_expressao(expr[2])
             gerar_expressao(expr[3])
             op = expr[1]
             if op == '>':
-                gen("SUP")
+                gen("SUP     // Maior")
             elif op == '<':
-                gen("INF")
+                gen("INF     // Menor")
             elif op == '=':
-                gen("EQUAL")
+                gen("EQUAL     // Igual")
             elif op == '<>':
-                gen("EQUAL")
-                gen("NOT")
+                gen("EQUAL     // Diferente")
+                gen("NOT     // Diferente")
             elif op == '>=':
-                gen("SUPEQ")
+                gen("SUPEQ     // Maior ou Igual")
             elif op == '<=':
-                gen("INFEQ")
+                gen("INFEQ     // Menor ou Igual")
         elif expr[0] == 'and':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("AND")
+            gen("AND     // E lógico")
         elif expr[0] == 'or':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("OR")
+            gen("OR     // Ou lógico")
         elif expr[0] == 'not':
             gerar_expressao(expr[1])
-            gen("NOT")
+            gen("NOT     // Não lógico")
         elif expr[0] == 'call' and expr[1] == 'length':
             
             var = expr[2]
             endereco = tabela.obter(var)["endereco"]
-            gen(f"PUSHG {endereco}")
-            gen("STRLEN")
+            gen(f"PUSHG {endereco}     // Empilha endereço da string")
+            gen("STRLEN     // Calcula o tamanho da string")
 
         elif expr[0] == 'call':
             nome_funcao = expr[1]
             argumento = expr[2]
             
             gerar_expressao(argumento)  # Empilha argumento
-            gen(f"CALL {nome_funcao}")  # Chama a função
+            gen(f"CALL {nome_funcao}     // Invoca Função")  # Chama a função
 
         elif expr[0] == 'array_acesso':
             nome_array = expr[1]
@@ -370,34 +370,34 @@ def gerar_expressao(expr):
 
             if tipo == "string":
                 # Empilha endereço base do array
-                gen(f"PUSHG {endereco}")
+                gen(f"PUSHG {endereco}     // Empilha  endreço de {nome_array}")
                 
                 # Gera código para o índice
                 gerar_expressao(indice_expr)
     
-                gen("PUSHI 1")  # Para o offset
-                gen("SUB")  # Adiciona o offset ao endereço base
+                gen("PUSHI 1     // Offset")  # Para o offset
+                gen("SUB     // Offset")  # Adiciona o offset ao endereço base
 
                 # Carrega o valor do array
-                gen("CHARAT")
+                gen("CHARAT     // Valor Asccii do caractere")
             else:
             
                 # Empilha endereço base do array
-                gen(f"PUSHG {endereco}")
+                gen(f"PUSHG {endereco}     // Empilha endereço base do array {nome_array}")
 
                 # Gera código para o índice
                 gerar_expressao(indice_expr)
 
-                gen("PUSHI 1")  # Para o offset
-                gen("SUB")  # Adiciona o offset ao endereço base
+                gen("PUSHI 1     // Offset")  # Para o offset
+                gen("SUB     // Offset")  # Adiciona o offset ao endereço base
 
 
                 # Carrega o valor do array
-                gen("LOADN")
+                gen("LOADN     // Carrega valor do array")
         elif expr[0] == 'menos':
-            gen("PUSHI 0")
+            gen("PUSHI 0     // Push zero")
             gerar_expressao(expr[1])
-            gen("SUB")
+            gen("SUB     // Subtração para negativo")
 
 def p_atribuicao(p):
     "atribuicao : ID ASSIGN expressao"
@@ -424,19 +424,19 @@ def emitir_uma_expressao_para_input(item):
                 print(f"Erro semântico: variável '{item}' não tem endereço atribuído.")
                 return
 
-            gen("READ")  # lê string do input
+            gen("READ  // Le string do input")  # lê string do input
 
             # Conversão dependendo do tipo esperado
             if isinstance(tipo, tuple) and tipo[0] == "array":
                 # Para arrays, assume que o tipo base é integer por padrão
-                gen("ATOI")
+                gen("ATOI      // Converte string para inteiro")
             elif tipo == "integer":
-                gen("ATOI")
+                gen("ATOI     // Converte string para inteiro")
             elif tipo == "real":
-                gen("ATOF")
+                gen("ATOF     // Converte string para float")
             # string não precisa de conversão
 
-            gen(f"STOREG {endereco}")
+            gen(f"STOREG {endereco}     // Armazena {item} no endereço {endereco}")
         else:
             print(f"Erro semântico: variável '{item}' não declarada.")
     
@@ -457,20 +457,20 @@ def emitir_uma_expressao_para_input(item):
                 endereco = info["endereco"]
                 tipo = info["tipo"]
 
-                gen(f"PUSHG {endereco}")
+                gen(f"PUSHG {endereco}     // Empilha endereço base do array {nome_array}")
 
                 gerar_expressao(indice_expr)
 
-                gen("PUSHI 1")  # Para o offset
-                gen("SUB")  # Adiciona o offset ao endereço base
+                gen("PUSHI 1     // Offset")  # Para o offset
+                gen("SUB     // Offset")  # Adiciona o offset ao endereço base
                 
 
-                gen("READ")
-                gen("ATOI")  # assume input is integer
+                gen("READ     // lê string do input")
+                gen("ATOI     // Converte string para inteiro")  # assume input is integer
 
 
                 
-                gen("STOREN")
+                gen("STOREN     // Armazena o valor lido no array")
         else:
             print(f"Erro semântico: array '{nome_array}' não declarado.")
 
@@ -499,24 +499,24 @@ def emitir_uma_expressao_para_output(item):
                 print(f"Erro semântico: variável '{item}' não tem endereço atribuído.")
                 return
 
-            gen(f'PUSHG {endereco}')
+            gen(f'PUSHG {endereco}    // Empilha endereço de {item}')
 
             if isinstance(tipo, tuple) and tipo[0] == "array":
                 # Para arrays, não sabemos como imprimir diretamente
                 gen("WRITEI")  # Assume que vai imprimir o endereço por agora
             elif tipo == "integer":
-                gen("WRITEI")
+                gen("WRITEI     // Imprime inteiro")
             elif tipo == "real":
-                gen("WRITEF")
+                gen("WRITEF     // Imprime float")
             else:
-                gen("WRITES")
+                gen("WRITES     // Imprime string")
         else:
             # String literal
             if item.startswith("'") and item.endswith("'"):
                 item = item[1:-1]  # Remove aspas simples
             item_fmt = item.replace('"', '\\"')
-            gen(f'PUSHS "{item_fmt}"')
-            gen("WRITES")
+            gen(f'PUSHS "{item_fmt}"     // Push String')
+            gen("WRITES     // Imprime string")
     elif isinstance(item, tuple) and item[0] == "array_acesso":
         # Acesso a elemento de array
         gerar_expressao(item)
@@ -529,31 +529,31 @@ def emitir_uma_expressao_para_output(item):
             if isinstance(tipo, tuple) and tipo[0] == "array":
                 tipo_elemento = tipo[3]
                 if tipo_elemento == "integer":
-                    gen("WRITEI")
+                    gen("WRITEI     // Imprime inteiro")
                 elif tipo_elemento == "real":
-                    gen("WRITEF")
+                    gen("WRITEF     // Imprime float")
                 else:
-                    gen("WRITES")
+                    gen("WRITES     // Imprime string")
             else:
-                gen("WRITEI")  # padrão
+                gen("WRITEI     // Imprime inteiro")  # padrão
         else:
-            gen("WRITEI")  # padrão
+            gen("WRITEI     // Imprime inteiro")  # padrão
     elif isinstance(item, int):
-        gen(f'PUSHI {item}')
-        gen("WRITEI")
+        gen(f'PUSHI {item}     // Push {item}')
+        gen("WRITEI     // Imprime inteiro")
     elif isinstance(item, float):
-        gen(f'PUSHF {item}')
-        gen("WRITEF")
+        gen(f'PUSHF {item}     // Push {item}')
+        gen("WRITEF     // Imprime float")
     else:
         # Expressão complexa
         gerar_expressao(item)
         tipo_expr = inferir_tipo(item)
         if tipo_expr == "integer":
-            gen("WRITEI")
+            gen("WRITEI     // Imprime inteiro")
         elif tipo_expr == "real":
-            gen("WRITEF")
+            gen("WRITEF     // Imprime float")
         else:
-            gen("WRITES")
+            gen("WRITES     // Imprime string")
 
 def p_escrita_write(p):
     "escrita : WRITE '(' lista_expressao ')'"
@@ -579,7 +579,7 @@ def gerar_instrucao(instr):
     elif instr[0] == "writeln":
         for item in instr[1]:
             emitir_uma_expressao_para_output(item)
-        gen("WRITELN")
+        gen("WRITELN     // Imprime nova linha")
 
     elif instr[0] == "write":
         for item in instr[1]:
@@ -591,9 +591,9 @@ def gerar_instrucao(instr):
         
         if tabela.existe(destino):
             endereco = tabela.obter(destino)["endereco"]
-            gen(f"STOREG {endereco}")
-        #else:
-            #print(f"Erro semântico: variável '{destino}' não declarada.")
+            gen(f"STOREG {endereco}     // Armazena {destino} no endereço {endereco}")
+        else:
+            print(f"Erro semântico: variável '{destino}' não declarada.")
 
     elif instr[0] == "retorno_funcao":
         nome_funcao = instr[1]
@@ -603,23 +603,23 @@ def gerar_instrucao(instr):
 
         if tabela.existe(nome_funcao):
             endereco = tabela.obter(nome_funcao)["endereco"]
-            gen(f"STOREG {endereco}")
+            gen(f"STOREG {endereco}     // Armazena {nome_funcao} no endereço da função")
         else:
             print(f"Erro: função '{nome_funcao}' não tem endereço atribuído.")
 
-        gen("RET")
+        gen("RETURN     // Retorna da função")
 
     elif instr[0] == "atribuicao_array":
         nome_array = instr[1]
         indice_expr = instr[2]
         valor_expr = instr[3]
         endereco = tabela.obter(nome_array)["endereco"]
-        gen(f"PUSHG {endereco}")
+        gen(f"PUSHG {endereco}     // Empilha endereço base do array {nome_array}")
         gerar_expressao(indice_expr)
-        gen("PUSHI 1")
-        gen("SUB")                     # índice zero-based = i - 1
+        gen("PUSHI 1     // Offset")  # Para o offset
+        gen("SUB     // Offset")                     # índice zero-based = i - 1
         gerar_expressao(valor_expr)
-        gen("STOREN")
+        gen("STOREN     // Armazena valor no array")
         
         if tabela.existe(nome_array):
             info = tabela.obter(nome_array)
@@ -630,14 +630,14 @@ def gerar_instrucao(instr):
             gerar_expressao(valor_expr)
             
             # Empilha endereço base do array
-            gen(f"PUSHG {endereco}")
+            gen(f"PUSHG {endereco}     // Empilha endereço base do array {nome_array}")
             
             # Gera código para o índice
             gerar_expressao(indice_expr)
 
             
             # Armazena no array
-            gen("STOREN")
+            gen("STOREN     // Armazena valor no array")
         else:
             print(f"Erro semântico: array '{nome_array}' não declarado.")
 
@@ -660,9 +660,9 @@ def gerar_instrucao(instr):
         label_fim = nova_label("while_fim")
         gen_label(label_inicio)
         gerar_expressao(cond)
-        gen(f"JZ {label_fim}")
+        gen(f"JZ {label_fim}     // Se condição for falsa, salta para o fim do loop")
         gerar_instrucao(corpo)
-        gen(f"JUMP {label_inicio}")
+        gen(f"JUMP {label_inicio}     // Jump para {label_inicio}")
         gen_label(label_fim)
 
     elif instr[0] == "bloco":
@@ -677,7 +677,7 @@ def gerar_instrucao(instr):
             
             # Inicializa a variável
             gerar_expressao(inicio)
-            gen(f"STOREG {endereco}")
+            gen(f"STOREG {endereco}  // Armazena {var} no endereço {endereco}")
             
             # Labels para o loop
             label_inicio = nova_label("forinicio")
@@ -686,22 +686,22 @@ def gerar_instrucao(instr):
             gen_label(label_inicio)
             
             # Testa condição (var <= fim)
-            gen(f"PUSHG {endereco}")
+            gen(f"PUSHG {endereco}    // Empilha indice")
             gerar_expressao(fim)
-            gen("SUP")  # var >= fim ? (invertido porque queremos var <= fim)
-            gen("NOT")    # NOT(var >= fim) = (var < fim)
-            gen(f"JZ {label_fim}")
+            gen("SUP    // Verifica se o indice é maior que o limite superior")  # var >= fim ? (invertido porque queremos var <= fim)
+            gen("NOT   // Negação")    # NOT(var >= fim) = (var < fim)
+            gen(f"JZ {label_fim}   // Se condição for falsa, salta para o fim do loop")
             
             # Executa corpo
             gerar_instrucao(corpo)
             
             # Incrementa variável
-            gen(f"PUSHG {endereco}")
-            gen("PUSHI 1")
-            gen("ADD")
-            gen(f"STOREG {endereco}")
+            gen(f"PUSHG {endereco} // Empilha indice")
+            gen("PUSHI 1   // Empilha 1")
+            gen("ADD  // Incrementa indice")
+            gen(f"STOREG {endereco}  // Armazena novo valor na variável")
             
-            gen(f"JUMP {label_inicio}")
+            gen(f"JUMP {label_inicio}   // Salta para o início do loop")
             gen_label(label_fim)
         else:
             print(f"Erro semântico: variável de controle '{var}' não declarada.")
@@ -713,26 +713,26 @@ def gerar_instrucao(instr):
             endereco = tabela.obter(var)["endereco"]
             
             gerar_expressao(inicio)
-            gen(f"STOREG {endereco}")
+            gen(f"STOREG {endereco}   // Armazena valor inicial na variável")
             
             label_inicio = nova_label("for_inicio")
             label_fim = nova_label("for_fim")
             
             gen_label(label_inicio)
-            gen(f"PUSHG {endereco}")
+            gen(f"PUSHG {endereco}   // Empilha indice")
             gerar_expressao(fim)
-            gen("INF")  # var <= fim ? (invertido porque queremos var >= fim)
-            gen("NOT")    # NOT(var <= fim) = (var > fim)
-            gen(f"JZ {label_fim}")
+            gen("INF  // Verifica se é inferior")  # var <= fim ? (invertido porque queremos var >= fim)
+            gen("NOT // Negação")    # NOT(var <= fim) = (var > fim)
+            gen(f"JZ {label_fim}   // Se condição for falsa, salta para o fim do loop")
             
             gerar_instrucao(corpo)
             
-            gen(f"PUSHG {endereco}")
-            gen("PUSHI 1")
-            gen("SUB")
-            gen(f"STOREG {endereco}")
+            gen(f"PUSHG {endereco}  // Empilha indice")
+            gen("PUSHI 1  // Empilha 1")
+            gen("SUB  // Decrementa indice")  # Decrementa a variável de controle
+            gen(f"STOREG {endereco}  // Armazena novo valor na variável")
             
-            gen(f"JUMP {label_inicio}")
+            gen(f"JUMP {label_inicio}  // Salta para o início do loop")
             gen_label(label_fim)
         else:
             print(f"Erro semântico: variável de controle '{var}' não declarada.")
@@ -743,11 +743,11 @@ def gerar_codigo_if_else(cond, then_instr, else_instr=None):
     label_fim = nova_label("fim")
 
     gerar_expressao(cond)       # expr → empilha resultado
-    gen(f"JZ {label_else}")     # se falso → salta para else
+    gen(f"JZ {label_else}  // Salta para a label de else ")     # se falso → salta para else
 
     gerar_instrucao(then_instr) # executa then
 
-    gen(f"JUMP {label_fim}")    # salta para o fim
+    gen(f"JUMP {label_fim}  // Salta para o final da Label")    # salta para o fim
 
     gen_label(label_else)
 
@@ -961,8 +961,8 @@ def gerar_alocacoes_arrays(cabecalho):
                         continue
 
                     # Geração de código assembly para alocação do array
-                    gen(F"ALLOC {tamanho}")
-                    gen(f"STOREG {endereco}")
+                    gen(F"ALLOC {tamanho} // Aloca espaço para o array {nome} com tamanho {tamanho}")
+                    gen(f"STOREG {endereco} // Armazena o o array {nome} no endereço {endereco}")
 
 
 
@@ -1008,14 +1008,14 @@ def gerar_codigo(ast):
 
             gen_label(nome_funcao)
             gerar_instrucao(corpo_funcao)
-            gen("RET")
+            gen("RETURN")
 
             tabela.sair_funcao()  # sair do escopo da função
 
         # 3. Gerar código principal
-        gen("START")
+        gen("START   // Início do programa")
         gerar_instrucao(corpo)
-        gen("STOP")
+        gen("STOP   // Fim do programa")
 
         print("\n📦 Tabela de símbolos final:")
         print(tabela)
@@ -1093,7 +1093,7 @@ if __name__ == "__main__":
                 linha = instr.strip().replace('\r', '')
                 f.write(linha + "\n")
 
-        # Opcional: imprimir também no terminal
-        print("\nCódigo Assembly gerado:")
-        for instr in codigo_assembly:
-            print(instr)
+        ## Opcional: imprimir também no terminal
+        #print("\nCódigo Assembly gerado:")
+        #for instr in codigo_assembly:
+        #    print(instr)
