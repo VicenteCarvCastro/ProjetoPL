@@ -294,7 +294,9 @@ def gerar_expressao(expr):
             if expr.startswith("'") and expr.endswith("'"):
                 expr = expr[1:-1]  # Remove aspas simples
             item_fmt = expr.replace('"', '\\"')
-            gen(f'PUSHS "{item_fmt}"')
+            converte_to_ascii = ord(item_fmt[0])
+            gen(f'PUSHI {converte_to_ascii}')
+            print(f"Erro semântico: variável '{expr}' não declarada.")
     elif isinstance(expr, tuple):
         if expr[0] == '+':
             gerar_expressao(expr[1])
@@ -363,20 +365,34 @@ def gerar_expressao(expr):
             indice_expr = expr[2]
             info = tabela.obter(nome_array)
             endereco = info["endereco"]
-            tipo = info["tipo"]
-            
-            # Empilha endereço base do array
-            gen(f"PUSHG {endereco}")
-            
-            # Gera código para o índice
-            gerar_expressao(indice_expr)
+            tipo = info["tipo"] 
 
-            gen("PUSHI 1")  # Para o offset
-            gen("SUB")  # Adiciona o offset ao endereço base
+            if tipo == "string":
+                # Empilha endereço base do array
+                gen(f"PUSHG {endereco}")
+                
+                # Gera código para o índice
+                gerar_expressao(indice_expr)
+    
+                gen("PUSHI 1")  # Para o offset
+                gen("SUB")  # Adiciona o offset ao endereço base
+
+                # Carrega o valor do array
+                gen("CHARAT")
+            else:
             
-            
-            # Carrega o valor do array
-            gen("LOADN")
+                # Empilha endereço base do array
+                gen(f"PUSHG {endereco}")
+
+                # Gera código para o índice
+                gerar_expressao(indice_expr)
+
+                gen("PUSHI 1")  # Para o offset
+                gen("SUB")  # Adiciona o offset ao endereço base
+
+
+                # Carrega o valor do array
+                gen("LOADN")
         elif expr[0] == 'menos':
             gen("PUSHI 0")
             gerar_expressao(expr[1])
@@ -704,7 +720,7 @@ def gerar_instrucao(instr):
             gen_label(label_inicio)
             gen(f"PUSHG {endereco}")
             gerar_expressao(fim)
-            gen("INFEQ")  # var <= fim ? (invertido porque queremos var >= fim)
+            gen("INF")  # var <= fim ? (invertido porque queremos var >= fim)
             gen("NOT")    # NOT(var <= fim) = (var > fim)
             gen(f"JZ {label_fim}")
             
