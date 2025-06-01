@@ -15,12 +15,12 @@ funcoes -> funcao
 funcao -> ID '(' parametros ')' ':' tipo ';' bloco_funcao ';'
 
 
-// Mudar ??
+
 parametros -> lista_id ':' tipo                                
             | lista_id ':' tipo ';' parametros
             | ε
 
-// parametros ficaria..
+
 parametros -> lista_parametros
             | ε
 
@@ -61,7 +61,7 @@ instrucao        -> atribuicao
                  | while_statement
                  | for_statement
                  | bloco
-                 | ε     // Tirar e colocar em lista_instrucoes ??
+                 | ε     
 
 bloco            ->  BEGIN lista_instrucoes END
 
@@ -69,8 +69,8 @@ bloco            ->  BEGIN lista_instrucoes END
 atribuicao       -> ID ASSIGN expressao                             
                  | ID '[' expressao ']' ASSIGN expressao
 
-leitura          -> READ '(' expressao_simples ')'   // nao temos expressao_simples mas sim so expressao
-                 | READLN '(' expressao_simples ')'  // Acrescentar expressao_simples?
+leitura          -> READ '(' expressao_simples ')'   
+                 | READLN '(' expressao_simples ')'  
 
 escrita          -> WRITE '(' lista_expressao ')'
                  |  WRITELN '(' lista_expressao ')'
@@ -111,11 +111,11 @@ termo -> termo '*' fator
        | fator
 
 
-fator            -> NUMBER                     // Const ?  
+fator            -> NUMBER                      
                  | STRING_LITERAL
-                 | ID                          // Var ?
-                 | ID '[' expressao ']'        // Acesso a array  
-                 | ID '(' expressao ')'        // Chamada de funçao
+                 | ID                          
+                 | ID '[' expressao ']'        
+                 | ID '(' expressao ')'        
                  | TRUE
                  | FALSE
                  | '(' expressao ')'
