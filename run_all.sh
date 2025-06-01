@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ ! -f parser2.py ]; then
+if [ ! -f parser.py ]; then
   echo "Erro: não encontrei parser2.py neste diretório."
   exit 1
 fi
@@ -19,7 +19,7 @@ for arquivo in "${pascal_files[@]}"; do
   echo "Processando $arquivo..."
   echo "=============================="
 
-  python3 parser2.py < "$arquivo"
+  python3 parser.py < "$arquivo"
   if [ $? -ne 0 ]; then
     echo "  → Erro ao rodar parser2.py sobre $arquivo"
     continue

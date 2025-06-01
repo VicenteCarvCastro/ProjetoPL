@@ -8,3 +8,13 @@ Grupo 55:
 - Vicente Castro
 - Guilherme Pereira
 
+To run the examples:
+```
+$ ./run_all.sh
+```
+
+to run individual pascal files
+
+```
+$ python3 parser.py < <path-to-file>
+```
