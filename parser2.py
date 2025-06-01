@@ -303,22 +303,34 @@ def gerar_expressao(expr):
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
             gen("FADD     // Soma de dois valores")
+        # subtração float
         elif expr[0] == '-':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
             gen("FSUB     // Subtração de dois valores")
+        # multiplicação float
         elif expr[0] == '*':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
             gen("FMUL     // Multiplicação de dois valores")
+
+        # divisão inteira (div)
         elif expr[0] == 'div':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("FDIV     // Divisão de dois valores")
+            gen("DIV     // Divisão inteira de dois valores")
+
+        # divisão real (/)
+        elif expr[0] == '/':
+            gerar_expressao(expr[1])
+            gerar_expressao(expr[2])
+            gen("FDIV     // Divisão real de dois valores")
+
+        # módulo inteiro (mod)
         elif expr[0] == 'mod':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("FMOD     // Módulo de dois valores")
+            gen("MOD     // Módulo inteiro de dois valores")
         elif expr[0] == 'relop':
             gerar_expressao(expr[2])
             gerar_expressao(expr[3])
@@ -550,7 +562,7 @@ def emitir_uma_expressao_para_output(item):
     else:
         # Expressão complexa
         gerar_expressao(item)
-        tipo_expr = inferir_tipo(item)
+        tipo_expr = inferir_tipo(tabela, item)
         if tipo_expr == "integer":
             gen("WRITEI     // Imprime inteiro")
         elif tipo_expr == "real":
@@ -1014,7 +1026,7 @@ def gerar_codigo(ast):
         gerar_instrucao(corpo)
         gen("STOP   // Fim do programa")
 
-        print("\n📦 Tabela de símbolos final:")
+        print("\n Tabela de símbolos final:")
         print(tabela)
 
 # -------------------------
