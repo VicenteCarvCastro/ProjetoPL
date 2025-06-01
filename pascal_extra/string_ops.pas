@@ -1,8 +1,8 @@
 program StringTest;
 var
+    len: integer;
     name: string;
     greeting: string;
-    len: integer;
 begin
     name := 'Pascal';
     greeting := 'Hello, ';

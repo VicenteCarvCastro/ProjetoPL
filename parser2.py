@@ -295,8 +295,11 @@ def gerar_expressao(expr):
             if expr.startswith("'") and expr.endswith("'"):
                 expr = expr[1:-1]  # Remove aspas simples
             item_fmt = expr.replace('"', '\\"')
-            converte_to_ascii = ord(item_fmt[0])
-            gen(f'PUSHI {converte_to_ascii}     // Push Char Ascii Value')
+            if len(item_fmt) == 1:
+                converte_to_ascii = ord(item_fmt[0])
+                gen(f'PUSHI {converte_to_ascii}     // Push Char Ascii Value')
+            else:
+                gen(f'PUSHS "{item_fmt}"     // Push String Literal')
             #print(f"Erro semântico: variável '{expr}' não declarada.")
     elif isinstance(expr, tuple):
         if expr[0] == '+':
