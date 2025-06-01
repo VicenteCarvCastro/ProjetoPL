@@ -2,7 +2,7 @@ program ExpressionTest;
 var
     a, b, c, d: integer;
 
-    x: integer;
+    x: real;
 begin
     a := 2;
     b := 3;

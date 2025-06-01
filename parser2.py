@@ -302,23 +302,23 @@ def gerar_expressao(expr):
         if expr[0] == '+':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("ADD     // Soma de dois valores")
+            gen("FADD     // Soma de dois valores")
         elif expr[0] == '-':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("SUB     // Subtração de dois valores")
+            gen("FSUB     // Subtração de dois valores")
         elif expr[0] == '*':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("MUL     // Multiplicação de dois valores")
+            gen("FMUL     // Multiplicação de dois valores")
         elif expr[0] == 'div':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("DIV     // Divisão de dois valores")
+            gen("FDIV     // Divisão de dois valores")
         elif expr[0] == 'mod':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
-            gen("MOD     // Módulo de dois valores")
+            gen("FMOD     // Módulo de dois valores")
         elif expr[0] == 'relop':
             gerar_expressao(expr[2])
             gerar_expressao(expr[3])
@@ -597,7 +597,7 @@ def gerar_instrucao(instr):
             if endereco is None:
                 print(f"Erro semântico: variável '{destino}' não tem endereço atribuído.")
                 return
-            gen(f"STOREG {endereco}     // 1Armazena {destino} no endereço {endereco}")
+            gen(f"STOREG {endereco}     // Armazena {destino} no endereço {endereco}")
         else:
             print(f"Erro semântico: variável '{destino}' não declarada.")
 
@@ -627,25 +627,7 @@ def gerar_instrucao(instr):
         gerar_expressao(valor_expr)
         gen("STOREN     // Armazena valor no array")
         
-        if tabela.existe(nome_array):
-            info = tabela.obter(nome_array)
-            endereco = info["endereco"]
-            tipo = info["tipo"]
-            
-            # Gera o valor a ser armazenado
-            gerar_expressao(valor_expr)
-            
-            # Empilha endereço base do array
-            gen(f"PUSHG {endereco}     // Empilha endereço base do array {nome_array}")
-            
-            # Gera código para o índice
-            gerar_expressao(indice_expr)
 
-            
-            # Armazena no array
-            gen("STOREN     // Armazena valor no array")
-        else:
-            print(f"Erro semântico: array '{nome_array}' não declarado.")
 
     elif instr[0] == "readln":
         emitir_uma_expressao_para_input(instr[1])

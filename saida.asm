@@ -1,9 +1,9 @@
 JUMP MAIN  // Salta para o início do programa
 BinToInt:    // Label BinToInt
 PUSHI 0     // Push valor 0
-STOREG 2     // 1Armazena valor no endereço 2
+STOREG 2     // Armazena valor no endereço 2
 PUSHI 1     // Push valor 1
-STOREG 3     // 1Armazena potencia no endereço 3
+STOREG 3     // Armazena potencia no endereço 3
 PUSHG 0     // Empilha endereço da string
 STRLEN     // Calcula o tamanho da string
 STOREG 1   // Armazena valor inicial na variável
@@ -23,15 +23,15 @@ EQUAL     // Igual
 JZ ELSE2  // Salta para a label de else
 PUSHG 2     // Empilha endreço de valor
 PUSHG 3     // Empilha endreço de potencia
-ADD     // Soma de dois valores
-STOREG 2     // 1Armazena valor no endereço 2
+FADD     // Soma de dois valores
+STOREG 2     // Armazena valor no endereço 2
 JUMP FIM3  // Salta para o final da Label
 ELSE2:    // Label ELSE2
 FIM3:    // Label FIM3
 PUSHG 3     // Empilha endreço de potencia
 PUSHI 2     // Push valor 2
-MUL     // Multiplicação de dois valores
-STOREG 3     // 1Armazena potencia no endereço 3
+FMUL     // Multiplicação de dois valores
+STOREG 3     // Armazena potencia no endereço 3
 PUSHG 1  // Empilha indice
 PUSHI 1  // Empilha 1
 SUB  // Decrementa indice
@@ -50,7 +50,7 @@ STOREG 0     // Armazena bin no endereço 0
 PUSHG 0     // Empilha endreço de bin
 PUSHA BinToInt     // Empilha endereço da função BinToInt
 CALL    // Invoca Função
-STOREG 1     // 1Armazena valor no endereço 1
+STOREG 1     // Armazena valor no endereço 1
 PUSHS "O valor inteiro correspondente é: "     // Push String
 WRITES     // Imprime string
 PUSHG 1    // Empilha endereço de valor
