@@ -359,7 +359,8 @@ def gerar_expressao(expr):
             argumento = expr[2]
             
             gerar_expressao(argumento)  # Empilha argumento
-            gen(f"CALL {nome_funcao}     // Invoca Função")  # Chama a função
+            gen(f"PUSHA {nome_funcao}     // Empilha endereço da função {nome_funcao}")
+            gen(f"CALL    // Invoca Função")  # Chama a função
 
         elif expr[0] == 'array_acesso':
             nome_array = expr[1]
@@ -435,7 +436,8 @@ def emitir_uma_expressao_para_input(item):
             elif tipo == "real":
                 gen("ATOF     // Converte string para float")
             # string não precisa de conversão
-
+            
+            
             gen(f"STOREG {endereco}     // Armazena {item} no endereço {endereco}")
         else:
             print(f"Erro semântico: variável '{item}' não declarada.")
@@ -488,6 +490,7 @@ def p_leitura_readln(p):
 
 def emitir_uma_expressao_para_output(item):
     """Função auxiliar para gerar código de escrita"""
+    print(f"Emitindo expressão para output: {item}")
     if isinstance(item, str):
         if tabela.existe(item):
             # É uma variável declarada
@@ -591,7 +594,10 @@ def gerar_instrucao(instr):
         
         if tabela.existe(destino):
             endereco = tabela.obter(destino)["endereco"]
-            gen(f"STOREG {endereco}     // Armazena {destino} no endereço {endereco}")
+            if endereco is None:
+                print(f"Erro semântico: variável '{destino}' não tem endereço atribuído.")
+                return
+            gen(f"STOREG {endereco}     // 1Armazena {destino} no endereço {endereco}")
         else:
             print(f"Erro semântico: variável '{destino}' não declarada.")
 
@@ -677,7 +683,10 @@ def gerar_instrucao(instr):
             
             # Inicializa a variável
             gerar_expressao(inicio)
-            gen(f"STOREG {endereco}  // Armazena {var} no endereço {endereco}")
+            if endereco is None:
+                print(f"Erro semântico: variável '{var}' não tem endereço atribuído.")
+            
+            gen(f"STOREG {endereco}  // 2Armazena {var} no endereço {endereco}")
             
             # Labels para o loop
             label_inicio = nova_label("forinicio")
@@ -887,6 +896,10 @@ def p_fator_numero(p):
     "fator : NUMBER"
     p[0] = p[1]
 
+def p_fator_real_numero(p):
+    "fator : REAL_NUMBER"
+    p[0] = p[1]
+
 def p_fator_string(p):
     "fator : STRING_LITERAL"
     p[0] = p[1]
@@ -977,6 +990,7 @@ def gerar_codigo(ast):
 
         # 1. Alocar arrays globais
         gerar_alocacoes_arrays(cabecalho)
+        gen("JUMP MAIN  // Salta para o início do programa")
 
         # 2. Gerar código para funções
         funcoes = cabecalho[2]
@@ -1013,6 +1027,7 @@ def gerar_codigo(ast):
             tabela.sair_funcao()  # sair do escopo da função
 
         # 3. Gerar código principal
+        gen ("MAIN:")
         gen("START   // Início do programa")
         gerar_instrucao(corpo)
         gen("STOP   // Fim do programa")

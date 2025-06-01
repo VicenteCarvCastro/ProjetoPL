@@ -18,13 +18,13 @@ def importar_parser(caminho, nome_modulo):
     return modulo
 
 # Importar os dois parsers
-parser1 = importar_parser(CAMINHO_PARSER1, "parser1")
+#parser1 = importar_parser(CAMINHO_PARSER1, "parser1")
 parser2 = importar_parser(CAMINHO_PARSER2, "parser2")
 
 def testar_parsers_em_ficheiros():
-    for nome_ficheiro in sorted(os.listdir(PASTA_TESTES_ERROS)):
+    for nome_ficheiro in sorted(os.listdir(PASTA_TESTES)):
         if nome_ficheiro.endswith(".pas"):
-            caminho = os.path.join(PASTA_TESTES_ERROS, nome_ficheiro)
+            caminho = os.path.join(PASTA_TESTES, nome_ficheiro)
 
             with open(caminho, "r", encoding="utf-8") as f:
                 codigo = f.read()

@@ -1,4 +1,5 @@
 def inferir_tipo(tabela, expr):
+    print(f"Value: {expr}, Type: {type(expr)}")
     if isinstance(expr, bool):
         return "boolean"
     if isinstance(expr, int):

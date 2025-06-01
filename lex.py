@@ -9,7 +9,7 @@ tokens = [
     'BEGIN', 'END', 'READLN', 'READ', 'WRITELN', 'WRITE',
     'IF', 'THEN', 'ELSE', 'WHILE', 'DOWNTO', 'FOR', 'TO',
     'DO', 'TRUE', 'FALSE', 'DIV', 'MOD',
-    'NOT', 'AND', 'OR', 'ID', 'NUMBER', 'STRING_LITERAL', 'ASSIGN',
+    'NOT', 'AND', 'OR', 'ID', 'REAL_NUMBER', 'NUMBER', 'STRING_LITERAL', 'ASSIGN',
     'EQUALS', 'NOT_EQUALS', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO',
     'GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'RANGE',
     'STRING', 'CHAR', 'BOOLEAN', 'REAL', 'INTEGER'
@@ -40,7 +40,7 @@ def t_INTEGER(t):
     return t
 
 def t_REAL(t):
-    r'real'
+    r'real' 
     return t
 
 def t_BOOLEAN(t):
@@ -189,6 +189,11 @@ def t_RANGE(t):
 def t_STRING_LITERAL(t):
     r"'[^']*?'"
     t.value = t.value[1:-1]
+    return t
+
+def t_REAL_NUMBER(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
     return t
 
 def t_NUMBER(t):
