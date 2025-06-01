@@ -415,6 +415,8 @@ def gerar_expressao(expr):
             gerar_expressao(expr[1])
             gen("SUB     // Subtração para negativo")
 
+
+
 def p_atribuicao(p):
     "atribuicao : ID ASSIGN expressao"
     p[0] = ("atribuicao", p[1], p[3])
@@ -422,6 +424,8 @@ def p_atribuicao(p):
 def p_atribuicao_array(p):
     "atribuicao : ID '[' expressao ']' ASSIGN expressao"
     p[0] = ("atribuicao_array", p[1], p[3], p[6])
+
+
 
 # -------------------------
 # Leitura
@@ -573,13 +577,17 @@ def emitir_uma_expressao_para_output(item):
         else:
             gen("WRITES     // Imprime string")
 
-def p_escrita_write(p):
-    "escrita : WRITE '(' lista_expressao ')'"
-    p[0] = ("write", p[3])
+def p_escrita_writeln_vazio(p):
+    "escrita : WRITELN"
+    p[0] = ("writeln", [])          # aceita somente writeln;
 
 def p_escrita_writeln(p):
     "escrita : WRITELN '(' lista_expressao ')'"
-    p[0] = ("writeln", p[3])
+    p[0] = ("writeln", p[3])        # writeln(lista)
+
+def p_escrita_write(p):
+    "escrita : WRITE '(' lista_expressao ')'"
+    p[0] = ("write", p[3])
 
 # -------------------------
 # IF, WHILE, FOR
