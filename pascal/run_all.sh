@@ -1,34 +1,38 @@
 #!/usr/bin/env bash
 
+# Script: run_all.sh
+# Percorre todos os .pas do diretório, executa parser2.py e renomeia saida.asm
+
+# Verifica se o parser2.py existe
 if [ ! -f parser2.py ]; then
   echo "Erro: não encontrei parser2.py neste diretório."
   exit 1
 fi
 
-shopt -s nullglob
-pascal_files=(pascal/*.pas)
-shopt -u nullglob
+# Loop em cada arquivo .pas
+for arquivo in *.pas; do
+  # Verifica se existe ao menos um .pas
+  if [ ! -e "$arquivo" ]; then
+    echo "Não há arquivos .pas para processar."
+    exit 0
+  fi
 
-if [ ${#pascal_files[@]} -eq 0 ]; then
-  echo "Não há arquivos .pas para processar."
-  exit 0
-fi
-
-for arquivo in "${pascal_files[@]}"; do
   echo "=============================="
   echo "Processando $arquivo..."
   echo "=============================="
 
+  # Executa o parser gerando saida.asm
   python3 parser2.py < "$arquivo"
   if [ $? -ne 0 ]; then
     echo "  → Erro ao rodar parser2.py sobre $arquivo"
     continue
   fi
 
-  base="$(basename "${arquivo%.pas}")"
+  # Se saiu sem erro, renomeia saida.asm para <base>.asm
+  base="${arquivo%.pas}"
   if [ -f saida.asm ]; then
-    mv saida.asm "pascal/${base}.asm"
-    echo "  → Gerado: pascal/${base}.asm"
+    mv saida.asm "${base}.asm"
+    echo "  → Gerado: ${base}.asm"
   else
     echo "  → Aviso: parser2.py não produziu saida.asm para $arquivo"
   fi
