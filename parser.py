@@ -338,18 +338,18 @@ def gerar_expressao(expr):
             gerar_expressao(expr[3])
             op = expr[1]
             if op == '>':
-                gen("SUP     // Maior")
+                gen("FSUP     // Maior")
             elif op == '<':
-                gen("INF     // Menor")
+                gen("FINF     // Menor")
             elif op == '=':
                 gen("EQUAL     // Igual")
             elif op == '<>':
                 gen("EQUAL     // Diferente")
                 gen("NOT     // Diferente")
             elif op == '>=':
-                gen("SUPEQ     // Maior ou Igual")
+                gen("FSUPEQ     // Maior ou Igual")
             elif op == '<=':
-                gen("INFEQ     // Menor ou Igual")
+                gen("FINFEQ     // Menor ou Igual")
         elif expr[0] == 'and':
             gerar_expressao(expr[1])
             gerar_expressao(expr[2])
@@ -391,7 +391,7 @@ def gerar_expressao(expr):
                 gerar_expressao(indice_expr)
     
                 gen("PUSHI 1     // Offset")  # Para o offset
-                gen("SUB     // Offset")  # Adiciona o offset ao endereço base
+                gen("FSUB     // Offset")  # Adiciona o offset ao endereço base
 
                 # Carrega o valor do array
                 gen("CHARAT     // Valor Asccii do caractere")
@@ -404,7 +404,7 @@ def gerar_expressao(expr):
                 gerar_expressao(indice_expr)
 
                 gen("PUSHI 1     // Offset")  # Para o offset
-                gen("SUB     // Offset")  # Adiciona o offset ao endereço base
+                gen("FSUB     // Offset")  # Adiciona o offset ao endereço base
 
 
                 # Carrega o valor do array
@@ -412,7 +412,7 @@ def gerar_expressao(expr):
         elif expr[0] == 'menos':
             gen("PUSHI 0     // Push zero")
             gerar_expressao(expr[1])
-            gen("SUB     // Subtração para negativo")
+            gen("FSUB     // Subtração para negativo")
 
 
 
@@ -482,7 +482,7 @@ def emitir_uma_expressao_para_input(item):
                 gerar_expressao(indice_expr)
 
                 gen("PUSHI 1     // Offset")  # Para o offset
-                gen("SUB     // Offset")  # Adiciona o offset ao endereço base
+                gen("FSUB     // Offset")  # Adiciona o offset ao endereço base
                 
 
                 gen("READ     // lê string do input")
@@ -645,7 +645,7 @@ def gerar_instrucao(instr):
         gen(f"PUSHG {endereco}     // Empilha endereço base do array {nome_array}")
         gerar_expressao(indice_expr)
         gen("PUSHI 1     // Offset")  # Para o offset
-        gen("SUB     // Offset")                     # índice zero-based = i - 1
+        gen("FSUB     // Offset")                     # índice zero-based = i - 1
         gerar_expressao(valor_expr)
         gen("STOREN     // Armazena valor no array")
         
@@ -701,7 +701,7 @@ def gerar_instrucao(instr):
             # Testa condição (var <= fim)
             gen(f"PUSHG {endereco}    // Empilha indice")
             gerar_expressao(fim)
-            gen("SUP    // Verifica se o indice é maior que o limite superior")  # var >= fim ? (invertido porque queremos var <= fim)
+            gen("FSUP    // Verifica se o indice é maior que o limite superior")  # var >= fim ? (invertido porque queremos var <= fim)
             gen("NOT   // Negação")    # NOT(var >= fim) = (var < fim)
             gen(f"JZ {label_fim}   // Se condição for falsa, salta para o fim do loop")
             
@@ -711,7 +711,7 @@ def gerar_instrucao(instr):
             # Incrementa variável
             gen(f"PUSHG {endereco} // Empilha indice")
             gen("PUSHI 1   // Empilha 1")
-            gen("ADD  // Incrementa indice")
+            gen("FADD  // Incrementa indice")
             gen(f"STOREG {endereco}  // Armazena novo valor na variável")
             
             gen(f"JUMP {label_inicio}   // Salta para o início do loop")
@@ -734,7 +734,7 @@ def gerar_instrucao(instr):
             gen_label(label_inicio)
             gen(f"PUSHG {endereco}   // Empilha indice")
             gerar_expressao(fim)
-            gen("INF  // Verifica se é inferior")  # var <= fim ? (invertido porque queremos var >= fim)
+            gen("FINF  // Verifica se é inferior")  # var <= fim ? (invertido porque queremos var >= fim)
             gen("NOT // Negação")    # NOT(var <= fim) = (var > fim)
             gen(f"JZ {label_fim}   // Se condição for falsa, salta para o fim do loop")
             
@@ -742,7 +742,7 @@ def gerar_instrucao(instr):
             
             gen(f"PUSHG {endereco}  // Empilha indice")
             gen("PUSHI 1  // Empilha 1")
-            gen("SUB  // Decrementa indice")  # Decrementa a variável de controle
+            gen("FSUB  // Decrementa indice")  # Decrementa a variável de controle
             gen(f"STOREG {endereco}  // Armazena novo valor na variável")
             
             gen(f"JUMP {label_inicio}  // Salta para o início do loop")
